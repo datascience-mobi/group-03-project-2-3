@@ -1,0 +1,19 @@
+#loading data (treated & untreated), julis code did not work for me, we have to change it
+NCI_TPW_gep_untreated <- readRDS("C:/Users/Tabita/Documents/Bioinfo Projekt FS 4/Gene Expression Profiles/7901477/NCI_TPW_gep_untreated.rds")
+NCI_TPW_gep_treated <- readRDS("C:/Users/Tabita/Documents/Bioinfo Projekt FS 4/Gene Expression Profiles/7901477/NCI_TPW_gep_treated.rds")
+
+#loading library limma needed for normalization
+library(limma)
+
+#normalize treated & untreated --> Appropriate method???
+untreated_normalized <- normalizeBetweenArrays(NCI_TPW_gep_untreated)
+treated_normalized <- normalizeBetweenArrays(NCI_TPW_gep_treated)
+
+#comparing boxplots
+boxplot(NCI_TPW_gep_treated[,1:10])
+boxplot(treated_normalized[,1:10])
+boxplot(NCI_TPW_gep_untreated[,1:10])
+boxplot(untreated_normalized[,1:10])
+
+
+
