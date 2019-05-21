@@ -1,4 +1,4 @@
-#loading data (treated & untreated), julis code did not work for me, we have to change it
+#loading data (treated & untreated), the code we got did not work for me, we have to change it
 NCI_TPW_gep_untreated <- readRDS("C:/Users/Tabita/Documents/Bioinfo Projekt FS 4/Gene Expression Profiles/7901477/NCI_TPW_gep_untreated.rds")
 NCI_TPW_gep_treated <- readRDS("C:/Users/Tabita/Documents/Bioinfo Projekt FS 4/Gene Expression Profiles/7901477/NCI_TPW_gep_treated.rds")
 
