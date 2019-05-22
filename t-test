@@ -1,0 +1,12 @@
+#check if normalized treated data is normally distributed using QQ-plot
+#if normally distributed quantiledots should lie on a straight line 
+d = sample(1:nrow(treated_normalized), 1)
+> qqnorm(treated_normalized[d, ], main = rownames(treated_normalized)[d])
+> qqline(treated_normalized[d, ])
+#check if normaized untreated data is normally distributed using QQ-plot
+c = sample(1:nrow(untreated_normalized), 1)
+> qqnorm(untreated_normalized[c, ], main = rownames(untreated_normalized)[c])
+> qqline(untreated_normalized[c, ])
+
+
+
