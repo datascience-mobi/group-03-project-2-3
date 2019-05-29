@@ -1,0 +1,2 @@
+#categorize treated and untreated data accoring to tissue and drug 
+split_treated_data <- split(treated_normalized, NCI_TPW_metadata[,6])
