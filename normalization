@@ -20,5 +20,11 @@ boxplot(treated_normalized[,1:10])
 boxplot(NCI_TPW_gep_untreated[,1:10])
 boxplot(untreated_normalized[,1:10])
 
+#finding number of batches 
+boxplot(NCI_TPW_gep_treated)
+boxplot(treated_normalized)
+boxplot(NCI_TPW_gep_untreated)
+boxplot(untreated_normalized) 
+
 
 
