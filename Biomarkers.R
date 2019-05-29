@@ -25,11 +25,12 @@ fcgeneexpression <- treated_normalized - untreated_normalized
 absvalfcgeneexpression <- abs(fcgeneexpression)
 
 #New matrices with only the columns about gemcitabine
+# ***CAMBIAR Y HACER CON SPLIT FUNCTION***
 treated_gemcitabine <- treated_normalized[,365:420]
 untreated_gemcitabine <- untreated_normalized[,365:420]
 absvalfcge_gemcitabine <- absvalfcgeneexpression[,365:420]
 
-#Create new funciton to get a list of the genes with the biggest difference in expression after treatment for a single column (cell line) of absvalfcge_gembitabine:
+#Create new function to get a list of the genes with the biggest difference in expression after treatment for a single column (cell line) of absvalfcge_gembitabine:
 function(absvalfcge_gemcitabine, n) {
   gfc <- absvalfcge_gemcitabine[ , n]
   orderedgenes <- names(gfc[order(-gfc)])
