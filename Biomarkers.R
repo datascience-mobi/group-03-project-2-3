@@ -1,7 +1,7 @@
 #loading library limma needed for normalization
 library(limma)
 
-#normalize treated & untreated --> Appropriate method???
+#normalize treated & untreated
 untreated_normalized <- normalizeBetweenArrays(NCI_TPW_gep_untreated)
 treated_normalized <- normalizeBetweenArrays(NCI_TPW_gep_treated)
 
