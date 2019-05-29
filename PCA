@@ -1,4 +1,14 @@
 #categorize treated and untreated data accoring to tissue and drug 
 split_treated_data <- split(treated_normalized, NCI_TPW_metadata[,6])
 #carry out PCA of split_treated_data
-#make data numeric 
+#make data numeric
+
+#tissue related PCA
+install.packages("ggfortify")
+library("ggfortify")
+
+untreated_normalized_dataframe <- as.data.frame(untreated_normalized)
+split_untreated <- split(untreated_normalized_dataframe, NCI_TPW_metadata[,6], drop = FALSE, sep = ".", lex.order = FALSE)
+
+#investigating how pcas of different tissues are distributed, here for example for CNS
+autoplot(prcomp(split_untreated$CNS))
