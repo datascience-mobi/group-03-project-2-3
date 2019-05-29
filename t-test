@@ -7,6 +7,8 @@ qqline(treated_normalized[d, ])
 c = sample(1:nrow(untreated_normalized), 1)
 qqnorm(untreated_normalized[c, ], main = rownames(untreated_normalized)[c])
 qqline(untreated_normalized[c, ])
-
+#ttest with normalized data? Significant difference between treated and untreated?
+t.test(NCI_TPW_gep_treated, NCI_TPW_gep_untreated, paired = TRUE)
+t.test(treated_normalized, untreated_normalized, paired = TRUE)
 
 
