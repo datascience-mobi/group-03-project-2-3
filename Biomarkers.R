@@ -43,11 +43,13 @@ orderforvectors <- function(x) {
   return(y)
 }
 
-
-#Apply the new funtion to all the columns and create a new matrix with the gene names
+#Apply the new funtion orderforvectors to all the columns and create a new matrix with the gene names
+matrixofbiomarkers <- apply(absvalfcge_gemcitabine, 2, orderforvector) #the 2 means it is applied to columns
 
 
 #Check for most common genes in the first 20 (?) rows of the new matrix -> biomarkers!
+topgenes <- sort(table(as.vector(matrixofbiomarkers[1:20,])))
 
+#Bar plot of topgenes to find the biomarkers
 
 
