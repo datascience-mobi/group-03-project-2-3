@@ -1,3 +1,9 @@
 #create table of tissue and sample for PCa
 # delete untreated data from metadata for coloring treated data
 #delete untreated data from metadata for coloring treated data 
+
+#using only first 819 rows of metadata to assign tissue and plot pca
+
+pca = prcomp(untreated_normalized, center = F, scale. = F)
+plot(pca$rotation[, 1], pca$rotation[, 2], col = NCI_TPW_metadata[1:819, 6], pch = 19, xlab = "PC1", 
+ylab = "PC2")
