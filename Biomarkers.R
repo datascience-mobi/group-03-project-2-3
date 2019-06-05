@@ -37,6 +37,13 @@ orderforbiomarkers <- function(absvalfcge_gemcitabine, n) {
   return(orderedgenes)
 }
 
+#Function to order the components of a vector (descending) and return the names in that order
+orderforvectors <- function(x) {
+  y <- names(x[order(-x)])
+  return(y)
+}
+
+
 #Apply the new funtion to all the columns and create a new matrix with the gene names
 
 
