@@ -1,6 +1,7 @@
 #LOADING DATA
 
 #Download necessary package
+install.packages("rstudioapi")
 library(rstudioapi)
 
 #Set wd to the working directory where this Rscript is located
