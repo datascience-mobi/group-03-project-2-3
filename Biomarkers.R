@@ -31,7 +31,7 @@ untreated_gemcitabine <- untreated_normalized[,365:420]
 absvalfcge_gemcitabine <- absvalfcgeneexpression[,365:420]
 
 #Create new function to get a list of the genes with the biggest difference in expression after treatment for a single column (cell line) of absvalfcge_gembitabine:
-function(absvalfcge_gemcitabine, n) {
+orderforbiomarkers <- function(absvalfcge_gemcitabine, n) {
   gfc <- absvalfcge_gemcitabine[ , n]
   orderedgenes <- names(gfc[order(-gfc)])
   return(orderedgenes)
