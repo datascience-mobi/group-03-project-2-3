@@ -22,5 +22,9 @@ boxplot(treated_normalized)
 boxplot(NCI_TPW_gep_untreated)
 boxplot(untreated_normalized) 
 
+# Though there seems to be large numbers of samples grouped together forming about 11 clusters. We cannot conclude that 
+#there is a batch effect as the x-axis does not have any sample names( may be due to the number of samples, 819). WE do not know exactly which
+#samples are present in each group. The clustering can simply be due to the effect of the drug or natural causes. IMPORTANT: Moreover, 
+#further operations were carried out without the consideration or removal of the batch effects (if any).
 
 
