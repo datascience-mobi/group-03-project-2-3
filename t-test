@@ -13,6 +13,6 @@ t.test(treated_normalized, untreated_normalized, paired = TRUE)
 
 # The H0 Hypothesis is that there is no change in the mean of the treated and untreated data.
 # the 95 percent confidence interval is between -0.0015656142 and -0.0009451127 with a p-value of 2.182e-15.
-# The p-value is not within confidence interval, thus the null hypothesis is rejected for the alternative hypothesis.
+# The p-value is not within the 95 percent confidence interval, thus the null hypothesis is rejected for the alternative hypothesis.
 # Alternative Hypothesis: there is a difference in mean between the treated and untreated data. ("Tentatively": does this prove that the
 # change is provoked by the drug? or is it only a batch effect? Check the boxplots for batch effect identification.
