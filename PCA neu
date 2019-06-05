@@ -4,6 +4,14 @@
 
 #using only first 819 rows of metadata to assign tissue and plot pca
 
-pca = prcomp(untreated_normalized, center = F, scale. = F)
-plot(pca$rotation[, 1], pca$rotation[, 2], col = NCI_TPW_metadata[1:819, 6], pch = 19, xlab = "PC1", 
+pca_untreated = prcomp(untreated_normalized, center = F, scale. = F)
+plot(pca_untreated$rotation[, 1], pca_untreated$rotation[, 2], col = NCI_TPW_metadata[1:819, 6], pch = 19, xlab = "PC1", 
 ylab = "PC2")
+
+#pca FC drug associated
+
+pca_FC = prcomp(FC, center = F, scale. = F)
+plot(pca_FC$rotation[, 1], pcaFC$rotation[, 2], col = NCI_TPW_metadata[1:819, 3], pch = 19, xlab = "PC1", 
+ylab = "PC2")
+
+#you can see that untreated is tissue associated and FC is drug associated
