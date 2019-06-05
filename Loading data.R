@@ -15,6 +15,6 @@ treated <- readRDS(paste0(wd,"/NCI_TPW_gep_treated.rds"))
 untreated <- readRDS(paste0(wd,"/NCI_TPW_gep_untreated.rds"))
 drugsensitivity <- readRDS(paste0(wd,"/NegLogGI50.rds"))
 
-cannotations <- read.table(paste0(wd,"/cellline_annotation.tsv"), header = TRUE, sep ="\t", stringsAsFactors = TRUE)
-dannotations <- read.table(paste0(wd,"/drug_annotations.tsv"), header = TRUE, sep ="\t", stringsAsFactors = TRUE)
+cannotation <- read.table(paste0(wd,"/cellline_annotation.tsv"), header = TRUE, sep ="\t", stringsAsFactors = TRUE)
+dannotation <- read.table(paste0(wd,"/drug_annotation.tsv"), header = TRUE, sep ="\t", stringsAsFactors = TRUE)
 metadata <- read.table(paste0(wd,"/NCI_TPW_metadata.tsv"), header = TRUE, sep ="\t", stringsAsFactors = TRUE)
