@@ -19,3 +19,4 @@ library(ggplot2)
 > basic=ggplot(everything, aes(Cell.Line.name, Gemcitabine.drug.sensitivity, colour = factor(Microsatellite), shape = factor(Microsatellite) )) +
 +     geom_point()
 > basic #very satisfied with this graph
+# a relationship between high drug sensitivity(Gemcitabine) and high microsatellite instabily cannot be concluded.
