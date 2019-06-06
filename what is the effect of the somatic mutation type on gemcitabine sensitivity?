@@ -2,7 +2,7 @@
 #plotting mean graph plot 
 #calculation of GI50 mean for gemcitabine
 rowMeans(NegLogGI50, na.rm = TRUE, dims = 1)
-#GI50 mean value is 7,003322
+#GI50 mean value is 7,003322 for gemcitabine
 #creating a vector for GI50 values of gemcitabine only 
 NegLogGI50gemcitabine<- NegLogGI50[-1:-7,]
 NegLogGI50gemcitabine2<- NegLogGI50gemcitabine[-2:-8,]
