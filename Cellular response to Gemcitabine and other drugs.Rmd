@@ -9,22 +9,175 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+##Loading the data
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+```{r}
+library(rstudioapi)
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+#Set wd to the working directory where this Rscript is located
+wd = dirname(rstudioapi::getSourceEditorContext()$path)
 
-```{r cars}
-summary(cars)
+#Load data
+basalexpression <- readRDS(paste0(wd,"/CCLE_basalexpression.rds"))
+copynumber <- readRDS(paste0(wd,"/CCLE_copynumber.rds"))
+mutations <- readRDS(paste0(wd,"/CCLE_mutations.rds"))
+treated <- readRDS(paste0(wd,"/NCI_TPW_gep_treated.rds"))
+untreated <- readRDS(paste0(wd,"/NCI_TPW_gep_untreated.rds"))
+drugsensitivity <- readRDS(paste0(wd,"/NegLogGI50.rds"))
+
+cannotation <- read.table(paste0(wd,"/cellline_annotation.tsv"), header = TRUE, sep ="\t", stringsAsFactors = TRUE)
+dannotation <- read.table(paste0(wd,"/drug_annotation.tsv"), header = TRUE, sep ="\t", stringsAsFactors = TRUE)
+metadata <- read.table(paste0(wd,"/NCI_TPW_metadata.tsv"), header = TRUE, sep ="\t", stringsAsFactors = TRUE)
 ```
 
-## Including Plots
+## Normalization of data
 
-You can also embed plots, for example:
+```{r}
+#loading library limma needed for normalization
+library(limma)
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+#normalize treated & untreated
+untreated_normalized <- normalizeBetweenArrays(untreated)
+treated_normalized <- normalizeBetweenArrays(treated)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+##Comparing boxplots
+
+```{r}
+boxplot(treated[,1:10])
+boxplot(treated_normalized[,1:10])
+boxplot(untreated[,1:10])
+boxplot(untreated_normalized[,1:10])
+
+#finding number of batches 
+boxplot(treated)
+boxplot(treated_normalized)
+boxplot(untreated)
+boxplot(untreated_normalized) 
+```
+Though there seems to be large numbers of samples grouped together forming about 11 clusters. We cannot conclude that there is a batch effect as the x-axis does not have any sample names( may be due to the number of samples, 819). WE do not know exactly which samples are present in each group. The clustering can simply be due to the effect of the drug or natural causes. IMPORTANT: Moreover, further operations were carried out without the consideration or removal of the batch effects (if any).
+
+##PCA
+
+```{r}
+#create table of tissue and sample for PCa
+# delete untreated data from metadata for coloring treated data
+#delete untreated data from metadata for coloring treated data 
+
+#using only first 819 rows of metadata to assign tissue and plot pca
+
+pca_untreated = prcomp(untreated_normalized, center = F, scale. = F)
+plot(pca_untreated$rotation[, 1], pca_untreated$rotation[, 2], col = metadata[1:819, 6], pch = 19, xlab = "PC1", 
+ylab = "PC2")
+
+#pca FC drug associated
+
+pca_FC = prcomp(FC, center = F, scale. = F)
+plot(pca_FC$rotation[, 1], pcaFC$rotation[, 2], col = metadata[1:819, 3], pch = 19, xlab = "PC1", 
+ylab = "PC2")
+
+#you can see that untreated is tissue associated and FC is drug associated
+```
+
+##T-test
+
+Check if normalized treated data is normally distributed using QQ-plot
+If normally distributed quantile dots should lie on a straight line 
+
+```{r}
+d = sample(1:nrow(treated_normalized), 1)
+qqnorm(treated_normalized[d, ], main = rownames(treated_normalized)[d])
+qqline(treated_normalized[d, ])
+#check if normaized untreated data is normally distributed using QQ-plot
+c = sample(1:nrow(untreated_normalized), 1)
+qqnorm(untreated_normalized[c, ], main = rownames(untreated_normalized)[c])
+qqline(untreated_normalized[c, ])
+```
+
+T-test with normalized data? Significant difference between treated and untreated?
+
+```{r}
+t.test(treated, untreated, paired = TRUE)
+t.test(treated_normalized, untreated_normalized, paired = TRUE)
+```
+
+The H0 Hypothesis is that there is no change in the mean of the treated and untreated data.
+
+The 95 percent confidence interval is between -0.0015656142 and -0.0009451127 with a p-value of 2.182e-15.
+The p-value is not within the 95 percent confidence interval, thus the null hypothesis is rejected for the alternative hypothesis.
+
+Alternative Hypothesis: there is a difference in mean between the treated and untreated data. ("Tentatively": does this prove that the change is provoked by the drug? or is it only a batch effect? Check the boxplots for batch effect identification.
+
+##Biomarkers
+
+Fold change to find the difference in gene expression between treated and untreated celllines 
+
+```{r}
+fcgeneexpression <- treated_normalized - untreated_normalized
+
+#Absolute value of the data in fcgeneexpression, to find the biggest changes, regardless of if they are up- or down-regulated
+absvalfcgeneexpression <- abs(fcgeneexpression)
+```
+
+New matrices with only the celllines treated wiht gemcitabine
+
+```{r}
+# ***CAMBIAR Y HACER CON SPLIT FUNCTION***
+treated_gemcitabine <- treated_normalized[,365:420]
+untreated_gemcitabine <- untreated_normalized[,365:420]
+absvalfcge_gemcitabine <- absvalfcgeneexpression[,365:420]
+```
+
+Create new function to get a list of the genes with the biggest difference in expression after treatment for a single column (cell line) of absvalfcge_gembitabine:
+
+```{r}
+orderforbiomarkers <- function(absvalfcge_gemcitabine, n) {
+  gfc <- absvalfcge_gemcitabine[ , n]
+  orderedgenes <- names(gfc[order(-gfc)])
+  return(orderedgenes)
+}
+```
+
+Function to order the components of a vector (descending) and return the names in that order
+
+```{r}
+orderforvectors <- function(x) {
+  y <- names(x[order(-x)])
+  return(y)
+}
+```
+
+Apply the new funtion ```orderforvectors``` to all the columns and create a new matrix with the gene names
+
+```{r}
+matrixofbiomarkers <- apply(absvalfcge_gemcitabine, 2, orderforvector) 
+#the 2 means it is applied to columns
+```
+
+Check for most common genes in the first 15 rows of the new matrix
+
+```{r}
+topgenes <- sort(table(as.vector(matrixofbiomarkers[1:15,])))
+```
+
+Convert `topgenes` into a matrix in descending order of counts
+
+```{r}
+matrixtopgenes <- as.matrix(topgenes[order(-topgenes)])
+```
+
+Bar plot of `matrixtopgenes` to find the biomarkers
+
+```{r}
+barplot(matrixtopgenes[1:20,], xlab = "Genes", ylab = "Counts", main = "Top differentially expressed genes")
+#We decided to take the top 15 genes as our biomarkers
+```
+
+List of our biomarkers
+
+```{r}
+biomarkers <- names(matrixtopgenes[1:15,1])
+View(biomarkers)
+```
+
+
