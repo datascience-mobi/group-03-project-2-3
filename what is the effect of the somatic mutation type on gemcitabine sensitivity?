@@ -2,3 +2,6 @@
 #plotting mean graph plot 
 #calculation of GI50 mean for gemcitabine
 rowMeans(NegLogGI50, na.rm = TRUE, dims = 1)
+#creating a new matrix 
+NegLogGI50gemcitabine<- NegLogGI50[-1:-7,]
+NegLogGI50gemcitabine2<- NegLogGI50gemcitabine[-2:-8,]

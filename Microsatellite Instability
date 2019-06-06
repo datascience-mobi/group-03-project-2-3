@@ -6,3 +6,6 @@ plot(drugsensitivity[8,])
 L=cannotation$Microsatellite_instability_status=="MSI-H"
 Cell_Line=data.frame("Cell Line name"= cannotation[1:61,1],"Microsatellite"= L)
 Cell_Line <- Cell_Line[order(Cell_Line$Cell.Line.name),]
+drugsensitivity=t(drugsensitivity)
+# It is observed that the cell lines in the drugsensitivity matrix is already Alphabetically arranged.
+# Thus the Cell_Line dataframe is directly merged with the Gemcitabine Drug Sensitivity Values.
