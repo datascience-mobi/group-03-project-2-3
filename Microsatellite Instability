@@ -1,0 +1,3 @@
+# Plotting the GI50 values relating to Gemcitabine treatment .
+View(NegLogGI50)
+plot(NegLogGI50[8,])
