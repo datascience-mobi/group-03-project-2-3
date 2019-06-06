@@ -13,3 +13,9 @@ drugsensitivity=t(drugsensitivity)
 
 gemcitabine_line=data.frame("Gemcitabine drug sensitivity"= drugsensitivity$gemcitibine[1:61])
 everything=cbind(Cell_Line,gemcitabine_line)
+plot(everything) #Quite interesting to look at
+
+library(ggplot2)
+> basic=ggplot(everything, aes(Cell.Line.name, Gemcitabine.drug.sensitivity, colour = factor(Microsatellite), shape = factor(Microsatellite) )) +
++     geom_point()
+> basic #very satisfied with this graph
