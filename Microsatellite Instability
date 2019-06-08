@@ -53,7 +53,7 @@ coolmap(geneexpression_MSI_related, cluster.by="de pattern", col=NULL,
 
 View(Cell_Line)
 
-#Biomarkers MSI-H in col = 8,12,11,17,19,27,42,45
+#MSI-H in col = 8,12,11,17,19,27,42,45 of geneexpression MSI related
 
 coolmap(geneexpression_MSI_related[, c(8,12,11,17,19,27,42,45)], cluster.by="de pattern", col=NULL, linkage.col = "complete", linkage.row="complete", show.dendrogram = "both")
 
