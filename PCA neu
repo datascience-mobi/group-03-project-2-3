@@ -2,16 +2,27 @@
 # delete untreated data from metadata for coloring treated data
 #delete untreated data from metadata for coloring treated data 
 
-#using only first 819 rows of metadata to assign tissue and plot pca
+#using only first 819 rows of metadata to assign tissue and drug and plot pca of geneexpression untreated
 
+#pca of untreated assigned to tissue 
 pca_untreated = prcomp(untreated_normalized, center = F, scale. = F)
 plot(pca_untreated$rotation[, 1], pca_untreated$rotation[, 2], col = NCI_TPW_metadata[1:819, 6], pch = 19, xlab = "PC1", 
 ylab = "PC2")
 
-#pca FC drug associated
+pca_untreated = prcomp(untreated_normalized, center = F, scale. = F)
+plot(pca_untreated$rotation[, 1], pca_untreated$rotation[, 2], col = NCI_TPW_metadata[1:819, 3], pch = 19, xlab = "PC1", 
+     ylab = "PC2")
 
-pca_FC = prcomp(FC, center = F, scale. = F)
-plot(pca_FC$rotation[, 1], pcaFC$rotation[, 2], col = NCI_TPW_metadata[1:819, 3], pch = 19, xlab = "PC1", 
+#pca of FC drug associated and tissue associated
+
+#drug associated
+pca_FC = prcomp(fcgeneexpression, center = F, scale. = F)
+plot(pca_FC$rotation[, 1], pca_FC$rotation[, 2], col = NCI_TPW_metadata[1:819, 3], pch = 19, xlab = "PC1", 
 ylab = "PC2")
 
-#you can see that untreated is tissue associated and FC is drug associated
+#pca of FC tissue associated
+pca_FC = prcomp(fcgeneexpression, center = F, scale. = F)
+plot(pca_FC$rotation[, 1], pca_FC$rotation[, 2], col = NCI_TPW_metadata[1:819, 6], pch = 19, xlab = "PC1", 
+ylab = "PC2")
+
+#you can see that untreated is tissue associated and the FC is drug associated
