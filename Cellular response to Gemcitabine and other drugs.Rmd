@@ -12,10 +12,8 @@ knitr::opts_chunk$set(echo = TRUE)
 ##Loading the data
 
 ```{r}
-library(rstudioapi)
-
 #Set wd to the working directory where this Rscript is located
-wd = dirname(rstudioapi::getSourceEditorContext()$path)
+wd = getwd()
 
 #Load data
 basalexpression <- readRDS(paste0(wd,"/CCLE_basalexpression.rds"))
@@ -60,6 +58,7 @@ Though there seems to be large numbers of samples grouped together forming about
 ##PCA
 
 ```{r}
+FC <- treated_normalized - untreated_normalized
 #create table of tissue and sample for PCa
 # delete untreated data from metadata for coloring treated data
 #delete untreated data from metadata for coloring treated data 
@@ -73,7 +72,7 @@ ylab = "PC2")
 #pca FC drug associated
 
 pca_FC = prcomp(FC, center = F, scale. = F)
-plot(pca_FC$rotation[, 1], pcaFC$rotation[, 2], col = metadata[1:819, 3], pch = 19, xlab = "PC1", 
+plot(pca_FC$rotation[, 1], pca_FC$rotation[, 2], col = metadata[1:819, 3], pch = 19, xlab = "PC1", 
 ylab = "PC2")
 
 #you can see that untreated is tissue associated and FC is drug associated
@@ -147,10 +146,10 @@ orderforvectors <- function(x) {
 }
 ```
 
-Apply the new funtion ```orderforvectors``` to all the columns and create a new matrix with the gene names
+Apply the new funtion *orderforvectors* to all the columns and create a new matrix with the gene names
 
 ```{r}
-matrixofbiomarkers <- apply(absvalfcge_gemcitabine, 2, orderforvector) 
+matrixofbiomarkers <- apply(absvalfcge_gemcitabine, 2, orderforvectors) 
 #the 2 means it is applied to columns
 ```
 
@@ -160,13 +159,13 @@ Check for most common genes in the first 15 rows of the new matrix
 topgenes <- sort(table(as.vector(matrixofbiomarkers[1:15,])))
 ```
 
-Convert `topgenes` into a matrix in descending order of counts
+Convert *topgenes* into a matrix in descending order of counts
 
 ```{r}
 matrixtopgenes <- as.matrix(topgenes[order(-topgenes)])
 ```
 
-Bar plot of `matrixtopgenes` to find the biomarkers
+Bar plot of *matrixtopgenes* to find the biomarkers
 
 ```{r}
 barplot(matrixtopgenes[1:20,], xlab = "Genes", ylab = "Counts", main = "Top differentially expressed genes")
@@ -177,7 +176,5 @@ List of our biomarkers
 
 ```{r}
 biomarkers <- names(matrixtopgenes[1:15,1])
-View(biomarkers)
+biomarkers
 ```
-
-
