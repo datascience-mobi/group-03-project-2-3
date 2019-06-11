@@ -2,10 +2,65 @@
 View(drugsensitivity)
 plot(drugsensitivity[8,])
 
-#creating a new dataframe with the Celllines and whether the Microsatellite Instablility is high or not. TRUE:High False:Stable/Low
+#creating a new dataframe with the Celllines and whether the Microsatellite Instablility is high or not. TRUE:High  False:Stable/Low
 L=cannotation$Microsatellite_instability_status=="MSI-H"
 Cell_Line=data.frame("Cell Line name"= cannotation[1:61,1],"Microsatellite"= L)
 Cell_Line <- Cell_Line[order(Cell_Line$Cell.Line.name),]
 drugsensitivity=t(drugsensitivity)
-# It is observed that the cell lines in the drugsensitivity matrix is already Alphabetically arranged.
+
+# It is observed that the cell lines in the drugsensitivity matrix is already arranged alphabetically.
 # Thus the Cell_Line dataframe is directly merged with the Gemcitabine Drug Sensitivity Values.
+
+gemcitabine_line=data.frame("Gemcitabine drug sensitivity"= drugsensitivity[1:61,8])
+everything=cbind(Cell_Line,gemcitabine_line)
+plot(everything) #Quite interesting to look at
+
+library(ggplot2)
+basic=ggplot(everything, aes(Cell.Line.name, Gemcitabine.drug.sensitivity, colour = factor(Microsatellite), shape = factor(Microsatellite) )) +
+   geom_point()
+basic #very satisfied with this graph
+# a relationship between high drug sensitivity(Gemcitabine) and high microsatellite instability cannot be concluded.
+
+####### Heatmap of biomarkers and of MSI related genes #######
+
+#check which rows are for gemcitibine
+gmci <- grepl('gemcitibine', colnames(fcgeneexpression))
+View(gmci)
+
+#rows 365:420, make dataframe with gemci and biomarkers
+
+biomarkers_geneexpression <- fcgeneexpression[c("ATF3", "CXCL8", "GADD45A", "CDKN1A", "TNFAIP3", "EGR1", "GDF15", "BTG2", "GEM", "CEACAM1", "DHRS2", "HBEGF", "IL11", "TNFRSF9", "TXNIP"),365:420]
+
+#heatmap of geneexpression of gemcitibine specific biomarkers
+
+library("ggfortify")
+autoplot(biomarkers_geneexpression)
+
+#MSI related genes, choosen after research
+
+geneexpression_MSI_related <- fcgeneexpression[c("MLH3", "MLH1", "MSH6", "PMS2CL///PMS2", "BATF", "BATF3"), 365:420]
+
+#plot only MSI related genes with limma
+
+library("limma")
+coolmap(geneexpression_MSI_related, cluster.by="de pattern", col=NULL,
+        linkage.row="complete", linkage.col="complete", show.dendrogram="both")
+
+
+#which cellines MSI-H or L? Note them 
+
+View(Cell_Line)
+
+#MSI-H in col = 8,12,11,17,19,27,42,45 of geneexpression MSI related which is only gemcitibine specific
+
+coolmap(geneexpression_MSI_related[, c(8,12,11,17,19,27,42,45)], cluster.by="de pattern", col=NULL, linkage.col = "complete", linkage.row="complete", show.dendrogram = "both")
+
+#no pattern with FC heatmap, but what says the untreated heatmap?
+#heatmap of Geneexpression of MSI related genes untreated
+
+geneexpression_MSI_related_untreated <- untreated_normalized[c("MLH3", "MLH1", "MSH6", "PMS2CL///PMS2", "BATF", "BATF3"), 365:420]
+
+geneexpression_MSI_related_untreated_High <- untreated_normalized[c("MLH3", "MLH1", "MSH6", "PMS2CL///PMS2", "BATF", "BATF3"), 365:420]
+autoplot(geneexpression_MSI_related_untreated_High[, c(8,12,11,17,19,27,42,45)] 
+         
+#as you can see also no pattern, would be nice if we can plot gemcitabine in one graph and on the left side MSI-H and on the right side MSI-L, so there wont be separate graphs
