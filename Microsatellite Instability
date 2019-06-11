@@ -21,7 +21,7 @@ basic=ggplot(everything, aes(Cell.Line.name, Gemcitabine.drug.sensitivity, colou
 basic #very satisfied with this graph
 # a relationship between high drug sensitivity(Gemcitabine) and high microsatellite instability cannot be concluded.
 
-####### Heatmap #######
+####### Heatmap of biomarkers and of MSI related genes #######
 
 #check which rows are for gemcitibine
 gmci <- grepl('gemcitibine', colnames(fcgeneexpression))
