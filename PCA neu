@@ -1,7 +1,4 @@
-#create table of tissue and sample for PCa
-# delete untreated data from metadata for coloring treated data
-#delete untreated data from metadata for coloring treated data 
-
+#PCA of untreated and FC tissue and drug associated
 #using only first 819 rows of metadata to assign tissue and drug and plot pca of geneexpression untreated
 
 #pca of untreated assigned to tissue 
