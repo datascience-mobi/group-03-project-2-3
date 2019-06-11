@@ -36,11 +36,9 @@ biomarkers_geneexpression <- fcgeneexpression[c("ATF3", "CXCL8", "GADD45A", "CDK
 library("ggfortify")
 autoplot(biomarkers_geneexpression)
 
-#MSI related genes, choosen after research: heatmap
+#MSI related genes, choosen after research
 
 geneexpression_MSI_related <- fcgeneexpression[c("MLH3", "MLH1", "MSH6", "PMS2CL///PMS2", "BATF", "BATF3"), 365:420]
-
-autoplot(biomarkers_geneexpression_MSI)
 
 #plot only MSI related genes with limma
 
@@ -53,7 +51,7 @@ coolmap(geneexpression_MSI_related, cluster.by="de pattern", col=NULL,
 
 View(Cell_Line)
 
-#MSI-H in col = 8,12,11,17,19,27,42,45 of geneexpression MSI related
+#MSI-H in col = 8,12,11,17,19,27,42,45 of geneexpression MSI related which is only gemcitibine specific
 
 coolmap(geneexpression_MSI_related[, c(8,12,11,17,19,27,42,45)], cluster.by="de pattern", col=NULL, linkage.col = "complete", linkage.row="complete", show.dendrogram = "both")
 
