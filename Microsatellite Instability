@@ -1,8 +1,10 @@
 # Plotting the GI50 values relating to Gemcitabine treatment .
+
 View(drugsensitivity)
 plot(drugsensitivity[8,])
 
 #creating a new dataframe with the Celllines and whether the Microsatellite Instablility is high or not. TRUE:High  False:Stable/Low
+
 L=cannotation$Microsatellite_instability_status=="MSI-H"
 Cell_Line=data.frame("Cell Line name"= cannotation[1:61,1],"Microsatellite"= L)
 Cell_Line <- Cell_Line[order(Cell_Line$Cell.Line.name),]
@@ -19,6 +21,7 @@ library(ggplot2)
 basic=ggplot(everything, aes(Cell.Line.name, Gemcitabine.drug.sensitivity, colour = factor(Microsatellite), shape = factor(Microsatellite) )) +
    geom_point()
 basic #very satisfied with this graph
+
 # a relationship between high drug sensitivity(Gemcitabine) and high microsatellite instability cannot be concluded.
 
 ####### Heatmap of biomarkers and of MSI related genes #######
