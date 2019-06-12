@@ -31,41 +31,76 @@ gmci <- grepl('gemcitibine', colnames(fcgeneexpression))
 View(gmci)
 
 #rows 365:420, make dataframe with gemci and biomarkers
-
 biomarkers_geneexpression <- fcgeneexpression[c("ATF3", "CXCL8", "GADD45A", "CDKN1A", "TNFAIP3", "EGR1", "GDF15", "BTG2", "GEM", "CEACAM1", "DHRS2", "HBEGF", "IL11", "TNFRSF9", "TXNIP"),365:420]
 
-#heatmap of geneexpression of gemcitibine specific biomarkers
-#make colnames equal to celllines
-
-library("limma")
-colnames(biomarkers_geneexpression) = metadata[365:420, 2]
-coolmap(biomarkers_geneexpression, cluster.by="de pattern", col=NULL, linkage.col = "complete", linkage.row="complete", show.dendrogram = "both")
-
-#MSI related genes, choosen after research
-
+#MSI related genes, choosen after research, new matrix for untreated and FC
 geneexpression_MSI_related <- fcgeneexpression[c("MLH3", "MLH1", "MSH6", "PMS2CL///PMS2", "BATF", "BATF3"), 365:420]
+geneexpression_MSI_related_untreated <- untreated_normalized[c("MLH3", "MLH1", "MSH6", "PMS2CL///PMS2", "BATF", "BATF3"), 365:420]
 
-#plot only MSI related genes FC 
-
-
-coolmap(geneexpression_MSI_related, cluster.by="de pattern", col=NULL,
-        linkage.row="complete", linkage.col="complete", show.dendrogram="both")
-
+#make colnames equal to celllines
+colnames(biomarkers_geneexpression) = metadata[365:420, 2]
+colnames(geneexpression_MSI_related) <- metadata[365:420,2]
+colnames(geneexpression_MSI_related_untreated) <- metadata[365:420,2]
 
 #which cellines MSI-H or L? Note them 
-
 View(Cell_Line)
 
 #MSI-H in col = 8,12,11,17,19,27,42,45 of geneexpression MSI related which is only gemcitibine specific
+
+
+#define new matrices to divide matrices in MSI-H and MSI-L
+
+biomarkers_geneexpression_MSIH <- biomarkers_geneexpression[,c(8,12,11,17,19,27,42,45)]
+biomarkers_geneexpression_MSIL <- biomarkers_geneexpression[,-c(8,12,11,17,19,27,42,45)]
+
+geneexpression_MSI_related_MSIH <- geneexpression_MSI_related[,c(8,12,11,17,19,27,42,45)]
+geneexpression_MSI_related_MSIL <- geneexpression_MSI_related[,-c(8,12,11,17,19,27,42,45)]
+
+geneexpression_MSI_related_untreated_MSIH <- geneexpression_MSI_related_untreated[, c(8,12,11,17,19,27,42,45)]
+geneexpression_MSI_related_untreated_MSIL <- geneexpression_MSI_related_untreated[, -c(8,12,11,17,19,27,42,45)]
+
+
+
+
+
+
+
+#packages which makes it possible to plot tow heatmaps next to each other
+
+if (!requireNamespace("BiocManager", quietly = TRUE))
+   install.packages("BiocManager")
+BiocManager::install("ComplexHeatmap")
+
+library("ComplexHeatmap")
+library("circlize")
+library("colorspace")
+library("GetoptLong")
+
+#two heatmaps togehter, geneexpression of untreated MSI High and Low
+ht_untreated_MSIH = Heatmap(geneexpression_MSI_related_untreated_MSIH, name = "geneexpression", column_title = "MSI-H", top_annotation = ha)
+ht_untreated_MSIL = Heatmap(geneexpression_MSI_related_untreated_MSIL, name = "gene expression", column_title = "MSI-L")
+ht_untreated_MSIH + ht_untreated_MSIL
+
+#until here it is okay
+
+
+
+library("limma")
+
+coolmap(biomarkers_geneexpression, cluster.by="de pattern", col=NULL, linkage.col = "complete", linkage.row="complete", show.dendrogram = "both")
+
+#plot only MSI related genes FC 
+coolmap(geneexpression_MSI_related, cluster.by="de pattern", col=NULL,
+        linkage.row="complete", linkage.col="complete", show.dendrogram="both")
 
 coolmap(geneexpression_MSI_related[, c(8,12,11,17,19,27,42,45)], cluster.by="de pattern", col=NULL, linkage.col = "complete", linkage.row="complete", show.dendrogram = "both")
 
 #no pattern with FC heatmap, but what says the untreated heatmap?
 #heatmap of Geneexpression of MSI related genes untreated
 
-geneexpression_MSI_related_untreated <- untreated_normalized[c("MLH3", "MLH1", "MSH6", "PMS2CL///PMS2", "BATF", "BATF3"), 365:420]
-
 geneexpression_MSI_related_untreated_High <- untreated_normalized[c("MLH3", "MLH1", "MSH6", "PMS2CL///PMS2", "BATF", "BATF3"), 365:420]
 autoplot(geneexpression_MSI_related_untreated_High[, c(8,12,11,17,19,27,42,45)] 
          
-#as you can see also no pattern, would be nice if we can plot gemcitabine in one graph and on the left side MSI-H and on the right side MSI-L, so there wont be separate graphs
+
+
+
