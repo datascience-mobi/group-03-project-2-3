@@ -26,3 +26,8 @@ ggplot(Neg_LogGI50gemcitabine4, aes(x=`cell_line`, y=NegLogGI50gemcitabine3, lab
      labs(subtitle=" ", 
           title= "cell line and drug sensitivity") + 
      coord_flip()
+     
+     #what are the differences in frequency of the different genes that are mutated
+     install.packages('plyr')
+     library(plyr)
+     count(mutations, 'Hugo_Symbol')
