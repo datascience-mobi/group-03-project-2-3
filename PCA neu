@@ -1,25 +1,31 @@
-#PCA of untreated and FC tissue and drug associated
-#using only first 819 rows of metadata to assign tissue and drug and plot pca of geneexpression untreated
+#PCA of untreated and FC drug associated
 
-#pca of untreated assigned to tissue 
-pca_untreated = prcomp(untreated_normalized, center = F, scale. = F)
-plot(pca_untreated$rotation[, 1], pca_untreated$rotation[, 2], col = metadata[1:819, 6], pch = 19, xlab = "PC1", 
+#PCA of FC 
+pca_FC = prcomp(fcgeneexpression, center = F, scale. = F)
+
+#plotting PCA of FC drug associated, PCA 1-6
+plot(pca_FC$rotation[, 1], pca_FC$rotation[, 2], col = metadata[1:ncol(untreated), "drug"], pch = 19, xlab = "PC1", 
 ylab = "PC2")
+plot(pca_FC$rotation[, 3], pca_FC$rotation[, 4], col = metadata[1:ncol(untreated), "drug"], pch = 19, xlab = "PC 3", 
+ylab = "PC 4")
+plot(pca_FC$rotation[, 5], pca_FC$rotation[, 6], col = metadata[1:ncol(untreated), "drug"], pch = 19, xlab = "PC 5", 
+ylab = "PC 6")
 
+#FC is obiously drug associated
+
+#UNTIL HERE IN MARKDOWN DOC
+
+#pca of untreated assigned to tissue
 pca_untreated = prcomp(untreated_normalized, center = F, scale. = F)
-plot(pca_untreated$rotation[, 1], pca_untreated$rotation[, 2], col = metadata[1:819, 3], pch = 19, xlab = "PC1", 
+plot(pca_untreated$rotation[, 1], pca_untreated$rotation[, 2], col = metadata[1:ncol(untreated), "tissue"], pch = 19, xlab = "PC1", 
+ylab = "PC2")
+plot(pca_untreated$rotation[, 1], pca_untreated$rotation[, 2], col = metadata[1:ncol(untreated), "tissue"], pch = 19, xlab = "PC1", 
      ylab = "PC2")
-
-#pca of FC drug associated and tissue associated
-
-#drug associated
+     
+#pca 1&2 of FC tissue associated
 pca_FC = prcomp(fcgeneexpression, center = F, scale. = F)
-plot(pca_FC$rotation[, 1], pca_FC$rotation[, 2], col = metadata[1:819, 3], pch = 19, xlab = "PC1", 
-ylab = "PC2")
+plot(pca_FC$rotation[, 1], pca_FC$rotation[, 2], col = metadata[1:ncol(untreated), "tissue"], pch = 19, xlab = "PC 1", 
+ylab = "PC 2")
 
-#pca of FC tissue associated
-pca_FC = prcomp(fcgeneexpression, center = F, scale. = F)
-plot(pca_FC$rotation[, 1], pca_FC$rotation[, 2], col = metadata[1:819, 6], pch = 19, xlab = "PC1", 
-ylab = "PC2")
 
 #you can see that untreated is tissue associated and the FC is drug associated
