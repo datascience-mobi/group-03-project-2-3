@@ -76,29 +76,27 @@ ht_untreated_MSIH = Heatmap(geneexpression_MSI_related_untreated_MSIH, name = "g
 ht_untreated_MSIL = Heatmap(geneexpression_MSI_related_untreated_MSIL, name = "gene expression", column_title = "MSI-L")
 ht_untreated_MSIH + ht_untreated_MSIL
 
-#until here it is okay
+#two heatmaps, biomarkers FC MSI-H and MSI-L
+ht_biomarkers_geneexpression_MSIH = Heatmap(biomarkers_geneexpression_MSIH, name = "FC MSI-H", column_title = "MSI-H", column_names_gp = gpar(fontsize = 7)) 
+ht_biomarkers_geneexpression_MSIL = Heatmap(biomarkers_geneexpression_MSIL, name = "FC MSI-L", column_title = "MSI-L", column_names_gp = gpar(fontsize = 7))
+ 
+ht_biomarkers_geneexpression_MSI + ht_biomarkers_geneexpression_MSIL
+
+
+#until here it is okay, but no obvious difference between MSI-H and MSI-L when it comes to FC after gemci treatment
+#sum mean of FC in MSI-L (48 celllines) and MSI-H (8 celllines)
+
+sum(biomarkers_geneexpression_MSIH)/8 ; sum(biomarkers_geneexpression_MSIL)/48
+t.test(biomarkers_geneexpression_MSIH, biomarkers_geneexpression_MSIL, paired = TRUE)
+
+#quite close, kein signifikanter Unterschied bei p = 0.05
 
 
 
 
 
 
-library("limma")
 
-coolmap(biomarkers_geneexpression, cluster.by="de pattern", col=NULL, linkage.col = "complete", linkage.row="complete", show.dendrogram = "both")
-
-#plot only MSI related genes FC 
-coolmap(geneexpression_MSI_related, cluster.by="de pattern", col=NULL,
-        linkage.row="complete", linkage.col="complete", show.dendrogram="both")
-
-coolmap(geneexpression_MSI_related[, c(8,12,11,17,19,27,42,45)], cluster.by="de pattern", col=NULL, linkage.col = "complete", linkage.row="complete", show.dendrogram = "both")
-
-#no pattern with FC heatmap, but what says the untreated heatmap?
-#heatmap of Geneexpression of MSI related genes untreated
-
-geneexpression_MSI_related_untreated_High <- untreated_normalized[c("MLH3", "MLH1", "MSH6", "PMS2CL///PMS2", "BATF", "BATF3"), 365:420]
-autoplot(geneexpression_MSI_related_untreated_High[, c(8,12,11,17,19,27,42,45)] 
-         
 
 
 
