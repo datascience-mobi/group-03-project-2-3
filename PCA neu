@@ -4,8 +4,8 @@
 pca_FC = prcomp(fcgeneexpression, center = F, scale. = F)
 
 #plotting PCA of FC drug associated, PCA 1-6
-plot(pca_FC$rotation[, 1], pca_FC$rotation[, 2], col = metadata[1:ncol(untreated), "drug"], pch = 19, xlab = "PC1", 
-ylab = "PC2")
+plot(pca_FC$rotation[, 1], pca_FC$rotation[, 2], col = metadata[1:ncol(untreated), "drug"], pch = 19, xlab = "PC 1", 
+ylab = "PC 2")
 plot(pca_FC$rotation[, 3], pca_FC$rotation[, 4], col = metadata[1:ncol(untreated), "drug"], pch = 19, xlab = "PC 3", 
 ylab = "PC 4")
 plot(pca_FC$rotation[, 5], pca_FC$rotation[, 6], col = metadata[1:ncol(untreated), "drug"], pch = 19, xlab = "PC 5", 
