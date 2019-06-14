@@ -83,7 +83,7 @@ ht_biomarkers_geneexpression_MSIL = Heatmap(biomarkers_geneexpression_MSIL, name
 ht_biomarkers_geneexpression_MSI + ht_biomarkers_geneexpression_MSIL
 
 
-#until here it is okay, but no obvious difference between MSI-H and MSI-L when it comes to FC after gemci treatment
+#no obvious difference between MSI-H and MSI-L when it comes to FC after gemci treatment
 #sum mean of FC in MSI-L (48 celllines) and MSI-H (8 celllines)
 
 sum(biomarkers_geneexpression_MSIH)/8 ; sum(biomarkers_geneexpression_MSIL)/48
