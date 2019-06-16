@@ -15,3 +15,13 @@ dim(copynumber)
 # Solution:
 # - New matrix with the mean for each cellline in untreated_normalized
 # - Order columns alphabetically in both matrixes if not already ordered
+
+# ------- 1. ------- 
+
+identical(rownames(copynumber), rownames(copynumber[order(rownames(copynumber)),]))
+# False, so order them:
+cnforlr <- copynumber[order(rownames(copynumber)),]
+
+identical(rownames(untreated_normalized), rownames(untreated_normalized[order(rownames(untreated_normalized)),]))
+# False, so order them:
+utnforlr <- untreated_normalized[order(rownames(untreated_normalized)),]
