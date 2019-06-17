@@ -9,7 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-##Loading the data
+## Loading the data
 
 ```{r}
 #Set wd to the working directory where this Rscript is located
@@ -39,7 +39,7 @@ untreated_normalized <- normalizeBetweenArrays(untreated)
 treated_normalized <- normalizeBetweenArrays(treated)
 ```
 
-##Comparing boxplots
+## Comparing boxplots
 
 ```{r}
 
@@ -49,7 +49,7 @@ boxplot(treated_normalized)
 ```
 Though there seems to be large numbers of samples grouped together forming about 11 clusters. We cannot conclude that there is a batch effect as the x-axis does not have any sample names( may be due to the number of samples, 819). WE do not know exactly which samples are present in each group. The clustering can simply be due to the effect of the drug or natural causes. IMPORTANT: Moreover, further operations were carried out without the consideration or removal of the batch effects (if any).
 
-##PCA
+## PCA
 
 ```{r}
 #PCA of FC 
@@ -68,9 +68,9 @@ plot(pca_FC$rotation[, 5], pca_FC$rotation[, 6], col = metadata[1:ncol(untreated
 ylab = "PC 6")
 ```
 
-#FC is obviously drug associated
+FC is obviously drug associated
 
-##T-test
+## T-test
 
 Check if normalized treated data is normally distributed using QQ-plot
 If normally distributed quantile dots should lie on a straight line 
@@ -99,7 +99,7 @@ The p-value is not within the 95 percent confidence interval, thus the null hypo
 
 Alternative Hypothesis: there is a difference in mean between the treated and untreated data. ("Tentatively": does this prove that the change is provoked by the drug? or is it only a batch effect? Check the boxplots for batch effect identification.
 
-##Biomarkers
+## Biomarkers
 
 Fold change to find the difference in gene expression between treated and untreated celllines 
 
@@ -119,17 +119,8 @@ untreated_gemcitabine <- untreated_normalized[,365:420]
 absvalfcge_gemcitabine <- absvalfcgeneexpression[,365:420]
 ```
 
-Create new function to get a list of the genes with the biggest difference in expression after treatment for a single column (cell line) of absvalfcge_gembitabine:
 
-```{r}
-orderforbiomarkers <- function(absvalfcge_gemcitabine, n) {
-  gfc <- absvalfcge_gemcitabine[ , n]
-  orderedgenes <- names(gfc[order(-gfc)])
-  return(orderedgenes)
-}
-```
-
-Function to order the components of a vector (descending) and return the names in that order
+Create a function to order the components of a vector (descending) and return the names in that order
 
 ```{r}
 orderforvectors <- function(x) {
@@ -162,10 +153,10 @@ Bar plot of *matrixtopgenes* to find the biomarkers
 ```{r}
 barplot(matrixtopgenes[1:20,], xlab = "", ylab = "Counts", main = "Top differentially expressed genes", cex.names = 0.7, las = 2)
 mtext("Genes", side = 1, line = 4)
-#We decided to take the top 15 genes as our biomarkers
 ```
+We decided to take the top 15 genes as our biomarkers
 
-List of our biomarkers
+List of our biomarkers:
 
 ```{r}
 biomarkers <- names(matrixtopgenes[1:15,1])
