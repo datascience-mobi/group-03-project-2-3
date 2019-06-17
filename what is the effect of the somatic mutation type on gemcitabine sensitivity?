@@ -31,3 +31,8 @@ ggplot(Neg_LogGI50gemcitabine4, aes(x=`cell_line`, y=NegLogGI50gemcitabine3, lab
      install.packages('plyr')
      library(plyr)
      count(mutations, 'Hugo_Symbol')
+     
+     sum(mutations[,16] == "HS-578T")
+     #the cellline appreas in the first 267 rows
+     #check the number of a certain mutated gene for the cell line HS-578T 
+     sum(mutations[1:267,1] == "TCHH")
