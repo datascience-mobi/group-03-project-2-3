@@ -159,7 +159,8 @@ matrixtopgenes <- as.matrix(topgenes[order(-topgenes)])
 Bar plot of *matrixtopgenes* to find the biomarkers
 
 ```{r}
-barplot(matrixtopgenes[1:20,], xlab = "Genes", ylab = "Counts", main = "Top differentially expressed genes")
+barplot(matrixtopgenes[1:20,], xlab = "", ylab = "Counts", main = "Top differentially expressed genes", cex.names = 0.7, las = 2)
+mtext("Genes", side = 1, line = 4)
 #We decided to take the top 15 genes as our biomarkers
 ```
 
