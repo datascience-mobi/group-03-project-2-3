@@ -34,5 +34,12 @@ ggplot(Neg_LogGI50gemcitabine4, aes(x=`cell_line`, y=NegLogGI50gemcitabine3, lab
      
      sum(mutations[,16] == "HS-578T")
      #the cellline appears in the first 267 rows
-     #check the number of a certain mutated gene for the cell line HS-578T 
-     sum(mutations[1:267,1] == "TCHH")
+     #check the number of a certain mutation Typ (missense, nonsense, silent, slpice site) for the cell line HS-578T 
+sum(mutations[1:267,8] == "Missense_Mutation")
+#189 
+sum(mutations[1:267,8] == "Nonsense_Mutation")
+#13
+sum(mutations[1:267,8] == "Silent")
+#56
+sum(mutations[1:267,8] == "Splice_Site")
+#8
