@@ -53,6 +53,7 @@ Though there seems to be large numbers of samples grouped together forming about
 
 ```{r}
 #PCA of FC 
+fcgeneexpression <- treated_normalized - untreated_normalized
 pca_FC = prcomp(fcgeneexpression, center = F, scale. = F)
 
 #plotting PCA of FC drug associated, PCA 1-6
