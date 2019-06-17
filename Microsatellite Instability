@@ -24,10 +24,6 @@ basic #very satisfied with this graph
 
 # a relationship between high drug sensitivity(Gemcitabine) and high microsatellite instability cannot be concluded.
 
-#######Plotting mutations######
-#compare mean of mutations, biomarkers_geneexpression_MSIH and L has to be changed, MSIH contains only MSIH celllines
-mean_mutation_MSIH <- sum(CCLE_mutations[,16] %in% colnames(biomarkers_geneexpression_MSIH))/8
-mean_mutation_MSIL <- sum(CCLE_mutations[,16] %in% colnames(biomarkers_geneexpression_MSIL))/48
 
 ####### Heatmap of biomarkers and of MSI related genes #######
 
@@ -94,7 +90,13 @@ ht_biomarkers_geneexpression_MSIH + ht_biomarkers_geneexpression_MSIL
 sum(biomarkers_geneexpression_MSIH)/8 ; sum(biomarkers_geneexpression_MSIL)/48
 t.test(biomarkers_geneexpression_MSIH, biomarkers_geneexpression_MSIL, paired = TRUE)
 
-#quite close, kein signifikanter Unterschied bei p = 0.05
+#kein signifikanter Unterschied bei p = 0.05
+
+#######Plotting mutations######
+#compare mean of mutations, biomarkers_geneexpression_MSIH and L has to be changed, MSIH contains only MSIH celllines
+mean_mutation_MSIH <- sum(CCLE_mutations[,16] %in% colnames(biomarkers_geneexpression_MSIH))/8
+mean_mutation_MSIL <- sum(CCLE_mutations[,16] %in% colnames(biomarkers_geneexpression_MSIL))/48
+
 
 
 
