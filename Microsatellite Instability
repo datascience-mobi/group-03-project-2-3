@@ -94,8 +94,8 @@ t.test(biomarkers_geneexpression_MSIH, biomarkers_geneexpression_MSIL, paired = 
 
 #######Plotting mutations######
 #compare mean of mutations, biomarkers_geneexpression_MSIH and L has to be changed, MSIH contains only MSIH celllines
-mean_mutation_MSIH <- sum(CCLE_mutations[,16] %in% colnames(biomarkers_geneexpression_MSIH))/8
-mean_mutation_MSIL <- sum(CCLE_mutations[,16] %in% colnames(biomarkers_geneexpression_MSIL))/48
+mean_mutation_MSIH <- sum(mutations[,16] %in% colnames(biomarkers_geneexpression_MSIH))/8
+mean_mutation_MSIL <- sum(mutations[,16] %in% colnames(biomarkers_geneexpression_MSIL))/48
 
 
 
