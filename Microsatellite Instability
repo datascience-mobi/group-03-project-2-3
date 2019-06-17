@@ -77,8 +77,8 @@ library("colorspace")
 library("GetoptLong")
 
 #two heatmaps togehter, geneexpression of untreated MSI High and Low
-ht_untreated_MSIH = Heatmap(geneexpression_MSI_related_untreated_MSIH, name = "geneexpression", column_title = "MSI-H")
-ht_untreated_MSIL = Heatmap(geneexpression_MSI_related_untreated_MSIL, name = "gene expression", column_title = "MSI-L")
+ht_untreated_MSIH = Heatmap(geneexpression_MSI_related_untreated_MSIH, name = "geneexpression", column_title = "MSI-H", column_names_gp = gpar(fontsize = 7))
+ht_untreated_MSIL = Heatmap(geneexpression_MSI_related_untreated_MSIL, name = "gene expression", column_title = "MSI-L", column_names_gp = gpar(fontsize = 7))
 ht_untreated_MSIH + ht_untreated_MSIL
 
 #two heatmaps, biomarkers FC MSI-H and MSI-L
