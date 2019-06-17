@@ -85,7 +85,7 @@ ht_untreated_MSIH + ht_untreated_MSIL
 ht_biomarkers_geneexpression_MSIH = Heatmap(biomarkers_geneexpression_MSIH, name = "FC MSI-H", column_title = "MSI-H", column_names_gp = gpar(fontsize = 7)) 
 ht_biomarkers_geneexpression_MSIL = Heatmap(biomarkers_geneexpression_MSIL, name = "FC MSI-L", column_title = "MSI-L", column_names_gp = gpar(fontsize = 7))
  
-ht_biomarkers_geneexpression_MSI + ht_biomarkers_geneexpression_MSIL
+ht_biomarkers_geneexpression_MSIH + ht_biomarkers_geneexpression_MSIL
 
 
 #no obvious difference between MSI-H and MSI-L when it comes to FC after gemci treatment
