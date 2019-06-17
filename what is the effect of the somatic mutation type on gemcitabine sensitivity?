@@ -27,14 +27,17 @@ ggplot(Neg_LogGI50gemcitabine4, aes(x=`cell_line`, y=NegLogGI50gemcitabine3, lab
           title= "cell line and drug sensitivity") + 
      coord_flip()
      
-     #what are the differences in frequency of the different genes that are mutated
-     install.packages('plyr')
-     library(plyr)
-     count(mutations, 'Hugo_Symbol')
-     
-     sum(mutations[,16] == "HS-578T")
-     #the cellline appears in the first 267 rows
-     #check the number of a certain mutation Typ (missense, nonsense, silent, slpice site) for the cell line HS-578T 
+ 
+#what are the differences in frequency of the different genes that are mutated
+install.packages('plyr')
+library(plyr)
+count(mutations, 'Hugo_Symbol')
+   
+
+#looking at the previous mean graph plot now compare the differences in mutations of the cell line which had a high gemcitabine sensitivity and which had a low sensitivity    
+sum(mutations[,16] == "HS-578T")
+#the cellline appears in the first 267 rows
+#check the number of a certain mutation Typ (missense, nonsense, silent, slpice site) for the cell line HS-578T 
 sum(mutations[1:267,8] == "Missense_Mutation")
 #189 
 sum(mutations[1:267,8] == "Nonsense_Mutation")
