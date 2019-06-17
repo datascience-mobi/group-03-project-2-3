@@ -65,6 +65,7 @@ ylab = "PC 4")
 
 plot(pca_FC$rotation[, 5], pca_FC$rotation[, 6], col = metadata[1:ncol(untreated), "drug"], pch = 19, xlab = "PC 5", 
 ylab = "PC 6")
+```
 
 #FC is obviously drug associated
 
