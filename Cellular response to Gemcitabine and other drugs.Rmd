@@ -113,10 +113,19 @@ absvalfcgeneexpression <- abs(fcgeneexpression)
 New matrices with only the celllines treated wiht gemcitabine
 
 ```{r}
-# ***CAMBIAR Y HACER CON SPLIT FUNCTION***
-treated_gemcitabine <- treated_normalized[,365:420]
-untreated_gemcitabine <- untreated_normalized[,365:420]
-absvalfcge_gemcitabine <- absvalfcgeneexpression[,365:420]
+library("dplyr")
+
+treated_gemcitabine <- select(as_tibble(treated_normalized), contains("gemcitibine"))
+treated_gemcitabine <- as.matrix(treated_gemcitabine)
+rownames(treated_gemcitabine) <- rownames(treated_normalized)
+
+untreated_gemcitabine <- select(as_tibble(untreated_normalized), contains("gemcitibine"))
+untreated_gemcitabine <- as.matrix(untreated_gemcitabine)
+rownames(untreated_gemcitabine) <- rownames(untreated_normalized)
+
+absvalfcge_gemcitabine <- select(as_tibble(absvalfcgeneexpression), contains("gemcitibine"))
+absvalfcge_gemcitabine <- as.matrix(absvalfcge_gemcitabine)
+rownames(absvalfcge_gemcitabine) <- rownames(absvalfcgeneexpression)
 ```
 
 
