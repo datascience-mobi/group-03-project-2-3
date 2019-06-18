@@ -9,12 +9,6 @@ treated_normalized <- normalizeBetweenArrays(NCI_TPW_gep_treated)
 treated <- NCI_TPW_gep_treated
 untreated <- NCI_TPW_gep_untreated
 
-#comparing boxplots
-boxplot(NCI_TPW_gep_treated[,1:10])
-boxplot(treated_normalized[,1:10])
-boxplot(NCI_TPW_gep_untreated[,1:10])
-boxplot(untreated_normalized[,1:10])
-
 #-------BIOMARKERS-----------
 
 #Fold-change: values are already log2 transformed, so only substract the two matrices
@@ -24,11 +18,21 @@ fcgeneexpression <- treated_normalized - untreated_normalized
 #Absolute value of the data in fcgeneexpression, to find the biggest changes, regardless of if they are up- or down-regulated
 absvalfcgeneexpression <- abs(fcgeneexpression)
 
-#New matrices with only the columns about gemcitabine
-# ***CAMBIAR Y HACER CON SPLIT FUNCTION***
-treated_gemcitabine <- treated_normalized[,365:420]
-untreated_gemcitabine <- untreated_normalized[,365:420]
-absvalfcge_gemcitabine <- absvalfcgeneexpression[,365:420]
+#New matrices with only the columns about gemcitabine:
+library("dplyr")
+
+treated_gemcitabine <- select(as_tibble(treated_normalized), contains("gemcitibine"))
+treated_gemcitabine <- as.matrix(treated_gemcitabine)
+rownames(treated_gemcitabine) <- rownames(treated_normalized)
+
+untreated_gemcitabine <- select(as_tibble(untreated_normalized), contains("gemcitibine"))
+untreated_gemcitabine <- as.matrix(untreated_gemcitabine)
+rownames(untreated_gemcitabine) <- rownames(untreated_normalized)
+
+absvalfcge_gemcitabine <- select(as_tibble(absvalfcgeneexpression), contains("gemcitibine"))
+absvalfcge_gemcitabine <- as.matrix(absvalfcge_gemcitabine)
+rownames(absvalfcge_gemcitabine) <- rownames(absvalfcgeneexpression)
+
 
 #Create new function to get a list of the genes with the biggest difference in expression after treatment for a single column (cell line) of absvalfcge_gembitabine:
 orderforbiomarkers <- function(absvalfcge_gemcitabine, n) {
