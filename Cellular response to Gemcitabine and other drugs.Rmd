@@ -176,7 +176,7 @@ biomarkers
 ```{r}
 # Plotting the GI50 values relating to Gemcitabine treatment .
 
-plot(drugsensitivity[,"gemcitibine"])
+plot(drugsensitivity["gemcitibine",])
 
 #creating a new dataframe with the Celllines and whether the Microsatellite Instablility is high or not. TRUE:High  False:Stable/Low
 
