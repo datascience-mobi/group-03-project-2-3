@@ -171,3 +171,105 @@ List of our biomarkers:
 biomarkers <- names(matrixtopgenes[1:15,1])
 biomarkers
 ```
+## Microsatellite instability
+
+```{r}
+# Plotting the GI50 values relating to Gemcitabine treatment .
+
+View(drugsensitivity)
+plot(drugsensitivity[8,])
+
+#creating a new dataframe with the Celllines and whether the Microsatellite Instablility is high or not. TRUE:High  False:Stable/Low
+
+L=cannotation$Microsatellite_instability_status=="MSI-H"
+Cell_Line=data.frame("Cell Line name"= cannotation[1:61,1],"Microsatellite"= L)
+Cell_Line <- Cell_Line[order(Cell_Line$Cell.Line.name),]
+drugsensitivity=t(drugsensitivity)
+
+# It is observed that the cell lines in the drugsensitivity matrix is already arranged alphabetically.
+# Thus the Cell_Line dataframe is directly merged with the Gemcitabine Drug Sensitivity Values.
+
+gemcitabine_line=data.frame("Gemcitabine drug sensitivity"= drugsensitivity[1:61,8])
+everything=cbind(Cell_Line,gemcitabine_line)
+plot(everything) #Quite interesting to look at
+
+library(ggplot2)
+basic=ggplot(everything, aes(Cell.Line.name, Gemcitabine.drug.sensitivity, colour = factor(Microsatellite), shape = factor(Microsatellite) )) +
+   geom_point()
+basic #very satisfied with this graph
+
+# a relationship between high drug sensitivity(Gemcitabine) and high microsatellite instability cannot be concluded.
+
+
+####### Heatmap of biomarkers and of MSI related genes #######
+
+#check which rows are for gemcitibine
+gmci <- grepl('gemcitibine', colnames(fcgeneexpression))
+View(gmci)
+
+#rows 365:420, make dataframe with gemci and biomarkers
+biomarkers_geneexpression <- fcgeneexpression[c("ATF3", "CXCL8", "GADD45A", "CDKN1A", "TNFAIP3", "EGR1", "GDF15", "BTG2", "GEM", "CEACAM1", "DHRS2", "HBEGF", "IL11", "TNFRSF9", "TXNIP"),365:420]
+
+#MSI related genes, choosen after research, new matrix for untreated and FC
+geneexpression_MSI_related <- fcgeneexpression[c("MLH3", "MLH1", "MSH6", "PMS2CL///PMS2", "BATF", "BATF3"), 365:420]
+geneexpression_MSI_related_untreated <- untreated_normalized[c("MLH3", "MLH1", "MSH6", "PMS2CL///PMS2", "BATF", "BATF3"), 365:420]
+
+#make colnames equal to celllines
+colnames(biomarkers_geneexpression) = metadata[365:420, 2]
+colnames(geneexpression_MSI_related) <- metadata[365:420,2]
+colnames(geneexpression_MSI_related_untreated) <- metadata[365:420,2]
+
+#which cellines MSI-H or L? Note them 
+View(Cell_Line)
+
+#MSI-H in col = 8,12,11,17,19,27,42,45 of geneexpression MSI related which is only gemcitibine specific
+
+
+#define new matrices to divide matrices in MSI-H and MSI-L
+
+biomarkers_geneexpression_MSIH <- biomarkers_geneexpression[,c(8,12,11,17,19,27,42,45)]
+biomarkers_geneexpression_MSIL <- biomarkers_geneexpression[,-c(8,12,11,17,19,27,42,45)]
+
+geneexpression_MSI_related_MSIH <- geneexpression_MSI_related[,c(8,12,11,17,19,27,42,45)]
+geneexpression_MSI_related_MSIL <- geneexpression_MSI_related[,-c(8,12,11,17,19,27,42,45)]
+
+geneexpression_MSI_related_untreated_MSIH <- geneexpression_MSI_related_untreated[, c(8,12,11,17,19,27,42,45)]
+geneexpression_MSI_related_untreated_MSIL <- geneexpression_MSI_related_untreated[, -c(8,12,11,17,19,27,42,45)]
+
+
+#packages which makes it possible to plot tow heatmaps next to each other
+
+if (!requireNamespace("BiocManager", quietly = TRUE))
+   install.packages("BiocManager")
+BiocManager::install("ComplexHeatmap")
+
+library("ComplexHeatmap")
+library("circlize")
+library("colorspace")
+library("GetoptLong")
+
+#two heatmaps togehter, geneexpression of untreated MSI High and Low
+ht_untreated_MSIH = Heatmap(geneexpression_MSI_related_untreated_MSIH, name = "geneexpression", column_title = "MSI-H", column_names_gp = gpar(fontsize = 7))
+ht_untreated_MSIL = Heatmap(geneexpression_MSI_related_untreated_MSIL, name = "gene expression", column_title = "MSI-L", column_names_gp = gpar(fontsize = 7))
+ht_untreated_MSIH + ht_untreated_MSIL
+
+#two heatmaps, biomarkers FC MSI-H and MSI-L
+ht_biomarkers_geneexpression_MSIH = Heatmap(biomarkers_geneexpression_MSIH, name = "FC MSI-H", column_title = "MSI-H", column_names_gp = gpar(fontsize = 7)) 
+ht_biomarkers_geneexpression_MSIL = Heatmap(biomarkers_geneexpression_MSIL, name = "FC MSI-L", column_title = "MSI-L", column_names_gp = gpar(fontsize = 7))
+ 
+ht_biomarkers_geneexpression_MSIH + ht_biomarkers_geneexpression_MSIL
+
+
+#no obvious difference between MSI-H and MSI-L when it comes to FC after gemci treatment
+#sum mean of FC in MSI-L (48 celllines) and MSI-H (8 celllines)
+
+sum(biomarkers_geneexpression_MSIH)/8 ; sum(biomarkers_geneexpression_MSIL)/48
+t.test(biomarkers_geneexpression_MSIH, biomarkers_geneexpression_MSIL, paired = TRUE)
+
+#kein signifikanter Unterschied bei p = 0.05
+
+#######Plotting mutations######
+#compare mean of mutations, biomarkers_geneexpression_MSIH and L has to be changed, MSIH contains only MSIH celllines
+mean_mutation_MSIH <- sum(mutations[,16] %in% colnames(biomarkers_geneexpression_MSIH))/8
+mean_mutation_MSIL <- sum(mutations[,16] %in% colnames(biomarkers_geneexpression_MSIL))/48
+```
