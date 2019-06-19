@@ -176,8 +176,7 @@ biomarkers
 ```{r}
 # Plotting the GI50 values relating to Gemcitabine treatment .
 
-View(drugsensitivity)
-plot(drugsensitivity[8,])
+plot(drugsensitivity[,"gemcitibine"])
 
 #creating a new dataframe with the Celllines and whether the Microsatellite Instablility is high or not. TRUE:High  False:Stable/Low
 
@@ -188,10 +187,13 @@ drugsensitivity=t(drugsensitivity)
 
 # It is observed that the cell lines in the drugsensitivity matrix is already arranged alphabetically.
 # Thus the Cell_Line dataframe is directly merged with the Gemcitabine Drug Sensitivity Values.
-
+```
 gemcitabine_line=data.frame("Gemcitabine drug sensitivity"= drugsensitivity[1:61,8])
 everything=cbind(Cell_Line,gemcitabine_line)
 plot(everything) #Quite interesting to look at
+```{r}
+gemcitabine_line=data.frame("Gemcitabine drug sensitivity"= drugsensitivity[1:61,8])
+everything=cbind(Cell_Line,gemcitabine_line)
 
 library(ggplot2)
 basic=ggplot(everything, aes(Cell.Line.name, Gemcitabine.drug.sensitivity, colour = factor(Microsatellite), shape = factor(Microsatellite) )) +
@@ -205,7 +207,6 @@ basic #very satisfied with this graph
 
 #check which rows are for gemcitibine
 gmci <- grepl('gemcitibine', colnames(fcgeneexpression))
-View(gmci)
 
 #rows 365:420, make dataframe with gemci and biomarkers
 biomarkers_geneexpression <- fcgeneexpression[c("ATF3", "CXCL8", "GADD45A", "CDKN1A", "TNFAIP3", "EGR1", "GDF15", "BTG2", "GEM", "CEACAM1", "DHRS2", "HBEGF", "IL11", "TNFRSF9", "TXNIP"),365:420]
@@ -220,7 +221,7 @@ colnames(geneexpression_MSI_related) <- metadata[365:420,2]
 colnames(geneexpression_MSI_related_untreated) <- metadata[365:420,2]
 
 #which cellines MSI-H or L? Note them 
-View(Cell_Line)
+#View(Cell_Line)
 
 #MSI-H in col = 8,12,11,17,19,27,42,45 of geneexpression MSI related which is only gemcitibine specific
 
@@ -238,16 +239,14 @@ geneexpression_MSI_related_untreated_MSIL <- geneexpression_MSI_related_untreate
 
 
 #packages which makes it possible to plot tow heatmaps next to each other
-
-if (!requireNamespace("BiocManager", quietly = TRUE))
-   install.packages("BiocManager")
-BiocManager::install("ComplexHeatmap")
-
+```
+```{r, echo=FALSE}
 library("ComplexHeatmap")
 library("circlize")
 library("colorspace")
 library("GetoptLong")
-
+```
+```{r}
 #two heatmaps togehter, geneexpression of untreated MSI High and Low
 ht_untreated_MSIH = Heatmap(geneexpression_MSI_related_untreated_MSIH, name = "geneexpression", column_title = "MSI-H", column_names_gp = gpar(fontsize = 7))
 ht_untreated_MSIL = Heatmap(geneexpression_MSI_related_untreated_MSIL, name = "gene expression", column_title = "MSI-L", column_names_gp = gpar(fontsize = 7))
