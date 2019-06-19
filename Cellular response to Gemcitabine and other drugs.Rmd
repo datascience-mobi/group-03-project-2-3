@@ -64,8 +64,16 @@ ylab = "PC 2")
 plot(pca_FC$rotation[, 3], pca_FC$rotation[, 4], col = metadata[1:ncol(untreated), "drug"], pch = 19, xlab = "PC 3", 
 ylab = "PC 4")
 
-plot(pca_FC$rotation[, 5], pca_FC$rotation[, 6], col = metadata[1:ncol(untreated), "drug"], pch = 19, xlab = "PC 5", 
-ylab = "PC 6")
+#Try to plot with legend, works with r but not in the markdown doc
+
+#plotting PCA of FC drug associated, PCA 1-2
+drug_as_factor <- as.factor(metadata[1:ncol(treated),"drug"])
+levels <- as.factor(levels(drug_as_factor))
+
+#Plot PCA: Principal component 1 and 2:
+
+plot(pca_FC$rotation[, 1], pca_FC$rotation[, 2], pch = 19, xlab = "PC1",ylab = "PC2", col=drug_as_factor, main = "FC")
+legend("bottomleft", inset = c(-0.4,0),levels(drug_as_factor), xpd = TRUE, pch=19, col = levels)
 ```
 
 FC is obviously drug associated
