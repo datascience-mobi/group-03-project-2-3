@@ -205,7 +205,7 @@ basic #very satisfied with this graph
 # a relationship between high drug sensitivity(Gemcitabine) and high microsatellite instability cannot be concluded.
 ```
 
-####### Heatmap of biomarkers and of MSI related genes #######
+#Heatmap of biomarkers and of MSI related genes 
 ```{r}
 #check which rows are for gemcitibine
 gmci <- grepl('gemcitibine', colnames(fcgeneexpression))
@@ -242,7 +242,7 @@ geneexpression_MSI_related_untreated_MSIL <- geneexpression_MSI_related_untreate
 
 #packages which makes it possible to plot tow heatmaps next to each other
 ```
-```{r}
+```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
 library("ComplexHeatmap")
 library("circlize")
 library("colorspace")
