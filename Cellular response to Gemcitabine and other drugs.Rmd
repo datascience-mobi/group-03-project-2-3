@@ -82,12 +82,6 @@ Check if normalized treated data is normally distributed using QQ-plot
 If normally distributed quantile dots should lie on a straight line 
 
 ```{r}
-#check if randomly choosed gene is expressed normalized
-d = sample(1:nrow(treated_normalized), 1)
-qqnorm(treated_normalized[d, ], main = rownames(treated_normalized)[d])
-qqline(treated_normalized[d, ])
-```
-```{r}
 #check if normalized treated data is normally distributed using QQ-plot
 qqnorm(treated_normalized, main = "QQ Plot of geneexpression after treatment")
 qqline(treated_normalized)
@@ -248,18 +242,13 @@ geneexpression_MSI_related_untreated_MSIL <- geneexpression_MSI_related_untreate
 
 #packages which makes it possible to plot tow heatmaps next to each other
 ```
-```{r, echo=FALSE}
+```{r echo=FALSE}
 library("ComplexHeatmap")
 library("circlize")
 library("colorspace")
 library("GetoptLong")
 ```
-
-#two heatmaps togehter, geneexpression of untreated MSI High and Low
-ht_untreated_MSIH = Heatmap(geneexpression_MSI_related_untreated_MSIH, name = "geneexpression", column_title = "MSI-High", column_names_gp = gpar(fontsize = 5))
-ht_untreated_MSIL = Heatmap(geneexpression_MSI_related_untreated_MSIL, name = "geneexpression", column_title = "MSI-Low", column_names_gp = gpar(fontsize = 5))
-ht_untreated_MSIH + ht_untreated_MSIL
-
+Does MSI status effect the expression of biomarkers after gemcitibine treatment?
 ```{r}
 #two heatmaps of FC of biomarkers in MSI-Low and MSI-High celllines
 ht_biomarkers_geneexpression_MSIH = Heatmap(biomarkers_geneexpression_MSIH, name = "FC MSI-High", column_title = "MSI-H", column_names_gp = gpar(fontsize = 7)) 
