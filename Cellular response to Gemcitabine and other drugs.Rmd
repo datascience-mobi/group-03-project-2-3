@@ -42,12 +42,10 @@ treated_normalized <- normalizeBetweenArrays(treated)
 ## Comparing boxplots
 
 ```{r}
-
-#finding number of batches 
-boxplot(treated)
-boxplot(treated_normalized) 
+boxplot(treated, main = "geneexpression after treatment")
+boxplot(treated_normalized, main = "normalized geneexpression after treatment") 
 ```
-Though there seems to be large numbers of samples grouped together forming about 11 clusters. We cannot conclude that there is a batch effect as the x-axis does not have any sample names( may be due to the number of samples, 819). WE do not know exactly which samples are present in each group. The clustering can simply be due to the effect of the drug or natural causes. IMPORTANT: Moreover, further operations were carried out without the consideration or removal of the batch effects (if any).
+
 
 ## PCA
 
@@ -59,10 +57,10 @@ pca_FC = prcomp(fcgeneexpression, center = F, scale. = F)
 #plotting PCA of FC drug associated, PCA 1-6
 
 plot(pca_FC$rotation[, 1], pca_FC$rotation[, 2], col = metadata[1:ncol(untreated), "drug"], pch = 19, xlab = "PC 1", 
-ylab = "PC 2")
+ylab = "PC 2", main = "PCA of change of the Fold Change")
 
 plot(pca_FC$rotation[, 3], pca_FC$rotation[, 4], col = metadata[1:ncol(untreated), "drug"], pch = 19, xlab = "PC 3", 
-ylab = "PC 4")
+ylab = "PC 4", main = "PCA of the Fold Change")
 
 #Try to plot with legend, works with r but not in the markdown doc
 
@@ -83,14 +81,16 @@ FC is obviously drug associated
 Check if normalized treated data is normally distributed using QQ-plot
 If normally distributed quantile dots should lie on a straight line 
 
-```{r}
+```{r, echo=FALSE}
+#check if randomly choosed gene is expressed normalized
 d = sample(1:nrow(treated_normalized), 1)
 qqnorm(treated_normalized[d, ], main = rownames(treated_normalized)[d])
 qqline(treated_normalized[d, ])
-#check if normaized untreated data is normally distributed using QQ-plot
-c = sample(1:nrow(untreated_normalized), 1)
-qqnorm(untreated_normalized[c, ], main = rownames(untreated_normalized)[c])
-qqline(untreated_normalized[c, ])
+```
+```{r}
+#check if normalized treated data is normally distributed using QQ-plot
+qqnorm(treated_normalized, main = "QQ Plot of geneexpression after treatment")
+qqline(treated_normalized)
 ```
 
 T-test with normalized data? Significant difference between treated and untreated?
@@ -209,10 +209,10 @@ basic=ggplot(everything, aes(Cell.Line.name, Gemcitabine.drug.sensitivity, colou
 basic #very satisfied with this graph
 
 # a relationship between high drug sensitivity(Gemcitabine) and high microsatellite instability cannot be concluded.
-
+```
 
 ####### Heatmap of biomarkers and of MSI related genes #######
-
+```{r}
 #check which rows are for gemcitibine
 gmci <- grepl('gemcitibine', colnames(fcgeneexpression))
 
@@ -254,15 +254,16 @@ library("circlize")
 library("colorspace")
 library("GetoptLong")
 ```
-```{r}
+```{r, echo=FALSE}
 #two heatmaps togehter, geneexpression of untreated MSI High and Low
 ht_untreated_MSIH = Heatmap(geneexpression_MSI_related_untreated_MSIH, name = "geneexpression", column_title = "MSI-H", column_names_gp = gpar(fontsize = 7))
 ht_untreated_MSIL = Heatmap(geneexpression_MSI_related_untreated_MSIL, name = "gene expression", column_title = "MSI-L", column_names_gp = gpar(fontsize = 7))
 ht_untreated_MSIH + ht_untreated_MSIL
-
-#two heatmaps, biomarkers FC MSI-H and MSI-L
-ht_biomarkers_geneexpression_MSIH = Heatmap(biomarkers_geneexpression_MSIH, name = "FC MSI-H", column_title = "MSI-H", column_names_gp = gpar(fontsize = 7)) 
-ht_biomarkers_geneexpression_MSIL = Heatmap(biomarkers_geneexpression_MSIL, name = "FC MSI-L", column_title = "MSI-L", column_names_gp = gpar(fontsize = 7))
+```
+```{r}
+#two heatmaps of FC of biomarkers in MSI-Low and MSI-High celllines
+ht_biomarkers_geneexpression_MSIH = Heatmap(biomarkers_geneexpression_MSIH, name = "FC MSI-High", column_title = "MSI-H", column_names_gp = gpar(fontsize = 7)) 
+ht_biomarkers_geneexpression_MSIL = Heatmap(biomarkers_geneexpression_MSIL, name = "FC MSI-Low", column_title = "MSI-L", column_names_gp = gpar(fontsize = 7))
  
 ht_biomarkers_geneexpression_MSIH + ht_biomarkers_geneexpression_MSIL
 
@@ -273,7 +274,7 @@ ht_biomarkers_geneexpression_MSIH + ht_biomarkers_geneexpression_MSIL
 sum(biomarkers_geneexpression_MSIH)/8 ; sum(biomarkers_geneexpression_MSIL)/48
 t.test(biomarkers_geneexpression_MSIH, biomarkers_geneexpression_MSIL, paired = TRUE)
 
-#kein signifikanter Unterschied bei p = 0.05
+#no significant difference between geneexpression in MSI-H and MSI-L biomarkers
 
 #######Plotting mutations######
 #compare mean of mutations, biomarkers_geneexpression_MSIH and L has to be changed, MSIH contains only MSIH celllines
