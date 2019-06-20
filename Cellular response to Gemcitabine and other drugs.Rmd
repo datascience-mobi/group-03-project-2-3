@@ -242,7 +242,7 @@ geneexpression_MSI_related_untreated_MSIL <- geneexpression_MSI_related_untreate
 
 #packages which makes it possible to plot tow heatmaps next to each other
 ```
-```{r echo=FALSE}
+```{r}
 library("ComplexHeatmap")
 library("circlize")
 library("colorspace")
