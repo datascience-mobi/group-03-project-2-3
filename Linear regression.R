@@ -18,10 +18,21 @@ dim(copynumber)
 
 # ------- 1. ------- 
 
+#COPY NUMBER:
+
 identical(rownames(copynumber), rownames(copynumber[order(rownames(copynumber)),]))
 # False, so order them:
 cnforlr <- copynumber[order(rownames(copynumber)),]
 
+commongenes <- intersect(rownames(cnforlr), rownames(utnforlr))
+cnforlr <- cnforlr[which(rownames(cnforlr) %in% commongenes),]
+
+#UNTREATED:
+
 identical(rownames(untreated_normalized), rownames(untreated_normalized[order(rownames(untreated_normalized)),]))
 # False, so order them:
 utnforlr <- untreated_normalized[order(rownames(untreated_normalized)),]
+
+utnforlr <- utnforlr[which(rownames(utnforlr) %in% commongenes),]
+
+# ----------- 2. ----------- 
