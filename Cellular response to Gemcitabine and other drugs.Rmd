@@ -42,8 +42,8 @@ treated_normalized <- normalizeBetweenArrays(treated)
 ## Comparing boxplots
 
 ```{r}
-boxplot(treated, main = "geneexpression after treatment")
-boxplot(treated_normalized, main = "normalized geneexpression after treatment") 
+boxplot(treated, main = "geneexpression after treatment", ylab = "geneexpression", xlab = "samples", names = FALSE)
+boxplot(treated_normalized, main = "normalized geneexpression after treatment", ylab = "geneexpression", xlab = "samples", names = FALSE) 
 ```
 
 
@@ -54,22 +54,15 @@ boxplot(treated_normalized, main = "normalized geneexpression after treatment")
 fcgeneexpression <- treated_normalized - untreated_normalized
 pca_FC = prcomp(fcgeneexpression, center = F, scale. = F)
 
-#plotting PCA of FC drug associated, PCA 1-6
+#plot PC 1-4 of FC
 
-plot(pca_FC$rotation[, 1], pca_FC$rotation[, 2], col = metadata[1:ncol(untreated), "drug"], pch = 19, xlab = "PC 1", 
-ylab = "PC 2", main = "PCA of change of the Fold Change")
-
-plot(pca_FC$rotation[, 3], pca_FC$rotation[, 4], col = metadata[1:ncol(untreated), "drug"], pch = 19, xlab = "PC 3", 
-ylab = "PC 4", main = "PCA of the Fold Change")
-
-#Try to plot with legend, works with r but not in the markdown doc
-#plotting PCA of FC drug associated, PCA 1-2
 drug_as_factor <- as.factor(metadata[1:ncol(treated),"drug"])
 levels <- as.factor(levels(drug_as_factor))
 
-#Plot PCA: Principal component 1 and 2:
-
 plot(pca_FC$rotation[, 1], pca_FC$rotation[, 2], pch = 19, xlab = "PC 1",ylab = "PC 2", col=drug_as_factor, main = "PCA of the fold change ")
+legend("bottomright", levels(drug_as_factor), xpd = TRUE, pch=19, col = levels)
+
+plot(pca_FC$rotation[, 3], pca_FC$rotation[, 4], pch = 19, xlab = "PC 3",ylab = "PC 4", col=drug_as_factor, main = "PCA of the fold change ")
 legend("bottomright", levels(drug_as_factor), xpd = TRUE, pch=19, col = levels)
 ```
 
