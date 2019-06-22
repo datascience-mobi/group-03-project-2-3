@@ -59,11 +59,13 @@ pca_FC = prcomp(fcgeneexpression, center = F, scale. = F)
 drug_as_factor <- as.factor(metadata[1:ncol(treated),"drug"])
 levels <- as.factor(levels(drug_as_factor))
 
-plot(pca_FC$rotation[, 1], pca_FC$rotation[, 2], pch = 19, xlab = "PC 1",ylab = "PC 2", col=drug_as_factor, main = "PC 1&2 of the fold change ")
-legend("bottomright", levels(drug_as_factor), xpd = TRUE, pch=19, col = levels)
+par(xpd=T, mar=par()$mar+c(0,0,0,6))
+plot(pca_FC$rotation[, 1], pca_FC$rotation[, 2], pch = 20, xlab = "PC 1",ylab = "PC 2", col=drug_as_factor, main = "PC 1&2 of the fold change ")
+legend("right",inset = c(-0.3,0), levels(drug_as_factor), xpd = TRUE, pch=20, col = levels)
 
-plot(pca_FC$rotation[, 3], pca_FC$rotation[, 4], pch = 19, xlab = "PC 3",ylab = "PC 4", col=drug_as_factor, main = "PC 3&4 of the fold change ")
-legend("bottomright", levels(drug_as_factor), xpd = TRUE, pch=19, col = levels)
+par(xpd=T, mar=par()$mar+c(0,0,0,5))
+plot(pca_FC$rotation[, 3], pca_FC$rotation[, 4], pch = 20, xlab = "PC 3",ylab = "PC 4", col=drug_as_factor, main = "PC 3&4 of the fold change ")
+legend("right", inset=c(-0.5,0),levels(drug_as_factor), pch=20, col = levels, xpd =TRUE)
 ```
 
 FC is obviously drug associated
