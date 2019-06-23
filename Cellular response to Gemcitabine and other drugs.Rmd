@@ -264,5 +264,33 @@ t.test(biomarkers_geneexpression_MSIH, biomarkers_geneexpression_MSIL, paired = 
 mean_mutation_MSIH <- sum(mutations[,16] %in% colnames(biomarkers_geneexpression_MSIH))/8
 mean_mutation_MSIL <- sum(mutations[,16] %in% colnames(biomarkers_geneexpression_MSIL))/48
 ```
-``` {r}
+```{r}
+#is the drug sensitivity for gemcitabine dependend on the cell line? 
+#plotting mean graph plot 
 
+#calculation of GI50 mean for gemcitabine
+rowMeans(NegLogGI50, na.rm = TRUE, dims = 1)
+#GI50 mean value is 7,003322 for gemcitabine
+#creating a vector for GI50 values of gemcitabine only 
+NegLogGI50gemcitabine<- NegLogGI50[-1:-7,]
+NegLogGI50gemcitabine2<- NegLogGI50gemcitabine[-2:-8,]
+
+#substract the value 7,003322 for GI50 value of gemcitabine for every cell line 
+NegLogGI50gemcitabine3 <- NegLogGI50gemcitabine2 - 7.003322
+Neg_LogGI50gemcitabine4 <- as.data.frame(NegLogGI50gemcitabine3)
+
+
+install.packages('ggplot2')
+library(ggplot2)
+theme_set(theme_bw())  
+Neg_LogGI50gemcitabine4$`cell_line` <- rownames(Neg_LogGI50gemcitabine4)
+Neg_LogGI50gemcitabine4$NegLogGI50gemcitabine3_type<- ifelse(Neg_LogGI50gemcitabine4$NegLogGI50gemcitabine3< 0, "below", "above")
+ggplot(Neg_LogGI50gemcitabine4, aes(x=`cell_line`, y=NegLogGI50gemcitabine3, label=NegLogGI50gemcitabine3)) + 
+    geom_bar(stat='identity', aes(fill=NegLogGI50gemcitabine3_type), width=2.5)  +
+    scale_fill_manual(name="value", 
+                       labels = c("Above Average", "Below Average"), 
+                       values = c("above"="#00ba38", "below"="#f8766d")) + 
+     labs(subtitle=" ", 
+          title= "cell line and drug sensitivity") + 
+coord_flip()
+``` 
