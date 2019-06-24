@@ -293,6 +293,19 @@ ggplot(Neg_LogGI50gemcitabine4, aes(x=`cell_line`, y=NegLogGI50gemcitabine3, lab
      labs(subtitle=" ", 
           title= "cell line and drug sensitivity") + 
 coord_flip()
+
+#looking at the previous mean graph plot now compare the differences in mutations of 10 cell lines which had high gemcitabine sensitivity and which had low sensitivity   
+
+sum(mutations[,16] == "HS-578T")
+#the cellline appears in the first 267 rows
+
+#check the number of a certain mutation Typ (missense, nonsense, silent, slpice site) for the cell line HS-578T 
+#create a matrix for each cell line
+
+HS578T <- cbind(sum(mutations[1:267,8] == "Missense_Mutation"), sum(mutations[1:267,8] == "Silent"), sum(mutations[1:267,8] == "Nonsense_Mutation"),sum(mutations[1:267,8] == "Splice_Site"))
+
+#unsure if to proceed for all 60 cell lines or top ten highest and lowest
+
 ``` 
 
 ## Linear regression Analysis
