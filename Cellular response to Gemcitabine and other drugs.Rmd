@@ -281,7 +281,6 @@ NegLogGI50gemcitabine3 <- NegLogGI50gemcitabine2 - 7.003322
 Neg_LogGI50gemcitabine4 <- as.data.frame(NegLogGI50gemcitabine3)
 
 
-install.packages('ggplot2')
 library(ggplot2)
 theme_set(theme_bw())  
 Neg_LogGI50gemcitabine4$`cell_line` <- rownames(Neg_LogGI50gemcitabine4)
