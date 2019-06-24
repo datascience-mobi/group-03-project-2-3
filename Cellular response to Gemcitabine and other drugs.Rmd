@@ -304,7 +304,7 @@ sum(mutations[,16] == "HS-578T")
 
 HS578T <- cbind(sum(mutations[1:267,8] == "Missense_Mutation"), sum(mutations[1:267,8] == "Silent"), sum(mutations[1:267,8] == "Nonsense_Mutation"),sum(mutations[1:267,8] == "Splice_Site"))
 
-#unsure if to proceed for all 60 cell lines or top ten highest and lowest
+#unsure if to proceed for all 60 cell lines or only cell lines with top ten highest/lowest GI50
 
 ``` 
 
