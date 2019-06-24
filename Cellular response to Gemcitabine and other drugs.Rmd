@@ -294,7 +294,7 @@ ggplot(Neg_LogGI50gemcitabine4, aes(x=`cell_line`, y=NegLogGI50gemcitabine3, lab
           title= "cell line and drug sensitivity") + 
 coord_flip()
 
-#looking at the previous mean graph plot now compare the differences in mutations of 10 cell lines which had high gemcitabine sensitivity and which had low sensitivity   
+#looking at the previous mean graph plot now compare the differences in mutations of cell lines which had high gemcitabine sensitivity and which had low sensitivity   
 
 #check the number of a certain mutation type eg. (missense, nonsense, silent, slpice site) for example for the cell line HS-578T (other mutation types could be codon change, protein change)
 
