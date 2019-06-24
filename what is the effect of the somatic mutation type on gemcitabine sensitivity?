@@ -34,7 +34,7 @@ library(plyr)
 count(mutations, 'Hugo_Symbol')
    
 
-#looking at the previous mean graph plot now compare the differences in mutations of the cell line which had a high gemcitabine sensitivity and which had a low sensitivity    
+#looking at the previous mean graph plot now compare the differences in mutations of 10 cell lines which had the highest gemcitabine sensitivity and which had the lowest sensitivity    
 sum(mutations[,16] == "HS-578T")
 #the cellline appears in the first 267 rows
 #check the number of a certain mutation Typ (missense, nonsense, silent, slpice site) for the cell line HS-578T 
@@ -46,3 +46,5 @@ sum(mutations[1:267,8] == "Silent")
 #56
 sum(mutations[1:267,8] == "Splice_Site")
 #8
+#create a matrix for one cell line
+HS578T <- cbind(sum(mutations[1:267,8] == "Missense_Mutation"), sum(mutations[1:267,8] == "Silent"), sum(mutations[1:267,8] == "Nonsense_Mutation"),sum(mutations[1:267,8] == "Splice_Site"))
