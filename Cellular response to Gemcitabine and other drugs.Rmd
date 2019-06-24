@@ -194,6 +194,7 @@ everything=cbind(Cell_Line,gemcitabine_line)
 library(ggplot2)
 basic=ggplot(everything, aes(Cell.Line.name, Gemcitabine.drug.sensitivity, colour = factor(Microsatellite), shape = factor(Microsatellite) )) +
    geom_point()
+basic + ggtitle("Drug Sensitivity of Gemcitabine treated cell lines according to High Microsatellite Instability")+ xlab("Cell Line")+ylab("Drug Sensitivity")+theme(axis.text.x = element_text(angle = 90))
 basic #very satisfied with this graph
 
 # a relationship between high drug sensitivity(Gemcitabine) and high microsatellite instability cannot be concluded.
