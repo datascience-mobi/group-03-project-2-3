@@ -299,10 +299,12 @@ coord_flip()
 sum(mutations[,16] == "HS-578T")
 #the cellline appears in the first 267 rows
 
-#check the number of a certain mutation Typ (missense, nonsense, silent, slpice site) for the cell line HS-578T 
-#create a matrix for each cell line
+#check the number of a certain mutation type eg. (missense, nonsense, silent, slpice site) for example for the cell line HS-578T (other mutation types could be codon change, protein change)
+#create a matrix for cell line HS-578T
 
 HS578T <- cbind(sum(mutations[1:267,8] == "Missense_Mutation"), sum(mutations[1:267,8] == "Silent"), sum(mutations[1:267,8] == "Nonsense_Mutation"),sum(mutations[1:267,8] == "Splice_Site"))
+
+HS578T
 
 #unsure if to proceed for all 60 cell lines or only cell lines with top ten highest/lowest GI50
 
