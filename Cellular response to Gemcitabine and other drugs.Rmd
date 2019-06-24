@@ -295,3 +295,59 @@ ggplot(Neg_LogGI50gemcitabine4, aes(x=`cell_line`, y=NegLogGI50gemcitabine3, lab
           title= "cell line and drug sensitivity") + 
 coord_flip()
 ``` 
+
+## Linear regression Analysis
+
+(Still in progress, but would happily accept some feedback)
+
+Check dimension of untreated_normalized and copynumber to see if they are the same
+
+```{r}
+dim(untreated_normalized)
+dim(copynumber)
+```
+
+Dimensions are completely different:
+1. copynumber lists more genes than untreated_normalized
+Solution: 
+  - Check if rows (genes) are ordered alphabetically
+  - If not: order both matrixes alphabetically by row name
+  - Delete rows that appear in only one of the matrixes
+
+2. untreated_normalized has more columns, since there is one column for each drug
+ Solution:
+ - New matrix with the mean for each cellline in untreated_normalized
+ - Order columns alphabetically in both matrixes if not already ordered
+
+#### Solving problem 1:
+
+__COPY NUMBER:__
+
+```{r}
+identical(rownames(copynumber), rownames(copynumber[order(rownames(copynumber)),]))
+```
+False, so order them:
+```{r}
+cnforlr <- copynumber[order(rownames(copynumber)),]
+```
+
+Keeping only the rows (genes) that are in both matrixes (copy number and untreated):
+```{r}
+commongenes <- intersect(rownames(cnforlr), rownames(utnforlr))
+cnforlr <- cnforlr[which(rownames(cnforlr) %in% commongenes),]
+```
+
+__UNTREATED:__
+
+```{r}
+identical(rownames(untreated_normalized), rownames(untreated_normalized[order(rownames(untreated_normalized)),]))
+```
+False, so order them:
+```{r}
+utnforlr <- untreated_normalized[order(rownames(untreated_normalized)),]
+```
+Keeping only the rows (genes) that are in both matrixes (copy number and untreated):
+```{r}
+utnforlr <- utnforlr[which(rownames(utnforlr) %in% commongenes),]
+```
+#### Solving problem 2:
