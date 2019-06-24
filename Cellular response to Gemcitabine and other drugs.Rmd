@@ -296,11 +296,13 @@ coord_flip()
 
 #looking at the previous mean graph plot now compare the differences in mutations of 10 cell lines which had high gemcitabine sensitivity and which had low sensitivity   
 
+#check the number of a certain mutation type eg. (missense, nonsense, silent, slpice site) for example for the cell line HS-578T (other mutation types could be codon change, protein change)
+
 sum(mutations[,16] == "HS-578T")
 #the cellline appears in the first 267 rows
 
-#check the number of a certain mutation type eg. (missense, nonsense, silent, slpice site) for example for the cell line HS-578T (other mutation types could be codon change, protein change)
-#create a matrix for cell line HS-578T
+
+#create a matrix with number of missense, nonsense, silent, splice site mutations for cell line HS-578T
 
 HS578T <- cbind(sum(mutations[1:267,8] == "Missense_Mutation"), sum(mutations[1:267,8] == "Silent"), sum(mutations[1:267,8] == "Nonsense_Mutation"),sum(mutations[1:267,8] == "Splice_Site"))
 
