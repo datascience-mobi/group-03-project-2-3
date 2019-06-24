@@ -335,7 +335,7 @@ Solution:
 
 #### Solving problem 1:
 
-__COPY NUMBER:__
+COPY NUMBER:
 
 ```{r}
 identical(rownames(copynumber), rownames(copynumber[order(rownames(copynumber)),]))
@@ -345,13 +345,7 @@ False, so order them:
 cnforlr <- copynumber[order(rownames(copynumber)),]
 ```
 
-Keeping only the rows (genes) that are in both matrixes (copy number and untreated):
-```{r}
-commongenes <- intersect(rownames(cnforlr), rownames(utnforlr))
-cnforlr <- cnforlr[which(rownames(cnforlr) %in% commongenes),]
-```
-
-__UNTREATED:__
+UNTREATED: 
 
 ```{r}
 identical(rownames(untreated_normalized), rownames(untreated_normalized[order(rownames(untreated_normalized)),]))
@@ -360,8 +354,11 @@ False, so order them:
 ```{r}
 utnforlr <- untreated_normalized[order(rownames(untreated_normalized)),]
 ```
+
 Keeping only the rows (genes) that are in both matrixes (copy number and untreated):
 ```{r}
+commongenes <- intersect(rownames(cnforlr), rownames(utnforlr))
+cnforlr <- cnforlr[which(rownames(cnforlr) %in% commongenes),]
 utnforlr <- utnforlr[which(rownames(utnforlr) %in% commongenes),]
 ```
 #### Solving problem 2:
