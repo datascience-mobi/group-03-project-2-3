@@ -300,6 +300,8 @@ coord_flip()
 
 (Still in progress, but would happily accept some feedback)
 
+The goal of the linear regression is to find a way to predict the drug sensitivity (GI50 value) of celllines, based on their normal gene expression (when untreated) and/or based on their gene copy number. To do this, we will start by making sure that both matrixes (untreated and copy number) have the same rows and columns (same genes and same celllines) to be able to make a reasonable comparison.
+
 Check dimension of untreated_normalized and copynumber to see if they are the same
 
 ```{r}
@@ -351,3 +353,5 @@ Keeping only the rows (genes) that are in both matrixes (copy number and untreat
 utnforlr <- utnforlr[which(rownames(utnforlr) %in% commongenes),]
 ```
 #### Solving problem 2:
+
+(Still pending)
