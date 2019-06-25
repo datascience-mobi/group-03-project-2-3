@@ -1,0 +1,207 @@
+---
+title: "Group 3 - Part 2"
+author: "Diego Montero Solano, Sophie Zhu, Tabita Häßner, Shivani Nundoo"
+date: "6/25/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, echo=FALSE}
+#Loading the data
+
+#Set wd to the working directory where this Rscript is located
+wd = getwd()
+#Load data
+basalexpression <- readRDS(paste0(wd,"/CCLE_basalexpression.rds"))
+copynumber <- readRDS(paste0(wd,"/CCLE_copynumber.rds"))
+mutations <- readRDS(paste0(wd,"/CCLE_mutations.rds"))
+treated <- readRDS(paste0(wd,"/NCI_TPW_gep_treated.rds"))
+untreated <- readRDS(paste0(wd,"/NCI_TPW_gep_untreated.rds"))
+drugsensitivity <- readRDS(paste0(wd,"/NegLogGI50.rds"))
+cannotation <- read.table(paste0(wd,"/cellline_annotation.tsv"), header = TRUE, sep ="\t", stringsAsFactors = TRUE)
+dannotation <- read.table(paste0(wd,"/drug_annotation.tsv"), header = TRUE, sep ="\t", stringsAsFactors = TRUE)
+metadata <- read.table(paste0(wd,"/NCI_TPW_metadata.tsv"), header = TRUE, sep ="\t", stringsAsFactors = TRUE)
+
+
+## Normalization of data
+
+
+#loading library limma needed for normalization
+library(limma)
+#normalize treated & untreated
+untreated_normalized <- normalizeBetweenArrays(untreated)
+treated_normalized <- normalizeBetweenArrays(treated)
+
+#Other elements that need to be defined
+fcgeneexpression <- treated_normalized - untreated_normalized
+```
+
+## Microsatellite instability
+
+```{r}
+# Plotting the GI50 values relating to Gemcitabine treatment .
+plot(drugsensitivity["gemcitibine",])
+#creating a new dataframe with the Celllines and whether the Microsatellite Instablility is high or not. TRUE:High  False:Stable/Low
+L=cannotation$Microsatellite_instability_status=="MSI-H"
+Cell_Line=data.frame("Cell Line name"= cannotation[1:61,1],"Microsatellite"= L)
+Cell_Line <- Cell_Line[order(Cell_Line$Cell.Line.name),]
+drugsensitivity=t(drugsensitivity)
+# It is observed that the cell lines in the drugsensitivity matrix is already arranged alphabetically.
+# Thus the Cell_Line dataframe is directly merged with the Gemcitabine Drug Sensitivity Values.
+```
+gemcitabine_line=data.frame("Gemcitabine drug sensitivity"= drugsensitivity[1:61,8])
+everything=cbind(Cell_Line,gemcitabine_line)
+plot(everything) #Quite interesting to look at
+```{r}
+gemcitabine_line=data.frame("Gemcitabine drug sensitivity"= drugsensitivity[1:61,8])
+everything=cbind(Cell_Line,gemcitabine_line)
+library(ggplot2)
+basic=ggplot(everything, aes(Cell.Line.name, Gemcitabine.drug.sensitivity, colour = factor(Microsatellite), shape = factor(Microsatellite) )) +
+   geom_point()
+basic + ggtitle("Drug Sensitivity of Gemcitabine treated cell lines according to High Microsatellite Instability")+ xlab("Cell Line")+ylab("Drug Sensitivity")+theme(axis.text.x = element_text(angle = 90))
+basic #very satisfied with this graph
+# a relationship between high drug sensitivity(Gemcitabine) and high microsatellite instability cannot be concluded.
+```
+
+#Heatmap of biomarkers and of MSI related genes 
+```{r}
+#check which rows are for gemcitibine
+gmci <- grepl('gemcitibine', colnames(fcgeneexpression))
+#rows 365:420, make dataframe with gemci and biomarkers
+biomarkers_geneexpression <- fcgeneexpression[c("ATF3", "CXCL8", "GADD45A", "CDKN1A", "TNFAIP3", "EGR1", "GDF15", "BTG2", "GEM", "CEACAM1", "DHRS2", "HBEGF", "IL11", "TNFRSF9", "TXNIP"),365:420]
+#MSI related genes, choosen after research, new matrix for untreated and FC
+geneexpression_MSI_related <- fcgeneexpression[c("MLH3", "MLH1", "MSH6", "PMS2CL///PMS2", "BATF", "BATF3"), 365:420]
+geneexpression_MSI_related_untreated <- untreated_normalized[c("MLH3", "MLH1", "MSH6", "PMS2CL///PMS2", "BATF", "BATF3"), 365:420]
+#make colnames equal to celllines
+colnames(biomarkers_geneexpression) = metadata[365:420, 2]
+colnames(geneexpression_MSI_related) <- metadata[365:420,2]
+colnames(geneexpression_MSI_related_untreated) <- metadata[365:420,2]
+#which cellines MSI-H or L? Note them 
+#View(Cell_Line)
+#MSI-H in col = 8,12,11,17,19,27,42,45 of geneexpression MSI related which is only gemcitibine specific
+#define new matrices to divide matrices in MSI-H and MSI-L
+biomarkers_geneexpression_MSIH <- biomarkers_geneexpression[,c(8,12,11,17,19,27,42,45)]
+biomarkers_geneexpression_MSIL <- biomarkers_geneexpression[,-c(8,12,11,17,19,27,42,45)]
+geneexpression_MSI_related_MSIH <- geneexpression_MSI_related[,c(8,12,11,17,19,27,42,45)]
+geneexpression_MSI_related_MSIL <- geneexpression_MSI_related[,-c(8,12,11,17,19,27,42,45)]
+geneexpression_MSI_related_untreated_MSIH <- geneexpression_MSI_related_untreated[, c(8,12,11,17,19,27,42,45)]
+geneexpression_MSI_related_untreated_MSIL <- geneexpression_MSI_related_untreated[, -c(8,12,11,17,19,27,42,45)]
+#packages which makes it possible to plot tow heatmaps next to each other
+```
+```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
+library("ComplexHeatmap")
+library("circlize")
+library("colorspace")
+library("GetoptLong")
+```
+Does MSI status effect the expression of biomarkers after gemcitibine treatment?
+```{r}
+#two heatmaps of FC of biomarkers in MSI-Low and MSI-High celllines
+ht_biomarkers_geneexpression_MSIH = Heatmap(biomarkers_geneexpression_MSIH, name = "FC MSI-High", column_title = "MSI-H", column_names_gp = gpar(fontsize = 7)) 
+ht_biomarkers_geneexpression_MSIL = Heatmap(biomarkers_geneexpression_MSIL, name = "FC MSI-Low", column_title = "MSI-L", column_names_gp = gpar(fontsize = 7))
+ 
+ht_biomarkers_geneexpression_MSIH + ht_biomarkers_geneexpression_MSIL
+#no obvious difference between MSI-H and MSI-L when it comes to FC after gemci treatment
+#sum mean of FC in MSI-L (48 celllines) and MSI-H (8 celllines)
+sum(biomarkers_geneexpression_MSIH)/8 ; sum(biomarkers_geneexpression_MSIL)/48
+t.test(biomarkers_geneexpression_MSIH, biomarkers_geneexpression_MSIL, paired = TRUE)
+#no significant difference between geneexpression in MSI-H and MSI-L biomarkers
+#######Plotting mutations######
+#compare mean of mutations, biomarkers_geneexpression_MSIH and L has to be changed, MSIH contains only MSIH celllines
+mean_mutation_MSIH <- sum(mutations[,16] %in% colnames(biomarkers_geneexpression_MSIH))/8
+mean_mutation_MSIL <- sum(mutations[,16] %in% colnames(biomarkers_geneexpression_MSIL))/48
+```
+```{r}
+#is the drug sensitivity for gemcitabine dependend on the cell line? 
+#plotting mean graph plot 
+#calculation of GI50 mean for gemcitabine
+rowMeans(drugsensitivity, na.rm = TRUE, dims = 1)
+#GI50 mean value is 7,003322 for gemcitabine
+#creating a vector for GI50 values of gemcitabine only 
+NegLogGI50gemcitabine<- drugsensitivity[-1:-7,]
+NegLogGI50gemcitabine2<- NegLogGI50gemcitabine[-2:-8,]
+#substract the value 7,003322 for GI50 value of gemcitabine for every cell line 
+NegLogGI50gemcitabine3 <- NegLogGI50gemcitabine2 - 7.003322
+Neg_LogGI50gemcitabine4 <- as.data.frame(NegLogGI50gemcitabine3)
+library(ggplot2)
+theme_set(theme_bw())  
+Neg_LogGI50gemcitabine4$`cell_line` <- rownames(Neg_LogGI50gemcitabine4)
+Neg_LogGI50gemcitabine4$NegLogGI50gemcitabine3_type<- ifelse(Neg_LogGI50gemcitabine4$NegLogGI50gemcitabine3< 0, "below", "above")
+ggplot(Neg_LogGI50gemcitabine4, aes(x=`cell_line`, y=NegLogGI50gemcitabine3, label=NegLogGI50gemcitabine3)) + 
+    geom_bar(stat='identity', aes(fill=NegLogGI50gemcitabine3_type), width=2.5)  +
+    scale_fill_manual(name="value", 
+                       labels = c("Above Average", "Below Average"), 
+                       values = c("above"="#00ba38", "below"="#f8766d")) + 
+     labs(subtitle=" ", 
+          title= "cell line and drug sensitivity") + 
+coord_flip()
+#looking at the previous mean graph plot now compare the differences in mutations of cell lines which had high gemcitabine sensitivity and which had low sensitivity   
+#check the number of a certain mutation type eg. (missense, nonsense, silent, slpice site) for example for the cell line HS-578T (other mutation types could be codon change, protein change)
+sum(mutations[,16] == "HS-578T")
+#the cellline appears in the first 267 rows
+#create a matrix with number of missense, nonsense, silent, splice site mutations for cell line HS-578T
+HS578T <- cbind(sum(mutations[1:267,8] == "Missense_Mutation"), sum(mutations[1:267,8] == "Silent"), sum(mutations[1:267,8] == "Nonsense_Mutation"),sum(mutations[1:267,8] == "Splice_Site"))
+HS578T
+#unsure if to proceed for all 60 cell lines or only cell lines with top ten highest/lowest GI50
+``` 
+
+## Linear regression Analysis
+
+(Still in progress, but would happily accept some feedback)
+
+The goal of the linear regression is to find a way to predict the drug sensitivity (GI50 value) of celllines, based on their normal gene expression (when untreated) and/or based on their gene copy number. To do this, we will start by making sure that both matrixes (untreated and copy number) have the same rows and columns (same genes and same celllines) to be able to make a reasonable comparison.
+
+Check dimension of untreated_normalized and copynumber to see if they are the same
+
+```{r}
+dim(untreated_normalized)
+dim(copynumber)
+```
+
+Dimensions are completely different:  
+
+1. copynumber lists more genes than untreated_normalized  
+Solution:  
+  + Check if rows (genes) are ordered alphabetically  
+  + If not: order both matrixes alphabetically by row name  
+  + Delete rows that appear in only one of the matrixes  
+
+2. untreated_normalized has more columns, since there is one column for each drug  
+Solution:  
+ + New matrix with the mean for each cellline in untreated_normalized  
+ + Order columns alphabetically in both matrixes if not already ordered  
+
+#### Solving problem 1:
+
+COPY NUMBER:
+
+```{r}
+identical(rownames(copynumber), rownames(copynumber[order(rownames(copynumber)),]))
+```
+False, so order them:
+```{r}
+cnforlr <- copynumber[order(rownames(copynumber)),]
+```
+
+UNTREATED: 
+
+```{r}
+identical(rownames(untreated_normalized), rownames(untreated_normalized[order(rownames(untreated_normalized)),]))
+```
+False, so order them:
+```{r}
+utnforlr <- untreated_normalized[order(rownames(untreated_normalized)),]
+```
+
+Keeping only the rows (genes) that are in both matrixes (copy number and untreated):
+```{r}
+commongenes <- intersect(rownames(cnforlr), rownames(utnforlr))
+cnforlr <- cnforlr[which(rownames(cnforlr) %in% commongenes),]
+utnforlr <- utnforlr[which(rownames(utnforlr) %in% commongenes),]
+```
+#### Solving problem 2:
+
+(Still pending)
