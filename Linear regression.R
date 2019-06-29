@@ -36,3 +36,19 @@ utnforlr <- untreated_normalized[order(rownames(untreated_normalized)),]
 utnforlr <- utnforlr[which(rownames(utnforlr) %in% commongenes),]
 
 # ----------- 2. ----------- 
+
+#Cell lines in matrix utnforlr are untreated, so the part of the colnames stating drug, time and dose (0 nM) are unnecessary
+#Delete that part of the name to leave only the cellline
+
+colnames(utnforlr) <- sub("_.*", "", colnames(utnforlr))
+
+#order columns alphabetically 
+utnforlr <- utnforlr[, order(colnames(utnforlr))]  
+dim(utnforlr)
+colnames(utnforlr[,1:15])
+
+#There are  many columns for each cell line, so they need to be merged and have their mean calculated
+utnforlr <- sapply(split(seq_len(ncol(utnforlr)),colnames(utnforlr)),function(cis) rowMeans(utnforlr[,cis,drop=F]))
+dim(utnforlr)
+colnames(utnforlr[,1:15])
+#Number of columns has been reduced and now there is only one for each cellline
