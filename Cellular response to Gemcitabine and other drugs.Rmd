@@ -169,7 +169,7 @@ biomarkers
 ```
 ## Microsatellite instability
 
-```{r}
+```{r, warning=FALSE}
 # Plotting the GI50 values relating to Gemcitabine treatment .
 
 plot(drugsensitivity["gemcitibine",])
@@ -183,11 +183,11 @@ drugsensitivity=t(drugsensitivity)
 
 # It is observed that the cell lines in the drugsensitivity matrix is already arranged alphabetically.
 # Thus the Cell_Line dataframe is directly merged with the Gemcitabine Drug Sensitivity Values.
-```
+
 gemcitabine_line=data.frame("Gemcitabine drug sensitivity"= drugsensitivity[1:61,8])
 everything=cbind(Cell_Line,gemcitabine_line)
 plot(everything) #Quite interesting to look at
-```{r}
+ 
 gemcitabine_line=data.frame("Gemcitabine drug sensitivity"= drugsensitivity[1:61,8])
 everything=cbind(Cell_Line,gemcitabine_line)
 
@@ -402,6 +402,6 @@ commoncelllines <- intersect(colnames(cnforlr), colnames(utnforlr))
 cnforlr <- cnforlr[, which(colnames(cnforlr) %in% commoncelllines)]
 utnforlr <- utnforlr[, which(colnames(utnforlr) %in% commoncelllines)]
 ```
-Now both matrixes have the same rows (genes) and columns(celllines)
+Now both matrixes have the same rows (genes) and columns (celllines)
 
 (Still unsure of how to proceed with the linear regression)
