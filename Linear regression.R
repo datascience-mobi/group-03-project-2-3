@@ -52,3 +52,13 @@ utnforlr <- sapply(split(seq_len(ncol(utnforlr)),colnames(utnforlr)),function(ci
 dim(utnforlr)
 colnames(utnforlr[,1:15])
 #Number of columns has been reduced and now there is only one for each cellline
+
+#Order columns alphabetically in the copy number matrix
+cnforlr <- copynumber[, order(colnames(copynumber))]
+
+#Keep in both matrixes only the columns (celllines) that are present in both 
+commoncelllines <- intersect(colnames(cnforlr), colnames(utnforlr))
+cnforlr <- cnforlr[, which(colnames(cnforlr) %in% commoncelllines)]
+utnforlr <- utnforlr[, which(colnames((utnforlr) %in% commoncelllines))]
+
+#Now both matrixes have the same rows (genes) and columns(celllines)
