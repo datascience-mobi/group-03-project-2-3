@@ -368,4 +368,40 @@ utnforlr <- utnforlr[which(rownames(utnforlr) %in% commongenes),]
 ```
 #### Solving problem 2:
 
-(Still pending)
+Cell lines in matrix utnforlr are untreated, so the part of the colnames stating drug, time and dose (0 nM) are unnecessary.  
+Delete that part of the name to leave only the cellline.  
+
+```{r}
+colnames(utnforlr) <- sub("_.*", "", colnames(utnforlr))
+```
+
+Order columns alphabetically 
+```{r}
+utnforlr <- utnforlr[, order(colnames(utnforlr))]  
+```
+Check dimension of the matrix for untreated cells
+```{r}
+dim(utnforlr)
+colnames(utnforlr[,1:15])
+```
+There are  many columns for each cell line, so they need to be merged and have their mean calculated
+```{r}
+utnforlr <- sapply(split(seq_len(ncol(utnforlr)),colnames(utnforlr)),function(cis) rowMeans(utnforlr[,cis,drop=F]))
+dim(utnforlr)
+colnames(utnforlr[,1:15])
+#Number of columns has been reduced and now there is only one for each cellline
+```
+
+Order columns alphabetically in the copy number matrix
+```{r}
+cnforlr <- copynumber[, order(colnames(copynumber))]
+```
+Keep in both matrixes only the columns (celllines) that are present in both 
+```{r}
+commoncelllines <- intersect(colnames(cnforlr), colnames(utnforlr))
+cnforlr <- cnforlr[, which(colnames(cnforlr) %in% commoncelllines)]
+utnforlr <- utnforlr[, which(colnames((utnforlr) %in% commoncelllines))]
+```
+Now both matrixes have the same rows (genes) and columns(celllines)
+
+(Still unsure of how to proceed with the linear regression)
