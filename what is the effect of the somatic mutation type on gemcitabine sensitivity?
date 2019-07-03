@@ -48,3 +48,11 @@ sum(mutations[1:267,8] == "Splice_Site")
 #8
 #create a matrix for one cell line
 HS578T <- cbind(sum(mutations[1:267,8] == "Missense_Mutation"), sum(mutations[1:267,8] == "Silent"), sum(mutations[1:267,8] == "Nonsense_Mutation"),sum(mutations[1:267,8] == "Splice_Site"))
+
+#filter out celllines with 10 highest and 10 lowest GI50 values
+sort(NegLogGI50gemcitabine2, decreasing = FALSE)
+#cell lines with highest GI50 values are SNB-19, OVCAR-8 ,CAKI-1,NCI-H23 ,HCT-116 ,NCI-H460 ,M14,MCF7 ,786-0 ,ACHN
+#cell lines with lowest GI50 values are HCC-2998, HS-578T, OVCAR-4 , TK-10, PC-3  MDA-MB-231, SK-MEL-28 , OVCAR-3 ,KM12, HCT-15
+
+     
+
