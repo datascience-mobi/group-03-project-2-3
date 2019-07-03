@@ -62,3 +62,14 @@ cnforlr <- cnforlr[, which(colnames(cnforlr) %in% commoncelllines)]
 utnforlr <- utnforlr[, which(colnames(utnforlr) %in% commoncelllines)]
 
 #Now both matrixes have the same rows (genes) and columns(celllines)
+
+dsforlr <- drugsensitivity[which(rownames(drugsensitivity) %in% commoncelllines),]
+utnbmforlr <- utnforlr[which(rownames(utnforlr) %in% biomarkers),]
+
+linearregression <- rbind(utnbmforlr, dsforlr[, "gemcitibine"])
+linearregression <- t(linearregression)
+namesforlr <- biomarkers[order(biomarkers)]
+namesforlr <- namesforlr[-which(namesforlr=="CXCL8")]
+namesforlr <- c(namesforlr, "DS_gemcitibine")
+colnames(linearregression) <- namesforlr
+                   
