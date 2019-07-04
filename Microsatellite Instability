@@ -98,10 +98,20 @@ t.test(biomarkers_geneexpression_MSIH, biomarkers_geneexpression_MSIL, paired = 
 mean_mutation_MSIH <- sum(mutations[,16] %in% colnames(biomarkers_geneexpression_MSIH))/8
 mean_mutation_MSIL <- sum(mutations[,16] %in% colnames(biomarkers_geneexpression_MSIL))/48
 
+#Counting Mutation, MSI relation?
+counting_mutations <- count(mutation_cellline, vars = NULL, wt_var = NULL)
 
-
-
-
+plot(counting_mutations)
+library(qpcR)
+table_of_mutations <- qpcR:::cbind.na(counting_mutations, Cell_Line)
+qplot(
+    x = table_of_mutations[,3],
+    y = table_of_mutations[,2],
+    data = table_of_mutations,
+    color = table_of_mutations[,4], 
+    main = "number of mutations per cellline coloured by MSI status", 
+    xlab = "Cell line",ylab = "mutations",
+)
 
 
 
