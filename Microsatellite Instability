@@ -101,10 +101,9 @@ mean_mutation_MSIL <- sum(mutations[,16] %in% colnames(biomarkers_geneexpression
 #Counting Mutation, MSI relation?
 counting_mutations <- count(mutation_cellline, vars = NULL, wt_var = NULL)
 
-plot(counting_mutations)
 library(qpcR)
 table_of_mutations <- qpcR:::cbind.na(counting_mutations, Cell_Line)
-qplot(
+mutation_plot <- qplot(
     x = table_of_mutations[,3],
     y = table_of_mutations[,2],
     data = table_of_mutations,
@@ -112,7 +111,7 @@ qplot(
     main = "number of mutations per cellline coloured by MSI status", 
     xlab = "Cell line",ylab = "mutations",
 )
-
+mutation_plot + ggtitle("number of mutations per cellline coloures by MSI status")+ xlab("Cell Line")+ylab("mutations")+theme(axis.text.x = element_text(angle = 90))
 
 
 
