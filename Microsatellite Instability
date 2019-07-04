@@ -108,7 +108,7 @@ qplot(
     x = table_of_mutations[,3],
     y = table_of_mutations[,2],
     data = table_of_mutations,
-    color = table_of_mutations[,4], 
+    color = Microsatellite, 
     main = "number of mutations per cellline coloured by MSI status", 
     xlab = "Cell line",ylab = "mutations",
 )
