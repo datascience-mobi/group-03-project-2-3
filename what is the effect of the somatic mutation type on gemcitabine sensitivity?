@@ -74,7 +74,18 @@ for (i in (celllineshigh) ) {print(sum(mutations[which(mutations$Tumor_Sample_Ba
 for (i in (celllineslow) ) {print(sum(mutations[which(mutations$Tumor_Sample_Barcode == i),8] == "Silent"))}
 #1540,49,145,102,45,142,172,82,1305,2635
 
-#nonsense mutation for celllins with high GI50 values 
+#nonsense mutation for celllines with high GI50 values 
+for (i in (celllineshigh) ) {print(sum(mutations[which(mutations$Tumor_Sample_Barcode == i),8] == "Nonsense_Mutation"))}
+#0,17,10,68,113,19,62,30,17,5
 
-     
+#nonsense mutation for celllines with low GI50 values 
+for (i in (celllineslow) ) {print(sum(mutations[which(mutations$Tumor_Sample_Barcode == i),8] == "Nonsense_Mutation"))}
+#772,8,5,11,4,22,20,13,135,366
 
+#splice site mutation for celllines with high GI50 values
+for (i in (celllineshigh) ) {print(sum(mutations[which(mutations$Tumor_Sample_Barcode == i),8] == "Splice_Site"))}
+#0,19,10,66, 161,14,57,20,24,11
+
+#splice site mutation for celllines with low GI50 values 
+for (i in (celllineslow) ) {print(sum(mutations[which(mutations$Tumor_Sample_Barcode == i),8] == "Splice_Site"))}
+#187,11,18,12,6,22,26,17,176,541
