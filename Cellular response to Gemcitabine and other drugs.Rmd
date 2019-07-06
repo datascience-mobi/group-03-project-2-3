@@ -257,20 +257,27 @@ ht_biomarkers_geneexpression_MSIH + ht_biomarkers_geneexpression_MSIL
 
 sum(biomarkers_geneexpression_MSIH)/8 ; sum(biomarkers_geneexpression_MSIL)/48
 t.test(biomarkers_geneexpression_MSIH, biomarkers_geneexpression_MSIL, paired = TRUE)
+```
+no significant difference between geneexpression in MSI-H and MSI-L biomarkers
 
-#no significant difference between geneexpression in MSI-H and MSI-L biomarkers
 
-#######Plotting mutations######
-#Counting Mutation, MSI relation?
-mutation_cellline <- mutations[,16]
 
+#Plotting mutations
+Counting mutations, MSI relation?
+
+```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
 library(plyr)
-counting_mutations <- count(mutation_cellline, vars = NULL, wt_var = NULL)
-
 library(qpcR)
+library(ggplot2)
+```
+```{r}
+mutation_cellline <- mutations[,16]
+counting_mutations <- count(mutation_cellline, vars = NULL, wt_var = NULL)
+```
+
+```{r}
 table_of_mutations <- qpcR:::cbind.na(counting_mutations, Cell_Line)
 
-library(ggplot2)
 mutation_plot <- qplot(
 
     x = table_of_mutations[,3],
@@ -288,6 +295,7 @@ mutation_plot <- qplot(
 mutation_plot + ggtitle("number of mutations per cellline coloures by MSI status")+ xlab("Cell Line")+ylab("mutations")+theme(axis.text.x = element_text(angle = 90))
 
 ```
+It is obvious that MSI status affects the number of mutations, due to mutations in the repair system
 
 ##Drug sensitivity and cell line
 
