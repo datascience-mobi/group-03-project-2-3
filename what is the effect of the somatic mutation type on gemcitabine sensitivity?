@@ -53,18 +53,28 @@ HS578T <- cbind(sum(mutations[1:267,8] == "Missense_Mutation"), sum(mutations[1:
 sort(NegLogGI50gemcitabine2, decreasing = FALSE)
 
 #cell lines with highest GI50 values are SNB-19, OVCAR-8 ,CAKI-1,NCI-H23 ,HCT-116 ,NCI-H460 ,M14,MCF7 ,786-0,ACHN
-celllineshigh <- c("SNB-19","OVCAR-8","CAKI-1","NCI-H23","HCT-116","NCI-H460","M14,MCF7","786-0","ACHN")
+celllineshigh <- c("SNB-19","OVCAR-8","CAKI-1","NCI-H23","HCT-116","NCI-H460","M14","MCF7","786-0","ACHN")
 
 #cell lines with lowest GI50 values are HCC-2998, HS-578T, OVCAR-4 , TK-10, PC-3, MDA-MB-231, SK-MEL-28 , OVCAR-3 ,KM12, HCT-15
 celllineslow <- c("HCC-2998","HS-578T","OVCAR-4","TK-10","PC-3","MDA-MB-231","SK-MEL-28","OVCAR-3","KM12","HCT-15")
 
 #missense mutation for celllines with high GI50 values 
 for (i in (celllineshigh) ) {print(sum(mutations[which(mutations$Tumor_Sample_Barcode == i),8] == "Missense_Mutation"))}
-#results are: 0,292,148,907,2229,317,0,285,96
+#results are: 0,292,148,907,2229,317,993,420,285,96
 
-#missense mutation for cellline with low GI50 values 
+#missense mutation for celllines with low GI50 values 
 for (i in (celllineslow) ) {print(sum(mutations[which(mutations$Tumor_Sample_Barcode == i),8] == "Missense_Mutation"))}
 #6021,172,334,243,119,357,242,173,2492,6716
+
+#silent mutation for celllines with high GI50 values 
+for (i in (celllineshigh) ) {print(sum(mutations[which(mutations$Tumor_Sample_Barcode == i),8] == "Silent"))}
+#0,130,56,387,1039,113,555,153,120,37
+
+#silent mutation for celllines with low GI50 values 
+for (i in (celllineslow) ) {print(sum(mutations[which(mutations$Tumor_Sample_Barcode == i),8] == "Silent"))}
+#1540,49,145,102,45,142,172,82,1305,2635
+
+#nonsense mutation for celllins with high GI50 values 
 
      
 
