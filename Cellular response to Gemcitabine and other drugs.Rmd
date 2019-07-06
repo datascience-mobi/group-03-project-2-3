@@ -320,7 +320,7 @@ theme_set(theme_bw())
 Neg_LogGI50gemcitabine4$`cell_line` <- rownames(Neg_LogGI50gemcitabine4)
 Neg_LogGI50gemcitabine4$NegLogGI50gemcitabine3_type<- ifelse(Neg_LogGI50gemcitabine4$NegLogGI50gemcitabine3< 0, "below", "above")
 ggplot(Neg_LogGI50gemcitabine4, aes(x=`cell_line`, y=NegLogGI50gemcitabine3, label=NegLogGI50gemcitabine3)) + 
-    geom_bar(stat='identity', aes(fill=NegLogGI50gemcitabine3_type), width=2.5)  +
+    geom_bar(stat='identity', aes(fill=NegLogGI50gemcitabine3_type), width=0.7)  +
     scale_fill_manual(name="value", 
                        labels = c("Above Average", "Below Average"), 
                        values = c("above"="#00ba38", "below"="#f8766d")) + 
