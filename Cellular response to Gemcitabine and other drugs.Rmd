@@ -255,7 +255,7 @@ ht_biomarkers_geneexpression_MSIH + ht_biomarkers_geneexpression_MSIL
 #no obvious difference between MSI-H and MSI-L when it comes to FC after gemci treatment
 #sum mean of FC in MSI-L (48 celllines) and MSI-H (8 celllines)
 
-sum(biomarkers_geneexpression_MSIH)/8 ; sum(biomarkers_geneexpression_MSIL)/48
+mean(biomarkers_geneexpression_MSIH) ;mean(biomarkers_geneexpression_MSIL)
 t.test(biomarkers_geneexpression_MSIH, biomarkers_geneexpression_MSIL, paired = TRUE)
 ```
 no significant difference between geneexpression in MSI-H and MSI-L biomarkers
