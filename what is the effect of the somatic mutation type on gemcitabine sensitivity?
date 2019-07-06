@@ -61,6 +61,7 @@ celllineslow <- c("HCC-2998","HS-578T","OVCAR-4","TK-10","PC-3","MDA-MB-231","SK
 #missense mutation for celllines with high GI50 values 
 for (i in (celllineshigh) ) {print(sum(mutations[which(mutations$Tumor_Sample_Barcode == i),8] == "Missense_Mutation"))}
 #results are: 0,292,148,907,2229,317,993,420,285,96
+missensehigh <- c(0,292,148,907,2229,317,993,420,285,96)
 
 #missense mutation for celllines with low GI50 values 
 for (i in (celllineslow) ) {print(sum(mutations[which(mutations$Tumor_Sample_Barcode == i),8] == "Missense_Mutation"))}
@@ -69,6 +70,7 @@ for (i in (celllineslow) ) {print(sum(mutations[which(mutations$Tumor_Sample_Bar
 #silent mutation for celllines with high GI50 values 
 for (i in (celllineshigh) ) {print(sum(mutations[which(mutations$Tumor_Sample_Barcode == i),8] == "Silent"))}
 #0,130,56,387,1039,113,555,153,120,37
+silenthigh <- c(0,130,56,387,1039,113,555,153,120,37)
 
 #silent mutation for celllines with low GI50 values 
 for (i in (celllineslow) ) {print(sum(mutations[which(mutations$Tumor_Sample_Barcode == i),8] == "Silent"))}
@@ -77,6 +79,7 @@ for (i in (celllineslow) ) {print(sum(mutations[which(mutations$Tumor_Sample_Bar
 #nonsense mutation for celllines with high GI50 values 
 for (i in (celllineshigh) ) {print(sum(mutations[which(mutations$Tumor_Sample_Barcode == i),8] == "Nonsense_Mutation"))}
 #0,17,10,68,113,19,62,30,17,5
+nonsensehigh <- c(0,17,10,68,113,19,62,30,17,5)
 
 #nonsense mutation for celllines with low GI50 values 
 for (i in (celllineslow) ) {print(sum(mutations[which(mutations$Tumor_Sample_Barcode == i),8] == "Nonsense_Mutation"))}
@@ -85,6 +88,7 @@ for (i in (celllineslow) ) {print(sum(mutations[which(mutations$Tumor_Sample_Bar
 #splice site mutation for celllines with high GI50 values
 for (i in (celllineshigh) ) {print(sum(mutations[which(mutations$Tumor_Sample_Barcode == i),8] == "Splice_Site"))}
 #0,19,10,66, 161,14,57,20,24,11
+splicesitehigh <- c(0,19,10,66, 161,14,57,20,24,11)
 
 #splice site mutation for celllines with low GI50 values 
 for (i in (celllineslow) ) {print(sum(mutations[which(mutations$Tumor_Sample_Barcode == i),8] == "Splice_Site"))}
@@ -93,6 +97,7 @@ for (i in (celllineslow) ) {print(sum(mutations[which(mutations$Tumor_Sample_Bar
 #frame shift deletion for celllines with high GI50 values 
 for (i in (celllineshigh) ) {print(sum(mutations[which(mutations$Tumor_Sample_Barcode == i),8] == "Frame_Shift_Del"))}
 #0,16,14,40,631,21,5,9,18,3
+frameshifthigh <- c(0,16,14,40,631,21,5,9,18,3)
 
 #frame shift deletion for celllines with low GI50 values
 for (i in (celllineslow) ) {print(sum(mutations[which(mutations$Tumor_Sample_Barcode == i),8] == "Frame_Shift_Del"))}
@@ -101,6 +106,7 @@ for (i in (celllineslow) ) {print(sum(mutations[which(mutations$Tumor_Sample_Bar
 #frame shift insertion for celllines with high GI50 values 
 for (i in (celllineshigh) ) {print(sum(mutations[which(mutations$Tumor_Sample_Barcode == i),8] == "Frame_Shift_Ins"))}
 #0,23,15,22,175,18,2,15,12,14
+frameshiftinshigh <- c(0,23,15,22,175,18,2,15,12,14)
 
 #frame shift insertion for celllines with low GI50 values 
 for (i in (celllineslow) ) {print(sum(mutations[which(mutations$Tumor_Sample_Barcode == i),8] == "Frame_Shift_Ins"))}
@@ -109,9 +115,17 @@ for (i in (celllineslow) ) {print(sum(mutations[which(mutations$Tumor_Sample_Bar
 #de novo out of frame mutation for celllines with high GI50 values
 for (i in (celllineshigh) ) {print(sum(mutations[which(mutations$Tumor_Sample_Barcode == i),8] == "De_novo_Start_OutOfFrame"))}
 #0,3,5,15,20,3,2,0,5,4
+denovohigh <- c(0,3,5,15,20,3,2,0,5,4)
 
 #de novo out of frame mutation for celllines with low GI50 values 
 for (i in (celllineslow) ) {print(sum(mutations[which(mutations$Tumor_Sample_Barcode == i),8] == "De_novo_Start_OutOfFrame"))}
 #14,1,3,0,0,6,2,2,32,113
+
+#create a matrix for high GI50 values 
+HighGI50 <- cbind(missensehigh,silenthigh,nonsencehigh,splicesitehigh,frameshifthigh,frameshiftinshigh,denovohigh)
+dimnames(HighGI50) = list( 
+    c("SNB-19","OVCAR-8","CAKI-1","NCI-H23","HCT-116","NCI-H460","M14","MCF7","786-0","ACHN"),         # row names 
+    c("missense", "silent", "nonsense","splicesite","frame_shift_deletion","frame_shift_insertion","de_novo_out_of_frame"))
+
 
 
