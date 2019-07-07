@@ -141,5 +141,13 @@ dimnames(LowGI50) = list(
      c("HCC-2998","HS-578T","OVCAR-4","TK-10","PC-3","MDA-MB-231","SK-MEL-28","OVCAR-3","KM12","HCT-15"),         # row names 
      c("missense", "silent", "nonsense","splicesite","frame_shift_deletion","frame_shift_insertion","de_novo_out_of_frame")) #column names
 
+#create heatmaps 
+install.packages("pheatmap")
+library("pheatmap")
 
+pheatmap(HighGI50)
+pheatmap(HighGI50,color = colorRampPalette(c("blue","white","purple","firebrick3","red","orange"))(70))
+
+pheatmap(LowGI50)
+pheatmap(LowGI50,color = colorRampPalette(c("blue","white","purple","firebrick3","red","orange"))(70))
 
