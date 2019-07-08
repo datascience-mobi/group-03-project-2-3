@@ -72,4 +72,13 @@ namesforlr <- biomarkers[order(biomarkers)]
 namesforlr <- namesforlr[-which(namesforlr=="CXCL8")]
 namesforlr <- c(namesforlr, "DS_gemcitibine")
 colnames(linearregression) <- namesforlr
-                   
+                      
+#Plot each biomarker vs the drug sensitivity
+
+DS_gemcitibine <- linearregression[, "DS_gemcitibine"]
+for (i in c(1:14)) {
+  GeneX <- linearregression[, i]
+  name <- namesforlr[i]
+  plot(GeneX, DS_gemcitibine, xlab = namesforlr[i], ylab = "Drug sensitivity")
+  abline(lm(DS_gemcitibine~linearregression[,i], data = as.data.frame(linearregression)), col = "red")
+}
