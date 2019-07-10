@@ -170,6 +170,40 @@ biomarkers <- names(matrixtopgenes[1:15,1])
 biomarkers
 ```
 ## Microsatellite instability
+#Plotting mutations
+Counting mutations, MSI relation?
+
+```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
+library(plyr)
+library(qpcR)
+library(ggplot2)
+```
+```{r}
+mutation_cellline <- mutations[,16]
+counting_mutations <- count(mutation_cellline, vars = NULL, wt_var = NULL)
+```
+
+```{r}
+table_of_mutations <- qpcR:::cbind.na(counting_mutations, Cell_Line)
+
+mutation_plot <- qplot(
+
+    x = table_of_mutations[,3],
+
+    y = table_of_mutations[,2],
+
+    data = table_of_mutations,
+
+    color = Microsatellite, 
+
+    main = "number of mutations per cellline coloured by MSI status", 
+
+    xlab = "Cell line",ylab = "mutations",
+)
+mutation_plot + ggtitle("number of mutations per cellline coloures by MSI status")+ xlab("Cell Line")+ylab("mutations")+theme(axis.text.x = element_text(angle = 90))
+
+```
+It is obvious that MSI status affects the number of mutations, due to mutations in the repair system
 
 ```{r, warning=FALSE}
 # Plotting the GI50 values relating to Gemcitabine treatment .
@@ -203,6 +237,7 @@ basic #very satisfied with this graph
 ```
 
 #Heatmap of biomarkers and of MSI related genes 
+
 ```{r}
 #check which rows are for gemcitibine
 gmci <- grepl('gemcitibine', colnames(fcgeneexpression))
@@ -261,43 +296,6 @@ mean(biomarkers_geneexpression_MSIH) ;mean(biomarkers_geneexpression_MSIL)
 t.test(biomarkers_geneexpression_MSIH, biomarkers_geneexpression_MSIL, paired = TRUE)
 ```
 no significant difference between geneexpression in MSI-H and MSI-L biomarkers
-
-
-
-#Plotting mutations
-Counting mutations, MSI relation?
-
-```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
-library(plyr)
-library(qpcR)
-library(ggplot2)
-```
-```{r}
-mutation_cellline <- mutations[,16]
-counting_mutations <- count(mutation_cellline, vars = NULL, wt_var = NULL)
-```
-
-```{r}
-table_of_mutations <- qpcR:::cbind.na(counting_mutations, Cell_Line)
-
-mutation_plot <- qplot(
-
-    x = table_of_mutations[,3],
-
-    y = table_of_mutations[,2],
-
-    data = table_of_mutations,
-
-    color = Microsatellite, 
-
-    main = "number of mutations per cellline coloured by MSI status", 
-
-    xlab = "Cell line",ylab = "mutations",
-)
-mutation_plot + ggtitle("number of mutations per cellline coloures by MSI status")+ xlab("Cell Line")+ylab("mutations")+theme(axis.text.x = element_text(angle = 90))
-
-```
-It is obvious that MSI status affects the number of mutations, due to mutations in the repair system
 
 ##Drug sensitivity and cell line
 
