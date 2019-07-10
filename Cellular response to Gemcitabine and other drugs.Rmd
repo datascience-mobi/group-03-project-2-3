@@ -492,6 +492,13 @@ for (i in 1:ncol(cnbmforlr)) {
 }
 ```
 
+#### Multiple regression
+
+```{r}
+multipleregression <- lm(DS_gemcitibine~ATF3 + GADD45A + CDKN1A + TNFAIP3 + EGR1 + GDF15 + BTG2 + GEM + CEACAM1 + DHRS2 + HBEGF + IL11 + TNFRSF9 + TXNIP, data = as.data.frame(linearregression))
+summary(multipleregression)
+```
+
 #### Conclusion from the linear regression
 
 It is clear that there is no linear relationship between the gene expression or the gene copy number of the biomarkers and the drug sensitivity of a cellline to gemcitabine, or at least not with the methods used. 
