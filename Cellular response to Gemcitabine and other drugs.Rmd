@@ -184,6 +184,7 @@ counting_mutations <- count(mutation_cellline, vars = NULL, wt_var = NULL)
 ```
 
 ```{r}
+Cell_Line_no_nas <- na.omit(Cell_Line)
 table_of_mutations <- qpcR:::cbind.na(counting_mutations, Cell_Line)
 
 mutation_plot <- qplot(
