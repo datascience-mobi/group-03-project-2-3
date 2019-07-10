@@ -350,8 +350,6 @@ HS578T
 
 ## Linear regression Analysis
 
-(Still in progress, but would happily accept some feedback)
-
 The goal of the linear regression is to find a way to predict the drug sensitivity (GI50 value) of celllines, based on their normal gene expression (when untreated) and/or based on their gene copy number. To do this, we will start by making sure that both matrixes (untreated and copy number) have the same rows and columns (same genes and same celllines) to be able to make a reasonable comparison.
 
 Check dimension of untreated_normalized and copynumber to see if they are the same
@@ -447,17 +445,19 @@ Now both matrixes have the same rows (genes) and columns (celllines)
 A matrix is created with the gene expression of the biomarkers and a column with the drug sensitivity of each cell line to be used for the scatter plots and to trace the regression line.
 
 ```{r}
-dsforlr <- drugsensitivity[which(rownames(drugsensitivity) %in% commoncelllines),]
+drugsensitivityt <- t(drugsensitivity)
+dsforlr <- drugsensitivityt[which(rownames(drugsensitivityt) %in% commoncelllines),]
 utnbmforlr <- utnforlr[which(rownames(utnforlr) %in% biomarkers),]
 
-linearregression <- rbind(utnbmforlr, dsforlr[, "gemcitibine"])
+dsgemcitibine <- dsforlr[, 7]
+linearregression <- rbind(utnbmforlr, dsgemcitibine)
 linearregression <- t(linearregression)
-
-DS_gemcitibine <- linearregression[, "DS_gemcitibine"]
 
 namesforlr <- rownames(utnbmforlr)
 namesforlr <- c(namesforlr, "DS_gemcitibine")
 colnames(linearregression) <- namesforlr
+
+DS_gemcitibine <- linearregression[, "DS_gemcitibine"]
 ```
 
 Plots of each biomarker's gene expression vs the drug sensitivity:
