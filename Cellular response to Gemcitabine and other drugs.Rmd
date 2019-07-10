@@ -440,4 +440,55 @@ utnforlr <- utnforlr[, which(colnames(utnforlr) %in% commoncelllines)]
 ```
 Now both matrixes have the same rows (genes) and columns (celllines)
 
-(Still unsure of how to proceed with the linear regression)
+### Plotting the regressions
+
+#### Comparing the gene expression of the biomarkers vs. the drug sensitivity
+
+A matrix is created with the gene expression of the biomarkers and a column with the drug sensitivity of each cell line to be used for the scatter plots and to trace the regression line.
+
+```{r}
+dsforlr <- drugsensitivity[which(rownames(drugsensitivity) %in% commoncelllines),]
+utnbmforlr <- utnforlr[which(rownames(utnforlr) %in% biomarkers),]
+
+linearregression <- rbind(utnbmforlr, dsforlr[, "gemcitibine"])
+linearregression <- t(linearregression)
+
+DS_gemcitibine <- linearregression[, "DS_gemcitibine"]
+
+namesforlr <- rownames(utnbmforlr)
+namesforlr <- c(namesforlr, "DS_gemcitibine")
+colnames(linearregression) <- namesforlr
+```
+
+Plots of each biomarker's gene expression vs the drug sensitivity:
+
+```{r}
+for (i in 1:nrow(utnbmforlr)) {
+  GeneX <- linearregression[, i]
+  name <- namesforlr[i]
+  plot(GeneX, DS_gemcitibine, xlab = namesforlr[i], ylab = "Drug sensitivity", main = "Gene expression vs. drug sensitivity")
+  abline(lm(DS_gemcitibine~linearregression[,i], data = as.data.frame(linearregression)), col = "red")
+}
+```
+
+#### Comparing the gene copy number of the biomarkers vs. the drug sensitivity
+
+Preparation of the data for the analysis:
+
+```{r}
+cnbmforlr <- cnforlr[which(rownames(cnforlr) %in% biomarkers),]
+cnbmforlr <- t(cnbmforlr)
+
+lrforcn <- cbind(cnbmforlr, DS_gemcitibine)
+```
+
+Plots of each biomarker's gene copy number vs. the drug sensitivity
+
+```{r}
+for (i in 1:ncol(cnbmforlr)) {
+  Gene.i.CN <- cnbmforlr[, i]
+  name <- namesforlr[i]
+  plot(Gene.i.CN, DS_gemcitibine, xlab = namesforlr[i], ylab = "Drug sensitivity", main = "Gene copy number vs. drug sensitivity")
+  abline(lm(DS_gemcitibine~lrforcn[,i], data = as.data.frame(lrforcn)), col = "red")
+}
+```
