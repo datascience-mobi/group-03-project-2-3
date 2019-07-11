@@ -1,0 +1,7 @@
+colnames(fcgeneexpression)=metadata[1:819,3]
+fc_DCK <- fcgeneexpression["DCK",]
+plot(fc_DCK, col = metadata[1:819,3])
+fc_DCK_gemci <- fc_DCK[365:420]
+drugsensitivity_gemci <- drugsensitivity["gemcitibine",]
+a <- rbind(drugsensitivity_gemci, fc_DCK_gemci)
+a_no_nas <- a[,-c(29,18)]
