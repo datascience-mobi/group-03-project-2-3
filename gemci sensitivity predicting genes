@@ -24,8 +24,7 @@ fc_of_DCK_gemci <- as.vector(a_no_nas[2,])
 fc_of_GSTT1_gemci <- as.vector(c_no_nas[2,])
 
 sensitivity <- as.vector(a_no_nas[1,])
-plot(fc_of_DCK_gemci,sensitivity)
-plot(fc_of_GSTT1_gemci, sensitivity)
+
 
 trendline(fc_of_DCK_gemci, sensitivity)
 trendline(fc_of_GSTT1_gemci, sensitivity)
@@ -53,8 +52,7 @@ fc_of_TOP2A_gemci <- as.vector(a_no_nas[2,])
 fc_of_ABCC2_gemci <- as.vector(c_no_nas[2,])
 
 sensitivity <- as.vector(a_no_nas[1,])
-plot(fc_of_TOP2A_gemci,sensitivity)
-plot(fc_of_ABCC2_gemci, sensitivity)
+
 
 trendline(fc_of_TOP2A_gemci, sensitivity)
 trendline(fc_of_ABCC2_gemci, sensitivity)
