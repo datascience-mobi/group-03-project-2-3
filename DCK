@@ -1,11 +1,66 @@
+#DCK is frequently inactivated in acquired gemcitabine-resistant human cancer cells.deoxycytidine kinase (DCK). DCK is a key enzyme that activates gemcitabine by phosphorylation
+#so does DCK fcexpression correlate with drugsensitivity, do the same for CMPK1
+
+library(basicTrendline)
+
 colnames(fcgeneexpression)=metadata[1:819,3]
 fc_DCK <- fcgeneexpression["DCK",]
+fc_GSTT1 <- fcgeneexpression["GSTT1",]
+
 plot(fc_DCK, col = metadata[1:819,3])
+plot(fc_GSTT1, col = metadata[1:819,3])
+
 fc_DCK_gemci <- fc_DCK[365:420]
+fc_GSTT1_gemci <- fc_GSTT1[365:420]
+
 drugsensitivity_gemci <- drugsensitivity["gemcitibine",]
 a <- rbind(drugsensitivity_gemci, fc_DCK_gemci)
+c <- rbind(drugsensitivity_gemci,fc_GSTT1_gemci)
+
 a_no_nas <- a[,-c(29,18)]
+c_no_nas <- c[,-c(29,18)]
+
 fc_of_DCK_gemci <- as.vector(a_no_nas[2,])
+fc_of_GSTT1_gemci <- as.vector(c_no_nas[2,])
+
 sensitivity <- as.vector(a_no_nas[1,])
 plot(fc_of_DCK_gemci,sensitivity)
-abline(lm(fc_of_DCK_gemci ~ sensitivity))
+plot(fc_of_GSTT1_gemci, sensitivity)
+
+trendline(fc_of_DCK_gemci, sensitivity)
+trendline(fc_of_GSTT1_gemci, sensitivity)
+
+
+
+#same for TOP2A and ABCC2
+fc_TOP2A <- fcgeneexpression["TOP2A",]
+fc_ABCC2 <- fcgeneexpression["ABCC2",]
+
+plot(fc_TOP2A, col = metadata[1:819,3])
+plot(fc_ABCC2, col = metadata[1:819,3])
+
+fc_TOP2A_gemci <- fc_TOP2A[365:420]
+fc_ABCC2_gemci <- fc_ABCC2[365:420]
+
+drugsensitivity_gemci <- drugsensitivity["gemcitibine",]
+a <- rbind(drugsensitivity_gemci, fc_TOP2A_gemci)
+c <- rbind(drugsensitivity_gemci,fc_ABCC2_gemci)
+
+a_no_nas <- a[,-c(29,18)]
+c_no_nas <- c[,-c(29,18)]
+
+fc_of_TOP2A_gemci <- as.vector(a_no_nas[2,])
+fc_of_ABCC2_gemci <- as.vector(c_no_nas[2,])
+
+sensitivity <- as.vector(a_no_nas[1,])
+plot(fc_of_TOP2A_gemci,sensitivity)
+plot(fc_of_ABCC2_gemci, sensitivity)
+
+trendline(fc_of_TOP2A_gemci, sensitivity)
+trendline(fc_of_ABCC2_gemci, sensitivity)
+
+
+#as you can see there is no visible linear relation between the expression of CMPK or DCK and drugsensitivity, you can also see 
+that gemcitibine treatment leads to a higher expression of DCK compared to the other drugs.
+ were differentially expressed in gemcitabine-sensitive cancers: microsomal glutathione S-transferase 1 (GSTT1), 
+ topoisomerase II alpha (TOP2A), caspase 3, and ATP-binding cassette and subfamily C member 2 (ABCC2)
