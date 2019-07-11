@@ -47,6 +47,7 @@ treated_normalized <- normalizeBetweenArrays(treated)
 library("viridis")
 palette(viridis(15))
 drugnames <- metadata$drug
+par(mar=c(5,4,5,9))
 boxplot(treated,medcol= "black", border=drugnames, col=drugnames, xlab="samples", ylab="gene expression", main="Gene Expression treated celllines", names=FALSE, xaxt="n", boxwex=1, boxlty=0)#
 levels=as.factor(levels(drugnames))
 legend("topright",inset=c(-0.4,0), legend=levels(drugnames),xpd=TRUE,pch=19,col=levels,title="drugs")
