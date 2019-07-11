@@ -109,7 +109,7 @@ fcgeneexpression <- treated_normalized - untreated_normalized
 absvalfcgeneexpression <- abs(fcgeneexpression)
 ```
 
-New matrices with only the celllines treated wiht gemcitabine
+New matrices with only the celllines treated with gemcitabine
 
 ```{r}
 library("dplyr")
@@ -171,8 +171,9 @@ biomarkers <- names(matrixtopgenes[1:15,1])
 biomarkers
 ```
 ## Microsatellite instability
-#Plotting mutations
-Counting mutations, MSI relation?
+#MSI is defined as a mistake in MMR (Mismatch Repair system) so if we plot the number of mutations against the celllines, MSI-H celllines are supposed to have more mutations, to check this, we do the following plot
+
+#Plotting mutations and Counting mutations -> MSI relation?
 
 ```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
 library(plyr)
@@ -219,7 +220,6 @@ It is obvious that MSI status affects the number of mutations, due to mutations 
 ```{r, warning=FALSE}
 # Plotting the GI50 values relating to Gemcitabine treatment .
 
-plot(drugsensitivity["gemcitibine",])
 
 #creating a new dataframe with the Celllines and whether the Microsatellite Instablility is high or not. TRUE:High  False:Stable/Low
 
@@ -233,21 +233,17 @@ drugsensitivity=t(drugsensitivity)
 
 gemcitabine_line=data.frame("Gemcitabine drug sensitivity"= drugsensitivity[1:61,8])
 everything=cbind(Cell_Line,gemcitabine_line)
-plot(everything) #Quite interesting to look at
- 
-gemcitabine_line=data.frame("Gemcitabine drug sensitivity"= drugsensitivity[1:61,8])
-everything=cbind(Cell_Line,gemcitabine_line)
 
 library(ggplot2)
 basic=ggplot(everything, aes(Cell.Line.name, Gemcitabine.drug.sensitivity, colour = factor(Microsatellite), shape = factor(Microsatellite) )) +
    geom_point()
 basic + ggtitle("Drug Sensitivity of Gemcitabine treated cell lines according to High Microsatellite Instability")+ xlab("Cell Line")+ylab("Drug Sensitivity")+theme(axis.text.x = element_text(angle = 90))
-basic #very satisfied with this graph
 
 # a relationship between high drug sensitivity(Gemcitabine) and high microsatellite instability cannot be concluded.
 ```
 
 #Heatmap of biomarkers and of MSI related genes 
+To answer the question wheter MSI status affects the fold change after gemcitibine treatment, we investigate the fold change of our 15 biomarkers for gemcitibine.
 
 ```{r}
 #check which rows are for gemcitibine
