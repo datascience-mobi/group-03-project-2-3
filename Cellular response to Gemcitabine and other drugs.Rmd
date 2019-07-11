@@ -111,7 +111,7 @@ absvalfcgeneexpression <- abs(fcgeneexpression)
 
 New matrices with only the celllines treated with gemcitabine
 
-```{r}
+```{r, warning = FALSE, message = FALSE}
 library("dplyr")
 
 treated_gemcitabine <- select(as_tibble(treated_normalized), contains("gemcitibine"))
