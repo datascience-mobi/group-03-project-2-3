@@ -240,7 +240,7 @@ drugsensitivity=t(drugsensitivity)
 # It is observed that the cell lines in the drugsensitivity matrix is already arranged alphabetically.
 # Thus the Cell_Line dataframe is directly merged with the Gemcitabine Drug Sensitivity Values.
 
-gemcitabine_line=data.frame("Gemcitabine drug sensitivity"= drugsensitivity[1:61,8])
+gemcitabine_line=data.frame("Gemcitabine drug sensitivity"= drugsensitivity[8,1:61])
 everything=cbind(Cell_Line,gemcitabine_line)
 
 library(ggplot2)
