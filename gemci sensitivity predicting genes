@@ -1,13 +1,13 @@
 ##Investigating some gemcitibine related genes
 #DCK is frequently inactivated in acquired gemcitabine-resistant human cancer cells.deoxycytidine kinase (DCK). DCK is a key enzyme that activates gemcitabine by phosphorylation
-#so does DCK fcexpression correlate with drugsensitivity, do the same for CMPK1
+#so does DCK fcexpression correlate with drugsensitivity
 
 library(basicTrendline)
 
 colnames(fcgeneexpression)=metadata[1:819,3]
 fc_DCK <- fcgeneexpression["DCK",]
 
-plot(fc_DCK, col = metadata[1:819,3])
+plot(fc_DCK, col = metadata[1:819,3], main = "fold change of DCK", xlab = "samples", ylab = "fold change of DCK")
 
 fc_DCK_gemci <- fc_DCK[365:420]
 
@@ -24,6 +24,9 @@ trendline(fc_of_DCK_gemci, sensitivity)
 
 
 #differentially expressed in gemcitabine-sensitive cancers: microsomal glutathione S-transferase 1 (GSTT1), topoisomerase II alpha (TOP2A), caspase 3, and ATP-binding cassette and subfamily C member 2 (ABCC2)
+
+library(basicTrendline)
+colnames(fcgeneexpression)=metadata[1:819,3]
 
 #same for TOP2A and ABCC2
 fc_TOP2A <- fcgeneexpression["TOP2A",]
@@ -62,3 +65,4 @@ trendline(fc_of_GSTT1_gemci, sensitivity)
 that gemcitibine treatment leads to a higher expression of DCK compared to the other drugs.
  differentially expressed in gemcitabine-sensitive cancers: microsomal glutathione S-transferase 1 (GSTT1), 
  topoisomerase II alpha (TOP2A), caspase 3, and ATP-binding cassette and subfamily C member 2 (ABCC2)
+ or: SLC29A2, SLC281A
