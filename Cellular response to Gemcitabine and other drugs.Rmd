@@ -343,18 +343,6 @@ coord_flip()
 
 #looking at the previous mean graph plot now compare the differences in mutations of cell lines which had high gemcitabine sensitivity and which had low sensitivity   
 
-#check the number of a certain mutation type eg. (missense, nonsense, silent, slpice site) for example for the cell line HS-578T (other mutation types could be codon change, protein change)
-
-sum(mutations[,16] == "HS-578T")
-#the cellline appears in the first 267 rows
-
-
-#create a matrix with number of missense, nonsense, silent, splice site mutations for cell line HS-578T
-
-HS578T <- cbind(sum(mutations[1:267,8] == "Missense_Mutation"), sum(mutations[1:267,8] == "Silent"), sum(mutations[1:267,8] == "Nonsense_Mutation"),sum(mutations[1:267,8] == "Splice_Site"))
-
-HS578T
-
 #filter out celllines with 10 highest and 10 lowest GI50 values
 sort(NegLogGI50gemcitabine2, decreasing = FALSE)
 
@@ -454,11 +442,11 @@ library("pheatmap")
 #using quantiles to determine the colour coding breaks for the heatmap
 
 quantile(HighGI50)
-#0%:0 25%:6  50%:19  75%:113 100%:2229
+
 pheatmap(HighGI50,color = colorRampPalette(c("blue","white","purple","firebrick3","red","orange"))(10), breaks = c(0,6,19,113,2229))
 
 quantile(LowGI50)
-#0%:0 25%:8  50%:22  75%:172 100%:6716 
+
 pheatmap(LowGI50,color = colorRampPalette(c("blue","white","purple","firebrick3","red","orange"))(10), breaks = c(0,8,22,172,6716))
 
 ``` 
