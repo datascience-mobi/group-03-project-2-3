@@ -449,7 +449,6 @@ dimnames(LowGI50) = list(
      c("missense", "silent", "nonsense","splicesite","frame_shift_deletion","frame_shift_insertion","de_novo_out_of_frame")) #column names
 
 #create heatmaps 
-install.packages("pheatmap")
 library("pheatmap")
 
 #using quantiles to determine the colour coding breaks for the heatmap
