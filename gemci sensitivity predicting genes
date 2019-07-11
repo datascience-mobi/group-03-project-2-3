@@ -7,7 +7,11 @@ library(basicTrendline)
 colnames(fcgeneexpression)=metadata[1:819,3]
 fc_DCK <- fcgeneexpression["DCK",]
 
+palette(rainbow(15))
+drugnames <- metadata$drug
+levels=as.factor(levels(drugnames))
 plot(fc_DCK, col = metadata[1:819,3], main = "fold change of DCK", xlab = "samples", ylab = "fold change of DCK")
+legend("right", inset=c(-0.25,0),legend=levels(drugnames), pch=20, col = levels, xpd =TRUE, title = "drugs")
 
 fc_DCK_gemci <- fc_DCK[365:420]
 
