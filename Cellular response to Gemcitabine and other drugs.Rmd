@@ -60,6 +60,7 @@ pca_FC = prcomp(fcgeneexpression, center = F, scale. = F)
 
 drug_as_factor <- as.factor(metadata[1:ncol(treated),"drug"])
 levels <- as.factor(levels(drug_as_factor))
+palette(rainbow(15))
 
 par(xpd=T, mar=par()$mar+c(0,0,0,6))
 plot(pca_FC$rotation[, 1], pca_FC$rotation[, 2], pch = 20, xlab = "PC 1",ylab = "PC 2", col=drug_as_factor, main = "PC 1&2 of the fold change ")
@@ -294,7 +295,7 @@ ht_biomarkers_geneexpression_MSIH + ht_biomarkers_geneexpression_MSIL
 #sum mean of FC in MSI-L (48 celllines) and MSI-H (8 celllines)
 
 mean(biomarkers_geneexpression_MSIH) ;mean(biomarkers_geneexpression_MSIL)
-t.test(biomarkers_geneexpression_MSIH, biomarkers_geneexpression_MSIL, paired = TRUE)
+
 ```
 no significant difference between geneexpression in MSI-H and MSI-L biomarkers
 
