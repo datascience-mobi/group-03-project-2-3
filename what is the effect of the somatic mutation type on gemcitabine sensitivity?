@@ -146,9 +146,15 @@ dimnames(LowGI50) = list(
 install.packages("pheatmap")
 library("pheatmap")
 
-pheatmap(HighGI50)
-pheatmap(HighGI50,color = colorRampPalette(c("blue","white","purple","firebrick3","red","orange"))(70))
+#using quantiles to determine the colour coding breaks for the heatmap
 
-pheatmap(LowGI50)
-pheatmap(LowGI50,color = colorRampPalette(c("blue","white","purple","firebrick3","red","orange"))(70))
+quantile(HighGI50)
+#0%:0 25%:6  50%:19  75%:113 100%:2229
+pheatmap(HighGI50,color = colorRampPalette(c("blue","white","purple","firebrick3","red","orange"))(10), breaks = c(0,6,19,113,2229))
+
+quantile(LowGI50)
+#0%:0 25%:8  50%:22  75%:172 100%:6716 
+
+
+pheatmap(LowGI50,color = colorRampPalette(c("blue","white","purple","firebrick3","red","orange"))(10), breaks = c(0,8,22,172,6716))
 
