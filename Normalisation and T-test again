@@ -9,7 +9,7 @@ grep("gemcitibine",colnames(treated))
 Treated_Cells_Gemcitabine= treated[,365:420]
 qqPlot(Treated_Cells_Gemcitabine)
 
-# S shaped QQ Plot --> under dispersed data
+
 
 hist(Treated_Cells_Gemcitabine)
 
@@ -21,7 +21,7 @@ Untreated_Cells_Gemcitabine=untreated[,365:420]
 qqPlot(Treated_Cells_Gemcitabine)
 
 
-# S shaped QQ Plot  under dispersed data
+
 
 hist(Untreated_Cells_Gemcitabine)
 
