@@ -82,26 +82,23 @@ legend("right", inset=c(-0.5,0),levels(drug_as_factor), pch=20, col = levels, xp
 ```
 
 FC is obviously drug associated
-
 ## T-test
+
+```{r}
 
 #Normalisation
 
 library("car")
-
 
 grep("gemcitibine",colnames(treated))
 
 Treated_Cells_Gemcitabine= treated[,365:420]
 qqPlot(Treated_Cells_Gemcitabine)
 
-
-
 grep("gemcitibine",colnames(untreated))
 
 Untreated_Cells_Gemcitabine=untreated[,365:420]
 qqPlot(Treated_Cells_Gemcitabine)
-
 
 
 # Checking if normalization will have any effect on the QQ-Plots
@@ -115,7 +112,6 @@ qqPlot(Untreated_Gemcitabine_Normalised)
 
 # A more pronounced linearity is observed
 # But no significant change in shape, original data is used for further processing.
-
 
 
 ############T.Test############
@@ -132,6 +128,7 @@ pValues <- apply(commondataframe, 1, function(x) t.test(x[1:56],x[57:112],paired
 commondataframe_pvalue <- data.frame(commondataframe, pValues)
 sum(pValues < 0.05)
 # 6744 genes had a p value less than 0.05. Thus, this leads us to reject the null hypothesis and assume that there could be a difference between the treated and untreated data for these particular genes.
+```
 
 
 ## Biomarkers
