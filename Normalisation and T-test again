@@ -1,0 +1,45 @@
+#Normalisation
+
+install.packages("car")
+library("car")
+
+
+grep("gemcitibine",colnames(treated))
+
+Treated_Cells_Gemcitabine= treated[,365:420]
+qqPlot(Treated_Cells_Gemcitabine)
+
+# S shaped QQ Plot  under dispersed data
+
+hist(Treated_Cells_Gemcitabine)
+
+
+
+grep("gemcitibine",colnames(untreated))
+
+Untreated_Cells_Gemcitabine=untreated[,365:420]
+qqPlot(Treated_Cells_Gemcitabine)
+
+
+# S shaped QQ Plot  under dispersed data
+
+hist(Untreated_Cells_Gemcitabine)
+
+
+
+###########
+
+# Checking if normalization will have any effect on the QQ-Plots
+library(BBmisc)
+
+Treated_Gemcitabine_Normalised=normalize(Treated_Cells_Gemcitabine)
+qqPlot(Treated_Gemcitabine_Normalised)
+hist(Treated_Gemcitabine_Normalised)
+
+
+Untreated_Gemcitabine_Normalised=normalize(Untreated_Cells_Gemcitabine)
+qqPlot(Untreated_Gemcitabine_Normalised)
+hist(Untreated_Gemcitabine_Normalised)
+
+
+# A more pronounced linearity is observed
