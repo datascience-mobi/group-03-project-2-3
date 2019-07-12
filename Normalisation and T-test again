@@ -28,6 +28,7 @@ Untreated_Gemcitabine_Normalised=normalize(Untreated_Cells_Gemcitabine)
 qqPlot(Untreated_Gemcitabine_Normalised)
 
 # A more pronounced linearity is observed
+# But no significant change in shape, original data is used for further processing.
 
 ############T.Test############
 
