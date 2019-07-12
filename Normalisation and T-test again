@@ -30,6 +30,8 @@ qqPlot(Untreated_Gemcitabine_Normalised)
 # A more pronounced linearity is observed
 # But no significant change in shape, original data is used for further processing.
 
+
+
 ############T.Test############
 
 dim(Untreated_Cells_Gemcitabine)
@@ -37,8 +39,11 @@ dim(Untreated_Cells_Gemcitabine)
 commondataframe=data.frame(Untreated_Cells_Gemcitabine,Treated_Cells_Gemcitabine)
 
 pValues <- apply(commondataframe, 1, function(x) t.test(x[1:56],x[57:112],paired = TRUE, alternative = "two.sided")$p.value)
+commondataframe_pvalue <- data.frame(commondataframe, pValues)
 sum(pValues < 0.05)
+# 6744 genes had a p value less than 0.05. Thus, this leads us to reject the null hypothesis and assume that there could be a difference between the treated and untreated data for these particular genes.
 
 commondataframe_pvalue <- data.frame(commondataframe, pValues)
+
 
 
