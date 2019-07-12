@@ -463,17 +463,25 @@ pheatmap(LowGI50,color = colorRampPalette(c("blue","white","purple","firebrick3"
 
 ## Linear regression Analysis
 
-As seen previously, the analyzed celllines have different sensitivities to the treatment with gemcitabine. It would be useful to be able to predict the cell's response to the drug before starting the treatment and be able to apply this knowledge in the real world. The ultimate goal would be to be able to predict the response of a patient's cancer to the drug, so as to better decide if it is the ideal therapy in each case.
+As seen previously, the analyzed celllines have different sensitivities to the treatment with
+gemcitabine. It would be useful to be able to predict the cell's response to the drug before starting
+the treatment and be able to apply this knowledge in the real world. The ultimate goal would be to be
+able to predict the response of a patient's cancer to the drug, so as to better decide if it is the
+ideal therapy in each case.
 
 This linear regression will attempt to find a relation between:  
-1. The drug sensitivity of the celllines (GI50 value) and the gene expression of their biomarkers when untreated.  
+1. The drug sensitivity of the celllines (GI50 value) and the gene expression of their biomarkers when
+untreated.  
 2. The drug sensitivity and the gene copy number of the biomarkers.  
 
-The first step is to check the correlation between the gene expression and gene copy number of the biomarkers, to decide if it makes sense to compare them separately to the drug sensitivity or if it is enough to compare only one of the two.
+The first step is to check the correlation between the gene expression and gene copy number of the
+biomarkers, to decide if it makes sense to compare them separately to the drug sensitivity or if it is
+enough to compare only one of the two.
 
 ##### Creating a drug sensitivity and a gene expression matrix containing only the biomarkers:
 
-The biomarkers were selected from the treated and untreated matrices, so first we make sure that they are in the copy number matrix too.
+The biomarkers were selected from the treated and untreated matrices, so first we make sure that they
+are in the copy number matrix too.
 
 ```{r}
 biomarkers %in% rownames(copynumber)
@@ -482,7 +490,8 @@ The second biomarker is not in this matrix, so it has to be removed from the gen
 
 ```{r}
 commonbiomarkers.lr <- intersect(rownames(copynumber), biomarkers)
-#There is no need to intersect with the untreated matrix, because it was used to define the biomarkers, so it definitely contains all of them.
+#There is no need to intersect with the untreated matrix, because it was used to define 
+#the biomarkers, so it definitely contains all of them.
 ```
 
 Keep only the common biomarkers in both matrices and order alphabetically:
@@ -492,7 +501,8 @@ cnforlr <- copynumber[order(rownames(copynumber)),]
 cnforlr <- cnforlr[which(rownames(cnforlr) %in% commonbiomarkers.lr),]
 
 untreatedforlr <- untreated_normalized[order(rownames(untreated_normalized)),]
-untreatedforlr <- untreatedforlr[which(rownames(untreatedforlr) %in% commonbiomarkers.lr),]
+untreatedforlr <- 
+  untreatedforlr[which(rownames(untreatedforlr) %in% commonbiomarkers.lr),]
 ```
 
 Check the dimensions of the matrices:
@@ -504,16 +514,21 @@ dim(untreatedforlr)
 colnames(untreatedforlr[,1:3])
 ```
 
-The matrix for untreated has many more columns because it contains a measurement for each cellline before starting the treatment with each drug. Since no drug has been applied to any of them, all columns regarding a given cellline can be merged, and the information of drug, dose and time in the column name can be eliminated.
+The matrix for untreated has many more columns because it contains a measurement for each cellline
+before starting the treatment with each drug. Since no drug has been applied to any of them, all columns
+regarding a given cellline can be merged, and the information of drug, dose and time in the column name
+can be eliminated.
 
 ```{r}
 colnames(untreatedforlr) <- sub("_.*", "", colnames(untreatedforlr))
 
-untreatedforlr <- sapply(split(seq_len(ncol(untreatedforlr)),colnames(untreatedforlr)),function(cis) rowMeans(untreatedforlr[,cis,drop=F]))
+untreatedforlr <- sapply(split(seq_len(ncol(untreatedforlr)),colnames(untreatedforlr)),
+                         function(cis) rowMeans(untreatedforlr[,cis,drop=F]))
 dim(untreatedforlr)
 ```
 
-The matrix for untreated still lists more columns than the gene copy number, so only the common ones are to be kept, and we order them alphabetically:
+The matrix for untreated still lists more columns than the gene copy number, so only the common ones are
+to be kept, and we order them alphabetically:
 
 ```{r}
 commoncelllines.lr <- intersect(colnames(untreatedforlr), colnames(cnforlr))
@@ -541,21 +556,30 @@ for (i in 1:ncol(cnforlr.t)) {
 }
 names(correlations.cn.genexp) <- colnames(untreatedforlr.t)
 
-barplot(correlations.cn.genexp, ylim = c(-1,1), las = 2, cex.names = 0.8, ylab = "Correlation coefficient", main = "Correlation between gene expression and copy number" )
+barplot(correlations.cn.genexp, ylim = c(-1,1), las = 2, cex.names = 0.8, 
+        ylab = "Correlation coefficient", 
+        main = "Correlation between gene expression and copy number" )
 mtext("Genes", side = 1, line = 4.3)
 ```
 
-The correlation coefficient of all biomarkers' gene copy number and gene expression are very close to 0, which means that there is a very low correlation between the two variables analyzed.  
+The correlation coefficient of all biomarkers' gene copy number and gene expression are very close to 0,
+which means that there is a very low correlation between the two variables analyzed.  
 
-This low correlation was expected,since there are several mechanisms that control cells' gene expression. Epigenetic variations in the different tissues, like the DNA methylation can silence the gene expression, and transcription factors also play an important role in the up- or down-regulation of gene expression. Therefore, taking only the gene copy number would harldy be enough to predict the expression of a given gene.  
+This low correlation was expected,since there are several mechanisms that control cells' gene
+expression. Epigenetic variations in the different tissues, like the DNA methylation can silence the
+gene expression, and transcription factors also play an important role in the up- or down-regulation of
+gene expression. Therefore, taking only the gene copy number would harldy be enough to predict the
+expression of a given gene.  
 
-Since the correlation of the two variables is so low, we will proceed with a separate linear regressions for:  
+Since the correlation of the two variables is so low, we will proceed with separate linear regressions for:  
 1. Gene expression vs. drug sensitivity  
 2. Gene copy number vs. drug sensitivity
 
 ### 1. Linear regression of gene expression vs. drug sensitivity
 
-The drug sensitivity matrix contains the GI50 values of several celllines when exposed to different drugs. First of all, we make sure to leave only the celllines that are contained in the other two matrices for the regression.
+The drug sensitivity matrix contains the GI50 values of several celllines when exposed to different
+drugs. First of all, we make sure to leave only the celllines that are contained in the other two
+matrices for the regression.
 
 ```{r}
 dsforlr <- drugsensitivity[,which(colnames(drugsensitivity) %in% commoncelllines.lr)]
@@ -563,21 +587,23 @@ dsforlr <- dsforlr[,order(colnames(dsforlr))]
 dsforlr <- dsforlr[order(rownames(dsforlr)),]
 ```
 
-Create a matrix with the gene expression of the biomarkers and a row with the drug sensitivity of each cellline, to be used for the linear regressions:
+Create a matrix with the gene expression of the biomarkers and a row with the drug sensitivity of each
+cellline, to be used for the linear regressions:
 
 ```{r}
 genexp.drugsens <- rbind(untreatedforlr, dsforlr["gemcitibine",])
-rownames(genexp.drugsens) <- c(rownames(genexp.drugsens)[1:nrow(genexp.drugsens)-1], "DS_Gemcitabine")
+rownames(genexp.drugsens) <- c(rownames(genexp.drugsens)[1:nrow(genexp.drugsens)-1], 
+                               "DS_Gemcitabine")
 genexp.drugsens <- t(genexp.drugsens)
 ```
 
 Linear regression of the first biomarker (ATF3):
 
 ```{r}
-lrATF3genexp <- lm(DS_gemcitibine~ATF3, data = as.data.frame(genexp.drugsens))
+lrATF3genexp <- lm(DS_Gemcitabine~ATF3, data = as.data.frame(genexp.drugsens))
 summary(lrATF3genexp)
-plot(DS_gemcitibine~ATF3, data = as.data.frame(genexp.drugsens))
-abline(lm(DS_gemcitibine~ATF3, data = as.data.frame(genexp.drugsens)), col = "blue")
+plot(DS_Gemcitabine~ATF3, data = as.data.frame(genexp.drugsens))
+abline(lm(DS_Gemcitabine~ATF3, data = as.data.frame(genexp.drugsens)), col = "blue")
 ```
 
 R-squared values of the linear regression of each biomarker:
@@ -588,13 +614,15 @@ all.r.squared <- c()
 
 for (i in 1:length(commonbiomarkers.lr)) {
   r.squared.i <- 
-    summary(lm(DS_gemcitabine~genexp.drugsens[,i], data = as.data.frame(genexp.drugsens)))$r.squared
+    summary(lm(DS_gemcitabine~genexp.drugsens[,i], 
+               data = as.data.frame(genexp.drugsens)))$r.squared
   all.r.squared <- c(all.r.squared, r.squared.i)
 }
 
 names(all.r.squared) <- colnames(genexp.drugsens[,1:ncol(genexp.drugsens)-1])
 
-barplot(all.r.squared, ylim = c(0,1), ylab = "R-squared value", main = "Linear regressions using gene expression", cex.names = 0.7, las = 2)
+barplot(all.r.squared, ylim = c(0,1), ylab = "R-squared value", 
+        main = "Linear regressions using gene expression", cex.names = 0.7, las = 2)
 mtext("Biomarkers", side = 1, line = 4)
 ```
 
