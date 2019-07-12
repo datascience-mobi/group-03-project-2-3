@@ -11,8 +11,6 @@ qqPlot(Treated_Cells_Gemcitabine)
 
 
 
-
-
 grep("gemcitibine",colnames(untreated))
 
 Untreated_Cells_Gemcitabine=untreated[,365:420]
@@ -20,22 +18,26 @@ qqPlot(Treated_Cells_Gemcitabine)
 
 
 
-
-
-
-###########
-
 # Checking if normalization will have any effect on the QQ-Plots
 library(BBmisc)
 
 Treated_Gemcitabine_Normalised=normalize(Treated_Cells_Gemcitabine)
 qqPlot(Treated_Gemcitabine_Normalised)
 
-
-
 Untreated_Gemcitabine_Normalised=normalize(Untreated_Cells_Gemcitabine)
 qqPlot(Untreated_Gemcitabine_Normalised)
 
-
-
 # A more pronounced linearity is observed
+
+############T.Test############
+
+dim(Untreated_Cells_Gemcitabine)
+
+commondataframe=data.frame(Untreated_Cells_Gemcitabine,Treated_Cells_Gemcitabine)
+
+pValues <- apply(commondataframe, 1, function(x) t.test(x[1:56],x[57:112],paired = TRUE, alternative = "two.sided")$p.value)
+sum(pValues < 0.05)
+
+commondataframe_pvalue <- data.frame(commondataframe, pValues)
+
+
