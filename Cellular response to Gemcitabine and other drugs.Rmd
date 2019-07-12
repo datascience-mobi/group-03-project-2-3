@@ -577,7 +577,7 @@ Since the correlation of the two variables is so low, we will proceed with separ
 
 ### 1. Linear regression of gene expression vs. drug sensitivity
 
-The drug sensitivity matrix contains the GI50 values of several celllines when exposed to different
+The drug sensitivity matrix contains the EC50 values of several celllines when exposed to different
 drugs. First of all, we make sure to leave only the celllines that are contained in the other two
 matrices for the regression.
 
@@ -602,7 +602,8 @@ Linear regression of the first biomarker (ATF3):
 ```{r}
 lrATF3genexp <- lm(DS_Gemcitabine~ATF3, data = as.data.frame(genexp.drugsens))
 summary(lrATF3genexp)
-plot(DS_Gemcitabine~ATF3, data = as.data.frame(genexp.drugsens))
+plot(DS_Gemcitabine~ATF3, data = as.data.frame(genexp.drugsens), 
+     ylab = "EC50", main = "Linear regression with gene expression and EC50")
 abline(lm(DS_Gemcitabine~ATF3, data = as.data.frame(genexp.drugsens)), col = "blue")
 ```
 
@@ -610,20 +611,85 @@ R-squared values of the linear regression of each biomarker:
 
 ```{r}
 DS_gemcitabine <- genexp.drugsens[,"DS_Gemcitabine"]
-all.r.squared <- c()
+all.r.squared.ge <- c()
 
 for (i in 1:length(commonbiomarkers.lr)) {
-  r.squared.i <- 
+  r.squared.ge.i <- 
     summary(lm(DS_gemcitabine~genexp.drugsens[,i], 
                data = as.data.frame(genexp.drugsens)))$r.squared
-  all.r.squared <- c(all.r.squared, r.squared.i)
+  all.r.squared.ge <- c(all.r.squared.ge, r.squared.ge.i)
 }
 
-names(all.r.squared) <- colnames(genexp.drugsens[,1:ncol(genexp.drugsens)-1])
+names(all.r.squared.ge) <- colnames(genexp.drugsens[,1:ncol(genexp.drugsens)-1])
 
-barplot(all.r.squared, ylim = c(0,1), ylab = "R-squared value", 
-        main = "Linear regressions using gene expression", cex.names = 0.7, las = 2)
+barplot(all.r.squared.ge, ylim = c(0,1), ylab = "R-squared value", 
+        main = "R-squared values of the linear regressions using gene expression", 
+        cex.names = 0.7, las = 2)
 mtext("Biomarkers", side = 1, line = 4)
 ```
 
 ### 2. Linear regression of gene copy number vs. drug sensitivity
+
+The first step is to create a matrix with the gene copy number of the biomarkers and a row with the drug
+sensitivity of each cellline, just like it was done with the gene expression:
+
+```{r}
+copynum.drugsens <- rbind(cnforlr, dsforlr["gemcitibine",])
+rownames(copynum.drugsens) <- c(rownames(copynum.drugsens)[1:nrow(copynum.drugsens)-1], 
+                               "DS_Gemcitabine")
+copynum.drugsens <- t(copynum.drugsens)
+```
+
+Linear regression of the first biomarker (ATF3):
+
+```{r}
+lrATF3copynum <- lm(DS_Gemcitabine~ATF3, data = as.data.frame(copynum.drugsens))
+summary(lrATF3copynum)
+plot(DS_Gemcitabine~ATF3, data = as.data.frame(copynum.drugsens),
+     ylab = "EC50", main = "Linear regression with gene copy number and EC50")
+abline(lm(DS_Gemcitabine~ATF3, data = as.data.frame(copynum.drugsens)), col = "blue")
+```
+
+R-squared values of the linear regression of each biomarker:
+
+```{r}
+all.r.squared.cn <- c()
+for (i in 1:length(commonbiomarkers.lr)) {
+  r.squared.i.cn <- 
+    summary(lm(DS_gemcitabine~copynum.drugsens[,i], 
+               data = as.data.frame(copynum.drugsens)))$r.squared
+  all.r.squared.cn <- c(all.r.squared.cn, r.squared.i.cn)
+}
+names(all.r.squared.cn) <- colnames(copynum.drugsens[,1:ncol(copynum.drugsens)-1])
+barplot(all.r.squared.cn, ylim = c(0,1), ylab = "R-squared value", 
+        main = "R-squared values of the linear regressions using gene copy number", 
+        cex.names = 0.7, las = 2)
+mtext("Biomarkers", side = 1, line = 4)
+```
+
+## Multiple regression analysis
+
+The linear regressions showed that the gene expression or copy number of each biomarker by itself does
+not account for the drug sensitivity of the cellline. Therefore, we will inspect if a multiple
+regression using all 15 biomarkers can be used to better predict a cellline's drug sensitivity.
+
+#### Gene expression vs. drug sensitivity
+
+```{r}
+multipleregression.ge <- lm(DS_Gemcitabine~ATF3 + GADD45A + CDKN1A + TNFAIP3 + EGR1 
+                         + GDF15 + BTG2 + GEM + CEACAM1 + DHRS2 + HBEGF + IL11 + 
+                           TNFRSF9 + TXNIP, data = as.data.frame(genexp.drugsens))
+summary(multipleregression.ge)
+```
+
+#### Gene copy number vs. drug sensitivity
+
+```{r}
+multipleregression.cn <- lm(DS_Gemcitabine~ATF3 + GADD45A + CDKN1A + TNFAIP3 + EGR1 
+                         + GDF15 + BTG2 + GEM + CEACAM1 + DHRS2 + HBEGF + IL11 + 
+                           TNFRSF9 + TXNIP, data = as.data.frame(copynum.drugsens))
+summary(multipleregression.cn)
+```
+
+This regression has the highest R-squared value of all, but at 0.53 it still cannot be used to predict
+the drug sensitivity of the celllines.
