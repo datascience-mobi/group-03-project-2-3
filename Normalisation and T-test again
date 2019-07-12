@@ -11,8 +11,6 @@ qqPlot(Treated_Cells_Gemcitabine)
 
 
 
-hist(Treated_Cells_Gemcitabine)
-
 
 
 grep("gemcitibine",colnames(untreated))
@@ -23,8 +21,6 @@ qqPlot(Treated_Cells_Gemcitabine)
 
 
 
-hist(Untreated_Cells_Gemcitabine)
-
 
 
 ###########
@@ -34,12 +30,12 @@ library(BBmisc)
 
 Treated_Gemcitabine_Normalised=normalize(Treated_Cells_Gemcitabine)
 qqPlot(Treated_Gemcitabine_Normalised)
-hist(Treated_Gemcitabine_Normalised)
+
 
 
 Untreated_Gemcitabine_Normalised=normalize(Untreated_Cells_Gemcitabine)
 qqPlot(Untreated_Gemcitabine_Normalised)
-hist(Untreated_Gemcitabine_Normalised)
+
 
 
 # A more pronounced linearity is observed
