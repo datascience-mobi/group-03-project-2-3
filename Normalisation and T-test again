@@ -34,6 +34,10 @@ qqPlot(Untreated_Gemcitabine_Normalised)
 
 ############T.Test############
 
+# The H0 Hypothesis: there is no change in the mean of the treated and untreated data.
+# Alternative Hypothesis (H1): there is a difference in mean between the treated and untreated data.
+# Chosen limit: when pValue < 0.05,  H0 is rejected
+
 dim(Untreated_Cells_Gemcitabine)
 
 commondataframe=data.frame(Untreated_Cells_Gemcitabine,Treated_Cells_Gemcitabine)
