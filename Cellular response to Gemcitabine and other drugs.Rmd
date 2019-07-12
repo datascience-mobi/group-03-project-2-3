@@ -334,7 +334,7 @@ mean(biomarkers_geneexpression_MSIH) ;mean(biomarkers_geneexpression_MSIL)
 ```
 no significant difference between geneexpression in MSI-H and MSI-L biomarkers
 
-##Drug sensitivity and cell line
+## Drug sensitivity and cell line
 
 ```{r}
 #is the drug sensitivity for gemcitabine dependend on the cell line? 
@@ -348,21 +348,21 @@ NegLogGI50gemcitabine<- drugsensitivity[-1:-7,]
 NegLogGI50gemcitabine2<- NegLogGI50gemcitabine[-2:-8,]
 
 #substract the value 7,003322 for GI50 value of gemcitabine for every cell line 
-NegLogGI50gemcitabine3 <- NegLogGI50gemcitabine2 - 7.003322
-Neg_LogGI50gemcitabine4 <- as.data.frame(NegLogGI50gemcitabine3)
+GI50value <- NegLogGI50gemcitabine2 - 7.003322
+Neg_LogGI50gemcitabine4 <- as.data.frame(GI50value)
 
 
 library(ggplot2)
 theme_set(theme_bw())  
 Neg_LogGI50gemcitabine4$`cell_line` <- rownames(Neg_LogGI50gemcitabine4)
-Neg_LogGI50gemcitabine4$NegLogGI50gemcitabine3_type<- ifelse(Neg_LogGI50gemcitabine4$NegLogGI50gemcitabine3< 0, "below", "above")
-ggplot(Neg_LogGI50gemcitabine4, aes(x=`cell_line`, y=NegLogGI50gemcitabine3, label=NegLogGI50gemcitabine3)) + 
-    geom_bar(stat='identity', aes(fill=NegLogGI50gemcitabine3_type), width=0.7)  +
+Neg_LogGI50gemcitabine4$GI50value_type<- ifelse(Neg_LogGI50gemcitabine4$GI50value< 0, "below", "above")
+ggplot(Neg_LogGI50gemcitabine4, aes(x=`cell_line`, y=GI50value, label=GI50value)) + 
+    geom_bar(stat='identity', aes(fill=GI50value_type), width=0.7)  +
     scale_fill_manual(name="value", 
                        labels = c("Above Average", "Below Average"), 
                        values = c("above"="#00ba38", "below"="#f8766d")) + 
      labs(subtitle=" ", 
-          title= "cell line and drug sensitivity") + 
+          title= "Cell line and drug sensitivity") + 
 coord_flip()
 
 #looking at the previous mean graph plot now compare the differences in mutations of cell lines which had high gemcitabine sensitivity and which had low sensitivity   
