@@ -85,28 +85,54 @@ FC is obviously drug associated
 
 ## T-test
 
-Check if normalized treated data is normally distributed using QQ-plot
-If normally distributed quantile dots should lie on a straight line 
+#Normalisation
 
-```{r}
-#check if normalized treated data is normally distributed using QQ-plot
-qqnorm(treated_normalized, main = "QQ Plot of geneexpression after treatment")
-qqline(treated_normalized)
-```
+library("car")
 
-T-test with normalized data? Significant difference between treated and untreated?
 
-```{r}
-t.test(treated, untreated, paired = TRUE)
-t.test(treated_normalized, untreated_normalized, paired = TRUE)
-```
+grep("gemcitibine",colnames(treated))
 
-The H0 Hypothesis is that there is no change in the mean of the treated and untreated data.
+Treated_Cells_Gemcitabine= treated[,365:420]
+qqPlot(Treated_Cells_Gemcitabine)
 
-The 95 percent confidence interval is between -0.0015656142 and -0.0009451127 with a p-value of 2.182e-15.
-The p-value is not within the 95 percent confidence interval, thus the null hypothesis is rejected for the alternative hypothesis.
 
-Alternative Hypothesis: there is a difference in mean between the treated and untreated data. ("Tentatively": does this prove that the change is provoked by the drug? or is it only a batch effect? Check the boxplots for batch effect identification.
+
+grep("gemcitibine",colnames(untreated))
+
+Untreated_Cells_Gemcitabine=untreated[,365:420]
+qqPlot(Treated_Cells_Gemcitabine)
+
+
+
+# Checking if normalization will have any effect on the QQ-Plots
+library(BBmisc)
+
+Treated_Gemcitabine_Normalised=normalize(Treated_Cells_Gemcitabine)
+qqPlot(Treated_Gemcitabine_Normalised)
+
+Untreated_Gemcitabine_Normalised=normalize(Untreated_Cells_Gemcitabine)
+qqPlot(Untreated_Gemcitabine_Normalised)
+
+# A more pronounced linearity is observed
+# But no significant change in shape, original data is used for further processing.
+
+
+
+############T.Test############
+
+# The H0 Hypothesis: there is no change in the mean of the treated and untreated data.
+# Alternative Hypothesis (H1): there is a difference in mean between the treated and untreated data.
+# Chosen limit: when pValue < 0.05,  H0 is rejected
+
+dim(Untreated_Cells_Gemcitabine)
+
+commondataframe=data.frame(Untreated_Cells_Gemcitabine,Treated_Cells_Gemcitabine)
+
+pValues <- apply(commondataframe, 1, function(x) t.test(x[1:56],x[57:112],paired = TRUE, alternative = "two.sided")$p.value)
+commondataframe_pvalue <- data.frame(commondataframe, pValues)
+sum(pValues < 0.05)
+# 6744 genes had a p value less than 0.05. Thus, this leads us to reject the null hypothesis and assume that there could be a difference between the treated and untreated data for these particular genes.
+
 
 ## Biomarkers
 
