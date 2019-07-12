@@ -1,6 +1,5 @@
 #Normalisation
 
-install.packages("car")
 library("car")
 
 
