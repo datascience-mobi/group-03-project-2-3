@@ -200,6 +200,120 @@ biomarkers <- names(matrixtopgenes[1:15,1])
 biomarkers
 ```
 
+### Further insight into our biomarkers:
+
+Now that we know which genes have the highest difference in gene expression, we will check if each of 
+them is up- or down-regulated.
+
+```{r}
+fcge_gemcitabine <- 
+  select(as_tibble(fcgeneexpression), contains("gemcitibine"))
+fcge_gemcitabine <- as.matrix(fcge_gemcitabine)
+rownames(fcge_gemcitabine) <- rownames(fcgeneexpression)
+
+fcge_gemcitabine <- fcge_gemcitabine[which(rownames(fcge_gemcitabine) %in% biomarkers),]
+#fcge_gemcitabine <- fcge_gemcitabine[biomarkers,]
+
+meanfcge_gemcitabine <- apply(fcge_gemcitabine, 1, mean)
+meanfcge_gemcitabine <- meanfcge_gemcitabine[order(-meanfcge_gemcitabine)]
+
+barplot(meanfcge_gemcitabine, xlab = "", ylab = "Fold change", ylim = c(-1, 3), 
+        main = "Change in gene expression of the biomarkers with gemcitabine", 
+        cex.names = 0.9, las = 2, col = "#00CC66")
+mtext("Biomarkers", side = 1, line = 4)
+```
+
+Apparently most of the biomarkers are up-regulated after the treatment with gemcitabine. Only DHRS2 is down-regulated.
+
+### Cellular function of the biomarkers
+
+To further understand the effects of gemcitabine in the cells, we decided to compile the main functions 
+of each biomarker. The information about each gene was taken from the gene database of the National 
+Center for Biotechnology Information (NCBI) of the USA.
+
+##### ATF3
+
+This gene encodes for activating transcription factors. It is often highly expressed in cancer cells
+and is involved in the complex process of cellular stress response.
+
+##### CXCL8
+
+CXCL8 codes for Interleukin-8, which induces the migration of immune cells towards sites of infection,
+stimulates phagocytisis and promotes angiogenesis.
+
+##### CDKN1A
+
+This gene codes for a cyclin-dependent kinase inhibitor, which plays a role in the regulation of the 
+cell cycle, including DNA replication and DNA damage repair. Since gemcitabine produces broken DNA 
+strands, it makes sense that this DNA-damage-repair protein would be up-regulated in cancer cells to 
+counteract the drug's effects.
+
+##### GADD45A
+
+Member of a group of genes whose transcription increases when the cell is under stress or being treated
+with DNA-damaging agents, such as gemcitabine.
+
+##### TNFAIP3
+
+Encodes for TNF alpha induced protein 3, which is involved in the cytikine-mediated immune and 
+inflammatory responses.
+
+##### HBEGF
+
+Encodes for a growth factor involved in wound healing processes and known to be over-expressed in 
+certain cancer celllines.
+
+##### GEM
+
+This gene encodes for a GTP-binding protein, which could have a regulatory function in receptor-mediated signal transduction.
+
+##### TXNIP
+
+Encodes for a thioredoxin-binding protein, which inhibits thioreduxin and results in the accumulation 
+of reactive oxigen species in the cell and increased oxidative stress. It is suspected to function
+as a tumor-suppressor gene. 
+
+##### BTG2
+
+Encodes for a protein of the BTG/Tob family, which appears to have antiproliferative effects. 
+
+##### EGR1
+
+Encodes for a nuclear protein and transcription regulator; it works as a cancer suppressor gene.
+
+##### GDF15
+
+Encodes for a TGF-beta ligand, which regulates gene expression. Increased levels of the protein are
+linked with inflammation and oxidative stress.
+
+##### TNFRSF9
+
+Encodes for a protein of the TNF-receptor superfamily, which contributes to the clonal expansion, 
+survival and development of T-cells.
+
+##### IL11
+
+Encodes for Interleukin-11, which stimulates the development of immunoglobulin-dependent B-cells.
+
+##### CEACAM1
+
+Encodes for a cell-cell adhesion molecule that plays a role in angiogenesis, apoptosis, tumor 
+suppression and metastasis.
+
+##### DHRS2
+
+Encodes for a dehydrogenase/reductase of a family of enzymes known to metabolize different compounds 
+such as prostaglandins, retinoids, lipids and xenobiotics.
+
+#### Conclusion from the biomarkers
+
+Most of the biomarkers found are up-regulated after the cell is treated with gemcitabine. When looking 
+at the functions that these genes have, it appears that this up-regulation would be beneficial for the 
+treatment of cancer, since several of them are tumor-suppressor genes or have immune-activating effects.
+The one biomarker that is down-regulated (DHRS2) is an enzyme that metabolzes xenobiotics, so its 
+reduced expression is also beneficial, since it would presumably decrease the speed of degradation of 
+gemcitabine.
+
 ## Microsatellite instability
 #MSI is defined as a mistake in MMR (Mismatch Repair system) so if we plot the number of mutations against the celllines, MSI-H celllines are supposed to have more mutations, to check this, we do the following plot
 
