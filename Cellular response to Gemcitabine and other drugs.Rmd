@@ -573,6 +573,12 @@ pheatmap(LowGI50,color = colorRampPalette(c("blue","white","purple","firebrick3"
 
 #GI50 is the concentration for 50% of maximal inhibition of cell proliferation. However, since our values are -log10 transformed, higher values indicate higher sensitivity.The most prominent difference in mutation pattern between the celllines with high and low gemcitabine sensitivity is that the celllines with a low GI50 value have a much higher  count of mutations. Further we are going to look at the portion of different mutation types. In the heatmap it is visible that for most mutation type the mutation count pattern is similar. However, for nonsense and splice site mutation you can see that the celllines with low GI50 values have a higher portion in those mutations in comparison to the celllines with high GI50 values. It is maybe linked to the fact that gemcitabine is an antimetabolite and stops DNA synthesis by inducing a masked chain termination. Nonsense mutations have the same effect of inducing a stop of DNA synthesis. Celllines in which a stop of DNA synthesis occur more often due to nonsense mutation are maybe therefore less sensitive to gemcitabine. However mutation frequency alone is insufficient to identify and predict the drug sensitivity of a cellline towards gemcitabine. 
 
+#Other possibilities to explain a celllines sensitivity to gemcitabine are mutations of genes that play an important role in the mechanisms gemcitabine is involved in. One enzyme that plays an important role in converting gemcitabine from the prodrug into the final active drug form is deoxycytidine kinase (DCK) . It modifies gemcitabine by attaching a phosphate to it, converting it to gemcitabine monophosphate. The gene encoding this enzyme is called DCK.
+
+print(mutations[which(mutations$Hugo_Symbol == "DCK"),"Tumor_Sample_Barcode"])
+
+The only cellline that has a DCK mutation is "HCC-2998" and it corresponds to the fact that it is also a cellline with a low gemcitabine sensitivity. 
+
 ``` 
 
 ## Linear regression Analysis
