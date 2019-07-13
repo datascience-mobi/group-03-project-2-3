@@ -133,16 +133,21 @@ sum(pValues < 0.05)
 
 ## Biomarkers
 
-Fold change to find the difference in gene expression between treated and untreated celllines 
+In order to asses the effect that gemcitabine has in the cancer cells, we will define certain genes,
+that deliver the most information. To this end, we will base the selection of the genes on their
+expression, or more specifically, the change in their expression before and after the treatment with the
+drug. These will be out biomarkers.  
+
+The first step is to perform a fold change to find the difference in gene expression between treated and untreated celllines.
 
 ```{r}
 fcgeneexpression <- treated_normalized - untreated_normalized
-
-#Absolute value of the data in fcgeneexpression, to find the biggest changes, regardless of if they are up- or down-regulated
+#Absolute value of the data in fcgeneexpression, to find the biggest changes, regardless 
+#of if they are up- or down-regulated
 absvalfcgeneexpression <- abs(fcgeneexpression)
 ```
 
-New matrices with only the celllines treated with gemcitabine
+New matrices containing only the celllines treated with gemcitabine:
 
 ```{r, warning = FALSE, message = FALSE}
 library("dplyr")
@@ -151,28 +156,25 @@ treated_gemcitabine <- select(as_tibble(treated_normalized), contains("gemcitibi
 treated_gemcitabine <- as.matrix(treated_gemcitabine)
 rownames(treated_gemcitabine) <- rownames(treated_normalized)
 
-untreated_gemcitabine <- select(as_tibble(untreated_normalized), contains("gemcitibine"))
+untreated_gemcitabine <- 
+  select(as_tibble(untreated_normalized), contains("gemcitibine"))
 untreated_gemcitabine <- as.matrix(untreated_gemcitabine)
 rownames(untreated_gemcitabine) <- rownames(untreated_normalized)
 
-absvalfcge_gemcitabine <- select(as_tibble(absvalfcgeneexpression), contains("gemcitibine"))
+absvalfcge_gemcitabine <- 
+  select(as_tibble(absvalfcgeneexpression), contains("gemcitibine"))
 absvalfcge_gemcitabine <- as.matrix(absvalfcge_gemcitabine)
 rownames(absvalfcge_gemcitabine) <- rownames(absvalfcgeneexpression)
 ```
 
-
-Create a function to order the components of a vector (descending) and return the names in that order
+Create a new matrix with the top differentially expressed genes in descending order
 
 ```{r}
 orderforvectors <- function(x) {
   y <- names(x[order(-x)])
   return(y)
 }
-```
 
-Apply the new funtion *orderforvectors* to all the columns and create a new matrix with the gene names
-
-```{r}
 matrixofbiomarkers <- apply(absvalfcge_gemcitabine, 2, orderforvectors) 
 #the 2 means it is applied to columns
 ```
@@ -181,18 +183,12 @@ Check for most common genes in the first 15 rows of the new matrix
 
 ```{r}
 topgenes <- sort(table(as.vector(matrixofbiomarkers[1:15,])))
-```
 
-Convert *topgenes* into a matrix in descending order of counts
-
-```{r}
 matrixtopgenes <- as.matrix(topgenes[order(-topgenes)])
-```
 
-Bar plot of *matrixtopgenes* to find the biomarkers
-
-```{r}
-barplot(matrixtopgenes[1:20,], xlab = "", ylab = "Counts", main = "Top differentially expressed genes", cex.names = 0.7, las = 2)
+barplot(matrixtopgenes[1:30,], xlab = "", ylab = "Counts", 
+        main = "Top differentially expressed genes", 
+        cex.names = 0.7, las = 2, col = "#00CC66")
 mtext("Genes", side = 1, line = 4)
 ```
 We decided to take the top 15 genes as our biomarkers
@@ -203,6 +199,7 @@ List of our biomarkers:
 biomarkers <- names(matrixtopgenes[1:15,1])
 biomarkers
 ```
+
 ## Microsatellite instability
 #MSI is defined as a mistake in MMR (Mismatch Repair system) so if we plot the number of mutations against the celllines, MSI-H celllines are supposed to have more mutations, to check this, we do the following plot
 
