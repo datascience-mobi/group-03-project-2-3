@@ -556,7 +556,7 @@ for (i in 1:ncol(cnforlr.t)) {
 }
 names(correlations.cn.genexp) <- colnames(untreatedforlr.t)
 
-barplot(correlations.cn.genexp, ylim = c(-1,1), las = 2, cex.names = 0.8, 
+barplot(correlations.cn.genexp, ylim = c(-1,1), las = 2, cex.names = 0.8, col = "blue", 
         ylab = "Correlation coefficient", 
         main = "Correlation between gene expression and copy number" )
 mtext("Genes", side = 1, line = 4.3)
@@ -624,7 +624,7 @@ names(all.r.squared.ge) <- colnames(genexp.drugsens[,1:ncol(genexp.drugsens)-1])
 
 barplot(all.r.squared.ge, ylim = c(0,1), ylab = "R-squared value", 
         main = "R-squared values of the linear regressions using gene expression", 
-        cex.names = 0.7, las = 2)
+        cex.names = 0.7, las = 2, col = "blue")
 mtext("Biomarkers", side = 1, line = 4)
 ```
 
@@ -663,7 +663,7 @@ for (i in 1:length(commonbiomarkers.lr)) {
 names(all.r.squared.cn) <- colnames(copynum.drugsens[,1:ncol(copynum.drugsens)-1])
 barplot(all.r.squared.cn, ylim = c(0,1), ylab = "R-squared value", 
         main = "R-squared values of the linear regressions using gene copy number", 
-        cex.names = 0.7, las = 2)
+        cex.names = 0.7, las = 2, col = "blue")
 mtext("Biomarkers", side = 1, line = 4)
 ```
 
