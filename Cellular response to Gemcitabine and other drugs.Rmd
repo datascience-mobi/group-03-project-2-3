@@ -339,8 +339,8 @@ drugsensitivity=t(drugsensitivity)
 
 #The the Cell_Line dataframe is directly merged with the Gemcitabine Drug Sensitivity Values.
 Cell_Line_no_nas <- na.omit(Cell_Line)
-table_of_mutations <- qpcR:::cbind.na(counting_mutations, Cell_Line_no_nas)
-
+table_of_mutations_na <- qpcR:::cbind.na(counting_mutations, Cell_Line_no_nas)
+table_of_mutations <- na.omit(table_of_mutations_na)
 mutation_plot <- qplot(
 
     x = table_of_mutations[,3],
