@@ -453,9 +453,12 @@ NegLogGI50gemcitabine2<- NegLogGI50gemcitabine[-2:-8,]
 #substract the value 7,003322 for GI50 value of gemcitabine for every cell line 
 GI50value <- NegLogGI50gemcitabine2 - 7.003322
 Neg_LogGI50gemcitabine4 <- as.data.frame(GI50value)
+```
 
-
+```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
 library(ggplot2)
+```
+```{r}
 theme_set(theme_bw())  
 Neg_LogGI50gemcitabine4$`cell_line` <- rownames(Neg_LogGI50gemcitabine4)
 Neg_LogGI50gemcitabine4$GI50value_type<- ifelse(Neg_LogGI50gemcitabine4$GI50value< 0, "below", "above")
@@ -548,10 +551,12 @@ LowGI50 <- cbind(missensenselow,silentlow,nonesenselow,splicesitelow,frameshiftl
 dimnames(LowGI50) = list( 
      c("HCC-2998","HS-578T","OVCAR-4","TK-10","PC-3","MDA-MB-231","SK-MEL-28","OVCAR-3","KM12","HCT-15"),         # row names 
      c("missense", "silent", "nonsense","splicesite","frame_shift_deletion","frame_shift_insertion","de_novo_out_of_frame")) #column names
-
-#create heatmaps 
+```
+create heatmaps 
+```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
 library("pheatmap")
-
+```
+```{r}
 #using quantiles to determine the colour coding breaks for the heatmap
 
 quantile(HighGI50, c(.10, .20, .30, .40, .50, .60, .70, .80, .90, 1))
