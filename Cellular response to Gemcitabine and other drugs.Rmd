@@ -44,8 +44,10 @@ treated_normalized <- normalizeBetweenArrays(treated)
 
 ## Comparing boxplots
 
-```{r}
+```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
 library("viridis")
+```
+```{r}
 palette(viridis(15))
 drugnames <- metadata$drug
 par(mar=c(5,4,5,9))
