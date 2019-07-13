@@ -450,11 +450,11 @@ library("pheatmap")
 
 quantile(HighGI50)
 
-pheatmap(HighGI50,color = colorRampPalette(c("blue","white","purple","firebrick3","red","orange"))(10), breaks = c(0,6,19,113,2229), main= "Celllines with high GI50 values")
+pheatmap(HighGI50,color = colorRampPalette(c("blue","white","purple","firebrick3","red","orange"))(10), breaks = c(0,6,19,113,2229), main= "Celllines with high GI50 fold change values")
 
 quantile(LowGI50)
 
-pheatmap(LowGI50,color = colorRampPalette(c("blue","white","purple","firebrick3","red","orange"))(10), breaks = c(0,8,22,172,6716), main = "Celllines with low GI50 values")
+pheatmap(LowGI50,color = colorRampPalette(c("blue","white","purple","firebrick3","red","orange"))(10), breaks = c(0,8,22,172,6716), main = "Celllines with low GI50 fold change values")
 
 ``` 
 
