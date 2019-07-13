@@ -556,7 +556,7 @@ for (i in 1:ncol(cnforlr.t)) {
 }
 names(correlations.cn.genexp) <- colnames(untreatedforlr.t)
 
-barplot(correlations.cn.genexp, ylim = c(-1,1), las = 2, cex.names = 0.8, col = "blue", 
+barplot(correlations.cn.genexp, ylim = c(-1,1), las = 2, cex.names = 0.8, col = "#3399FF", 
         ylab = "Correlation coefficient", 
         main = "Correlation between gene expression and copy number" )
 mtext("Genes", side = 1, line = 4.3)
@@ -604,7 +604,7 @@ lrATF3genexp <- lm(DS_Gemcitabine~ATF3, data = as.data.frame(genexp.drugsens))
 summary(lrATF3genexp)
 plot(DS_Gemcitabine~ATF3, data = as.data.frame(genexp.drugsens), 
      ylab = "EC50", main = "Linear regression with gene expression and EC50")
-abline(lm(DS_Gemcitabine~ATF3, data = as.data.frame(genexp.drugsens)), col = "blue")
+abline(lm(DS_Gemcitabine~ATF3, data = as.data.frame(genexp.drugsens)), col = "#3399FF")
 ```
 
 R-squared values of the linear regression of each biomarker:
@@ -624,7 +624,7 @@ names(all.r.squared.ge) <- colnames(genexp.drugsens[,1:ncol(genexp.drugsens)-1])
 
 barplot(all.r.squared.ge, ylim = c(0,1), ylab = "R-squared value", 
         main = "R-squared values of the linear regressions using gene expression", 
-        cex.names = 0.7, las = 2, col = "blue")
+        cex.names = 0.7, las = 2, col = "#3399FF")
 mtext("Biomarkers", side = 1, line = 4)
 ```
 
@@ -647,7 +647,7 @@ lrATF3copynum <- lm(DS_Gemcitabine~ATF3, data = as.data.frame(copynum.drugsens))
 summary(lrATF3copynum)
 plot(DS_Gemcitabine~ATF3, data = as.data.frame(copynum.drugsens),
      ylab = "EC50", main = "Linear regression with gene copy number and EC50")
-abline(lm(DS_Gemcitabine~ATF3, data = as.data.frame(copynum.drugsens)), col = "blue")
+abline(lm(DS_Gemcitabine~ATF3, data = as.data.frame(copynum.drugsens)), col = "#3399FF")
 ```
 
 R-squared values of the linear regression of each biomarker:
@@ -663,7 +663,7 @@ for (i in 1:length(commonbiomarkers.lr)) {
 names(all.r.squared.cn) <- colnames(copynum.drugsens[,1:ncol(copynum.drugsens)-1])
 barplot(all.r.squared.cn, ylim = c(0,1), ylab = "R-squared value", 
         main = "R-squared values of the linear regressions using gene copy number", 
-        cex.names = 0.7, las = 2, col = "blue")
+        cex.names = 0.7, las = 2, col = "#3399FF")
 mtext("Biomarkers", side = 1, line = 4)
 ```
 
