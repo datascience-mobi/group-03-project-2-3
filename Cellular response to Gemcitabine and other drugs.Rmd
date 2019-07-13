@@ -99,7 +99,7 @@ qqPlot(Treated_Cells_Gemcitabine)
 grep("gemcitibine",colnames(untreated))
 
 Untreated_Cells_Gemcitabine=untreated[,365:420]
-qqPlot(Treated_Cells_Gemcitabine)
+qqPlot(Untreated_Cells_Gemcitabine)
 ```
 Checking if normalization will have any effect on the QQ-Plots
 ```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
