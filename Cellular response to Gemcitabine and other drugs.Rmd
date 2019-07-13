@@ -63,9 +63,8 @@ boxplot(treated_normalized, main = "normalized geneexpression after treatment", 
 
 
 ## PCA
-
+PCA of the fold change, to investigate whether change in gene expression is tissue associated.
 ```{r}
-#PCA of FC 
 fcgeneexpression <- treated_normalized - untreated_normalized
 pca_FC = prcomp(fcgeneexpression, center = F, scale. = F)
 
@@ -87,12 +86,11 @@ legend("right", inset=c(-0.5,0),levels(drug_as_factor), pch=20, col = levels, xp
 FC is obviously drug associated
 ## T-test
 
-```{r}
-
-#Normalisation
-
+Normalisation
+```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
 library("car")
-
+```
+```{r}
 grep("gemcitibine",colnames(treated))
 
 Treated_Cells_Gemcitabine= treated[,365:420]
