@@ -100,27 +100,28 @@ grep("gemcitibine",colnames(untreated))
 
 Untreated_Cells_Gemcitabine=untreated[,365:420]
 qqPlot(Treated_Cells_Gemcitabine)
-
-
-# Checking if normalization will have any effect on the QQ-Plots
+```
+Checking if normalization will have any effect on the QQ-Plots
+```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
 library(BBmisc)
-
+```
+```{r}
 Treated_Gemcitabine_Normalised=normalize(Treated_Cells_Gemcitabine)
 qqPlot(Treated_Gemcitabine_Normalised)
 
 Untreated_Gemcitabine_Normalised=normalize(Untreated_Cells_Gemcitabine)
 qqPlot(Untreated_Gemcitabine_Normalised)
+```
+A more pronounced linearity is observed
+But no significant change in shape, original data is used for further processing.
 
-# A more pronounced linearity is observed
-# But no significant change in shape, original data is used for further processing.
+##T.Test
 
+The H0 Hypothesis: there is no change in the mean of the treated and untreated data.
+Alternative Hypothesis (H1): there is a difference in mean between the treated and untreated data.
+Chosen limit: when pValue < 0.05,  H0 is rejected
 
-############T.Test############
-
-# The H0 Hypothesis: there is no change in the mean of the treated and untreated data.
-# Alternative Hypothesis (H1): there is a difference in mean between the treated and untreated data.
-# Chosen limit: when pValue < 0.05,  H0 is rejected
-
+```{r}
 dim(Untreated_Cells_Gemcitabine)
 
 commondataframe=data.frame(Untreated_Cells_Gemcitabine,Treated_Cells_Gemcitabine)
