@@ -115,7 +115,7 @@ qqPlot(Untreated_Gemcitabine_Normalised)
 A more pronounced linearity is observed
 But no significant change in shape, original data is used for further processing.
 
-##T.Test
+## T.test
 
 The H0 Hypothesis: there is no change in the mean of the treated and untreated data.
 Alternative Hypothesis (H1): there is a difference in mean between the treated and untreated data.
@@ -377,13 +377,15 @@ drugsensitivity=t(drugsensitivity)
 gemcitabine_line=data.frame("Gemcitabine drug sensitivity"= drugsensitivity[8,1:61])
 everything=cbind(Cell_Line,gemcitabine_line)
 
+```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
 library(ggplot2)
+```
+```{r}
 basic=ggplot(everything, aes(Cell.Line.name, Gemcitabine.drug.sensitivity, colour = factor(Microsatellite), shape = factor(Microsatellite) )) +
    geom_point()
 basic + ggtitle("Drug Sensitivity of Gemcitabine treated cell lines according to High Microsatellite Instability")+ xlab("Cell Line")+ylab("Drug Sensitivity")+theme(axis.text.x = element_text(angle = 90))
-
-# a relationship between high drug sensitivity(Gemcitabine) and high microsatellite instability cannot be concluded.
 ```
+a relationship between high drug sensitivity(Gemcitabine) and high microsatellite instability cannot be concluded.
 
 #Heatmap of biomarkers and of MSI related genes 
 To answer the question wheter MSI status affects the fold change after gemcitibine treatment, we investigate the fold change of our 15 biomarkers for gemcitibine.
