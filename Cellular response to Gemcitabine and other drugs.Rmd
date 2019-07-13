@@ -32,10 +32,11 @@ metadata <- read.table(paste0(wd,"/NCI_TPW_metadata.tsv"), header = TRUE, sep ="
 
 ## Normalization of data
 
-```{r}
-#loading library limma needed for normalization
+loading library limma needed for normalization
+```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
 library(limma)
-
+```
+```{r}
 #normalize treated & untreated
 untreated_normalized <- normalizeBetweenArrays(untreated)
 treated_normalized <- normalizeBetweenArrays(treated)
