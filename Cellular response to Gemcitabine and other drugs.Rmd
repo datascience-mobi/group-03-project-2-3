@@ -422,10 +422,10 @@ biomarkers_geneexpression_MSIL <- biomarkers_geneexpression[,-c(8,12,11,17,19,27
 geneexpression_MSI_related_MSIH <- geneexpression_MSI_related[,c(8,12,11,17,19,27,42,45)]
 geneexpression_MSI_related_MSIL <- geneexpression_MSI_related[,-c(8,12,11,17,19,27,42,45)]
 
-geneexpression_MSI_related_untreated_MSIH <- geneexpression_MSI_related_untreated
-[, c(8,12,11,17,19,27,42,45)]
-geneexpression_MSI_related_untreated_MSIL <- geneexpression_MSI_related_untreated
-[, -c(8,12,11,17,19,27,42,45)]
+geneexpression_MSI_related_untreated_MSIH <- 
+geneexpression_MSI_related_untreated[, c(8,12,11,17,19,27,42,45)]
+geneexpression_MSI_related_untreated_MSIL <- 
+geneexpression_MSI_related_untreated[, -c(8,12,11,17,19,27,42,45)]
 
 
 #packages which makes it possible to plot tow heatmaps next to each other
