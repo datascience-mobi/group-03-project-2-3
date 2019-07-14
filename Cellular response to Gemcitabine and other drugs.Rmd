@@ -672,7 +672,7 @@ print(mutations[which(mutations$Hugo_Symbol == "DCK"),"Tumor_Sample_Barcode"])
 The only cellline that has a DCK mutation is "HCC-2998" and it 
 corresponds to the fact that it is also a cellline with a low gemcitabine sensitivity. 
 
-``` 
+
 
 ## Linear regression Analysis
 
