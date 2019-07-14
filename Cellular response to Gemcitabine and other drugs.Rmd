@@ -141,7 +141,8 @@ pValues <- apply(commondataframe, 1, function(x) t.test(x[1:56],x[57:112],paired
 commondataframe_pvalue <- data.frame(commondataframe, pValues)
 sum(pValues < 0.05)
 ```
-6744 genes had a p value less than 0.05. Thus, this leads us to reject the null hypothesis and assume that there could be a difference between the treated and untreated data for these particular genes.
+6744 genes had a p value less than 0.05. Thus, this leads us to reject the null hypothesis 
+and assume that there could be a difference between the treated and untreated data for these particular genes.
 
 
 ## Biomarkers
@@ -328,7 +329,8 @@ reduced expression is also beneficial, since it would presumably decrease the sp
 gemcitabine.
 
 ## Microsatellite instability
-MSI is defined as a mistake in MMR (Mismatch Repair system) so if we plot the number of mutations against the celllines, MSI-H celllines are supposed to have more mutations, to check this, we do the following plot
+MSI is defined as a mistake in MMR (Mismatch Repair system) so if we plot the number of mutations against the celllines, 
+MSI-H celllines are supposed to have more mutations, to check this, we do the following plot
 
 ```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
 library(plyr)
@@ -341,7 +343,8 @@ counting_mutations <- count(mutation_cellline, vars = NULL, wt_var = NULL)
 ```
 
 ```{r}
-#creating a new dataframe with the Celllines and whether the Microsatellite Instablility is high or not. TRUE:High  False:Stable/Low
+#creating a new dataframe with the Celllines and whether the Microsatellite Instablility is high or not. 
+TRUE:High  False:Stable/Low
 
 L=cannotation$Microsatellite_instability_status=="MSI-H"
 Cell_Line=data.frame("Cell Line name"= cannotation[1:61,1],"Microsatellite"= L)
