@@ -466,7 +466,8 @@ library(ggplot2)
 ```{r}
 theme_set(theme_bw())  
 Neg_LogGI50gemcitabine4$`cell_line` <- rownames(Neg_LogGI50gemcitabine4)
-Neg_LogGI50gemcitabine4$GI50value_type<- ifelse(Neg_LogGI50gemcitabine4$GI50value< 0, "below", "above")
+Neg_LogGI50gemcitabine4$GI50value_type<- ifelse(Neg_LogGI50gemcitabine4$GI50value< 0,
+"below", "above")
 ggplot(Neg_LogGI50gemcitabine4, aes(x=`cell_line`, y=GI50value, label=GI50value)) + 
     geom_bar(stat='identity', aes(fill=GI50value_type), width=0.7)  +
     scale_fill_manual(name="value", 
@@ -476,86 +477,125 @@ ggplot(Neg_LogGI50gemcitabine4, aes(x=`cell_line`, y=GI50value, label=GI50value)
           title= "Cell line and drug sensitivity") + 
 coord_flip()
 
-#looking at the previous mean graph plot now compare the differences in mutations of cell lines which had high gemcitabine sensitivity and which had low sensitivity   
+#looking at the previous mean graph plot now compare the differences in mutations of cell 
+lines which had high gemcitabine sensitivity and which had low sensitivity   
 
 #filter out celllines with 10 highest and 10 lowest GI50 values
 sort(NegLogGI50gemcitabine2, decreasing = FALSE)
 
-#cell lines with highest GI50 values are SNB-19, OVCAR-8 ,CAKI-1,NCI-H23 ,HCT-116 ,NCI-H460 ,M14,MCF7 ,786-0,ACHN
-#since SNB-19 is not part of the mutations data I am going to proceed with the nine other celllines
-celllineshigh <- c("OVCAR-8","CAKI-1","NCI-H23","HCT-116","NCI-H460","M14","MCF7","786-0","ACHN")
+#cell lines with highest GI50 values are SNB-19, OVCAR-8 ,CAKI-1,NCI-H23 ,HCT-116,
+#NCI-H460 ,M14,MCF7 ,786-0,ACHN
+#since SNB-19 is not part of the mutations data I am going to proceed with the
+#nine other celllines
+celllineshigh <- c("OVCAR-8","CAKI-1","NCI-H23","HCT-116","NCI-H460","M14",
+"MCF7","786-0","ACHN")
 
-#cell lines with lowest GI50 values are HCC-2998, HS-578T, OVCAR-4 , TK-10, PC-3, MDA-MB-231, SK-MEL-28 , OVCAR-3 ,KM12, HCT-15
-celllineslow <- c("HCC-2998","HS-578T","OVCAR-4","TK-10","PC-3","MDA-MB-231","SK-MEL-28","OVCAR-3","KM12","HCT-15")
+#cell lines with lowest GI50 values are HCC-2998, HS-578T, OVCAR-4 , TK-10, PC-3, 
+#MDA-MB-231, SK-MEL-28 , OVCAR-3 ,KM12, HCT-15
+celllineslow <- c("HCC-2998","HS-578T","OVCAR-4","TK-10","PC-3","MDA-MB-231",
+"SK-MEL-28","OVCAR-3","KM12","HCT-15")
 
 #missense mutation for celllines with high GI50 values 
-for (i in (celllineshigh) ) {print(sum(mutations[which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"] == "Missense_Mutation"))}
+for (i in (celllineshigh) ) {print(sum(mutations[
+which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"] == 
+"Missense_Mutation"))}
 missensehigh <- c(292,148,907,2229,317,993,420,285,96)
 
 #missense mutation for celllines with low GI50 values 
-for (i in (celllineslow) ) {print(sum(mutations[which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"] == "Missense_Mutation"))}
+for (i in (celllineslow) ) {print(sum(mutations[
+which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"] 
+== "Missense_Mutation"))}
 missensenselow <- c(6021,172,334,243,119,357,242,173,2492,6716)
 
 #silent mutation for celllines with high GI50 values 
-for (i in (celllineshigh) ) {print(sum(mutations[which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"] == "Silent"))}
+for (i in (celllineshigh) ) {print(sum(mutations[
+which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"]
+== "Silent"))}
 silenthigh <- c(130,56,387,1039,113,555,153,120,37)
 
 #silent mutation for celllines with low GI50 values 
-for (i in (celllineslow) ) {print(sum(mutations[which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"] == "Silent"))}
+for (i in (celllineslow) ) {print(sum(mutations[
+which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"] 
+== "Silent"))}
 silentlow <- c(1540,49,145,102,45,142,172,82,1305,2635)
 
 #nonsense mutation for celllines with high GI50 values 
-for (i in (celllineshigh) ) {print(sum(mutations[which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"] == "Nonsense_Mutation"))}
+for (i in (celllineshigh) ) {print(sum(mutations[
+which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"] 
+== "Nonsense_Mutation"))}
 nonsensehigh <- c(17,10,68,113,19,62,30,17,5)
 
 #nonsense mutation for celllines with low GI50 values 
-for (i in (celllineslow) ) {print(sum(mutations[which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"] == "Nonsense_Mutation"))}
+for (i in (celllineslow) ) {print(sum(mutations[
+which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"]
+== "Nonsense_Mutation"))}
 nonesenselow <- c(772,8,5,11,4,22,20,13,135,366)
 
 #splice site mutation for celllines with high GI50 values
-for (i in (celllineshigh) ) {print(sum(mutations[which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"] == "Splice_Site"))}
+for (i in (celllineshigh) ) {print(sum(mutations[
+which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"] 
+== "Splice_Site"))}
 splicesitehigh <- c(19,10,66, 161,14,57,20,24,11)
 
 #splice site mutation for celllines with low GI50 values 
-for (i in (celllineslow) ) {print(sum(mutations[which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"] == "Splice_Site"))}
+for (i in (celllineslow) ) {print(sum(mutations[
+which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"]
+== "Splice_Site"))}
 splicesitelow <- c(187,11,18,12,6,22,26,17,176,541)
 
 #frame shift deletion for celllines with high GI50 values 
-for (i in (celllineshigh) ) {print(sum(mutations[which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"] == "Frame_Shift_Del"))}
+for (i in (celllineshigh) ) {print(sum(mutations[
+which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"]
+== "Frame_Shift_Del"))}
 frameshifthigh <- c(16,14,40,631,21,5,9,18,3)
 
 #frame shift deletion for celllines with low GI50 values
-for (i in (celllineslow) ) {print(sum(mutations[which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"] == "Frame_Shift_Del"))}
+for (i in (celllineslow) ) {print(sum(mutations[
+which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"]
+== "Frame_Shift_Del"))}
 frameshiftlow <- c(5,6,6,7,7,18,8,9,459,153)
 
 #frame shift insertion for celllines with high GI50 values 
-for (i in (celllineshigh) ) {print(sum(mutations[which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"] == "Frame_Shift_Ins"))}
+for (i in (celllineshigh) ) {print(sum(mutations[
+which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"] 
+== "Frame_Shift_Ins"))}
 frameshiftinshigh <- c(23,15,22,175,18,2,15,12,14)
 
 #frame shift insertion for celllines with low GI50 values 
-for (i in (celllineslow) ) {print(sum(mutations[which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"] == "Frame_Shift_Ins"))}
+for (i in (celllineslow) ) {print(sum(mutations[
+which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"]
+== "Frame_Shift_Ins"))}
 frameshiftinslow <- c(17,14,8,4,8,13,25,12,124,70)
 
 #de novo out of frame mutation for celllines with high GI50 values
-for (i in (celllineshigh) ) {print(sum(mutations[which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"] == "De_novo_Start_OutOfFrame"))}
+for (i in (celllineshigh) ) {print(sum(mutations[
+which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"]
+== "De_novo_Start_OutOfFrame"))}
 denovohigh <- c(3,5,15,20,3,2,0,5,4)
 
 #de novo out of frame mutation for celllines with low GI50 values 
-for (i in (celllineslow) ) {print(sum(mutations[which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"] == "De_novo_Start_OutOfFrame"))}
+for (i in (celllineslow) ) {print(sum(mutations[
+which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"] 
+== "De_novo_Start_OutOfFrame"))}
 denovolow <- c(14,1,3,0,0,6,2,2,32,113)
 
 #create a matrix for high GI50 values 
-HighGI50 <- cbind(missensehigh,silenthigh,nonsensehigh,splicesitehigh,frameshifthigh,frameshiftinshigh,denovohigh)
+HighGI50 <- cbind(missensehigh,silenthigh,nonsensehigh,splicesitehigh,
+frameshifthigh,frameshiftinshigh,denovohigh)
 dimnames(HighGI50) = list( 
-    c("OVCAR-8","CAKI-1","NCI-H23","HCT-116","NCI-H460","M14","MCF7","786-0","ACHN"),         # row names
-    c("missense", "silent", "nonsense","splicesite","frame_shift_deletion","frame_shift_insertion","de_novo_out_of_frame")) #column names
-    
+    c("OVCAR-8","CAKI-1","NCI-H23","HCT-116","NCI-H460","M14","MCF7","786-0","
+    ACHN"),       
+    c("missense", "silent", "nonsense","splicesite","frame_shift_deletion",
+    "frame_shift_insertion","de_novo_out_of_frame"))    
 
 #create a matrix for low GI50 values 
-LowGI50 <- cbind(missensenselow,silentlow,nonesenselow,splicesitelow,frameshiftlow,frameshiftinslow,denovolow)
+LowGI50 <- cbind(missensenselow,silentlow,nonesenselow,splicesitelow,
+frameshiftlow,frameshiftinslow,denovolow)
 dimnames(LowGI50) = list( 
-     c("HCC-2998","HS-578T","OVCAR-4","TK-10","PC-3","MDA-MB-231","SK-MEL-28","OVCAR-3","KM12","HCT-15"),         # row names 
-     c("missense", "silent", "nonsense","splicesite","frame_shift_deletion","frame_shift_insertion","de_novo_out_of_frame")) #column names
+     c("HCC-2998","HS-578T","OVCAR-4","TK-10","PC-3","MDA-MB-231","SK-MEL-28",
+     "OVCAR-3","KM12","HCT-15"),        
+     c("missense", "silent", "nonsense","splicesite","frame_shift_deletion",
+     "frame_shift_insertion","de_novo_out_of_frame")) 
 ```
 create heatmaps 
 ```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
@@ -566,21 +606,54 @@ library("pheatmap")
 
 quantile(HighGI50, c(.10, .20, .30, .40, .50, .60, .70, .80, .90, 1))
 
-pheatmap(HighGI50,color = colorRampPalette(c("blue","white","purple","firebrick3","red","orange"))(10), breaks = c(4.8,10.7,15.0,19.0,26.4,66.6,149.0,390.3,2229.0), main= "Celllines with high GI50 fold change values")
+pheatmap(HighGI50,color = colorRampPalette(c("blue","white","purple",
+"firebrick3","red","orange"))(10), breaks = c(4.8,10.7,15.0,19.0,26.4,66.6,149.
+0,390.3,2229.0), main= "Celllines with high GI50 fold change values")
 
 
 
 quantile(LowGI50, c(.10, .20, .30, .40, .50, .60, .70, .80, .90, 1))
 
-pheatmap(LowGI50,color = colorRampPalette(c("blue","white","purple","firebrick3","red","orange"))(10), breaks = c(4.0,6.8,10.4,14.0,22.0,74.8,142.9,198.0,  564.1,6716.0), main= "Celllines with low GI50 fold change values")
+pheatmap(LowGI50,color = colorRampPalette(c("blue","white","purple","firebrick3",
+"red","orange"))(10), breaks = c(4.0,6.8,10.4,14.0,22.0,74.8,142.9,
+198.0,564.1,6716.0), main= "Celllines with low GI50 fold change values")
 
-#GI50 is the concentration for 50% of maximal inhibition of cell proliferation. However, since our values are -log10 transformed, higher values indicate higher sensitivity.The most prominent difference in mutation pattern between the celllines with high and low gemcitabine sensitivity is that the celllines with a low GI50 value have a much higher  count of mutations. Further we are going to look at the portion of different mutation types. In the heatmap it is visible that for most mutation type the mutation count pattern is similar. However, for nonsense and splice site mutation you can see that the celllines with low GI50 values have a higher portion in those mutations in comparison to the celllines with high GI50 values. It is maybe linked to the fact that gemcitabine is an antimetabolite and stops DNA synthesis by inducing a masked chain termination. Nonsense mutations have the same effect of inducing a stop of DNA synthesis. Celllines in which a stop of DNA synthesis occur more often due to nonsense mutation are maybe therefore less sensitive to gemcitabine. However mutation frequency alone is insufficient to identify and predict the drug sensitivity of a cellline towards gemcitabine. 
+```
 
-#Other possibilities to explain a celllines sensitivity to gemcitabine are mutations of genes that play an important role in the mechanisms gemcitabine is involved in. One enzyme that plays an important role in converting gemcitabine from the prodrug into the final active drug form is deoxycytidine kinase (DCK) . It modifies gemcitabine by attaching a phosphate to it, converting it to gemcitabine monophosphate. The gene encoding this enzyme is called DCK.
+
+GI50 is the concentration for 50% of maximal inhibition of cell proliferation.
+However, since our values are -log10 transformed, higher values indicate higher 
+sensitivity.The most prominent difference in mutation pattern between the celllines 
+with high and low gemcitabine sensitivity is that the celllines with a low GI50 value
+have a much higher  count of mutations. Further we are going to look at the portion
+of different mutation types. In the heatmap it is visible that for most mutation 
+type the mutation count pattern is similar. However, for nonsense and splice site
+mutation you can see that the celllines with low GI50 values have a higher portion 
+in those mutations in comparison to the celllines with high GI50 values. It is
+maybe linked to the fact that gemcitabine is an antimetabolite and stops DNA synthesis 
+by inducing a masked chain termination. Nonsense mutations have the same effect of 
+inducing a stop of DNA synthesis. Celllines in which a stop of DNA synthesis occur 
+more often due to nonsense mutation are maybe therefore less sensitive to gemcitabine. 
+However mutation frequency alone is insufficient to identify and predict the drug 
+sensitivity of a cellline towards gemcitabine. 
+
+Other possibilities to explain a celllines sensitivity to gemcitabine are 
+mutations of genes that play an important role in the mechanisms gemcitabine 
+is involved in. One enzyme that plays an important role in converting gemcitabine 
+from the prodrug into the final active drug form is deoxycytidine kinase (DCK) . 
+It modifies gemcitabine by attaching a phosphate to it, converting it to gemcitabine
+monophosphate. The gene encoding this enzyme is called DCK.
+
+
+```{r}
 
 print(mutations[which(mutations$Hugo_Symbol == "DCK"),"Tumor_Sample_Barcode"])
 
-#The only cellline that has a DCK mutation is "HCC-2998" and it corresponds to the fact that it is also a cellline with a low gemcitabine sensitivity. 
+```
+
+
+The only cellline that has a DCK mutation is "HCC-2998" and it 
+corresponds to the fact that it is also a cellline with a low gemcitabine sensitivity. 
 
 ``` 
 
