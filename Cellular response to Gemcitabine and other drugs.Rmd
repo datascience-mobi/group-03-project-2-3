@@ -78,12 +78,16 @@ levels <- as.factor(levels(drug_as_factor))
 palette(rainbow(15))
 
 par(xpd=T, mar=par()$mar+c(0,0,0,6))
-plot(pca_FC$rotation[, 1], pca_FC$rotation[, 2], pch = 20, xlab = "PC 1",                                                              ylab = "PC 2", col=drug_as_factor, main = "PC 1&2 of the fold change ")
-legend("right",inset = c(-0.3,0), levels(drug_as_factor), xpd = TRUE,                                                                                                                     pch=20, col = levels)
+plot(pca_FC$rotation[, 1], pca_FC$rotation[, 2], pch = 20, xlab = "PC 1",
+ylab = "PC 2", col=drug_as_factor, main = "PC 1&2 of the fold change ")
+legend("right",inset = c(-0.3,0), levels(drug_as_factor), xpd = TRUE,
+pch=20, col = levels)
 
 par(xpd=T, mar=par()$mar+c(0,0,0,5))
-plot(pca_FC$rotation[, 3], pca_FC$rotation[, 4], pch = 20, xlab = "PC 3",                                                              ylab = "PC 4", col=drug_as_factor, main = "PC 3&4 of the fold change ")
-legend("right", inset=c(-0.5,0),levels(drug_as_factor), pch=20,                                                                                                                col = levels, xpd =TRUE)
+plot(pca_FC$rotation[, 3], pca_FC$rotation[, 4], pch = 20, xlab = "PC 3",
+ylab = "PC 4", col=drug_as_factor, main = "PC 3&4 of the fold change ")
+legend("right", inset=c(-0.5,0),levels(drug_as_factor), pch=20,
+col = levels, xpd =TRUE)
 ```
 
 FC is obviously drug associated
@@ -333,14 +337,14 @@ counting_mutations <- count(mutation_cellline, vars = NULL, wt_var = NULL)
 ```
 
 ```{r}
-#creating a new dataframe with the Celllines and whether the Microsatellite                                                   Instablility is high or not. TRUE:High  False:Stable/Low
+#creating a new dataframe with the Celllines and whether the Microsatellite Instablility is high or not. TRUE:High  False:Stable/Low
 
 L=cannotation$Microsatellite_instability_status=="MSI-H"
 Cell_Line=data.frame("Cell Line name"= cannotation[1:61,1],"Microsatellite"= L)
 Cell_Line <- Cell_Line[order(Cell_Line$Cell.Line.name),]
 drugsensitivity=t(drugsensitivity)
 
-#The the Cell_Line dataframe is directly merged with the Gemcitabine Drug                                                      Sensitivity Values.
+#The the Cell_Line dataframe is directly merged with the Gemcitabine Drug Sensitivity Values.
 Cell_Line_no_nas <- na.omit(Cell_Line)
 table_of_mutations_na <- qpcR:::cbind.na(counting_mutations, Cell_Line_no_nas)
 table_of_mutations <- na.omit(table_of_mutations_na)
@@ -358,7 +362,8 @@ mutation_plot <- qplot(
 
     xlab = "Cell line",ylab = "mutations",
 )
-mutation_plot + ggtitle("number of mutations per cellline coloured by MSI status")+ xlab                                           ("Cell Line")+ylab("mutations")+theme(axis.text.x = element_text(angle = 90))
+mutation_plot + ggtitle("number of mutations per cellline coloured by MSI 
+status")+ xlab("Cell Line")+ylab("mutations")+theme(axis.text.x = element_text(angle = 90))
 
 ```
 
@@ -394,11 +399,15 @@ gmci <- grepl('gemcitibine', colnames(fcgeneexpression))
 
 #rows 365:420(gemcitibine), make dataframe with gemci and biomarkers
 colnames(fcgeneexpression) = metadata[1:819,2]
-biomarkers_geneexpression <- fcgeneexpression[c("ATF3", "CXCL8", "GADD45A",                                              "CDKN1A","TNFAIP3", "EGR1", "GDF15", "BTG2", "GEM", "CEACAM1", "DHRS2", "HBEGF",                                                                                                   "IL11", "TNFRSF9", "TXNIP"),365:420]
+biomarkers_geneexpression <- fcgeneexpression[c("ATF3", "CXCL8", "GADD45A",
+"CDKN1A","TNFAIP3", "EGR1", "GDF15", "BTG2", "GEM", "CEACAM1", "DHRS2", "HBEGF",
+"IL11", "TNFRSF9", "TXNIP"),365:420]
 
 #MSI related genes, choosen after research, new matrix for untreated and FC
-geneexpression_MSI_related <- fcgeneexpression[c("MLH3", "MLH1", "MSH6",                                                                                              "PMS2CL///PMS2", "BATF", "BATF3"), 365:420]
-geneexpression_MSI_related_untreated <- untreated_normalized[c("MLH3",                                                                                               "MLH1", "MSH6", "BATF", "BATF3"), 365:420]
+geneexpression_MSI_related <- fcgeneexpression[c("MLH3", "MLH1", "MSH6",
+"PMS2CL///PMS2", "BATF", "BATF3"), 365:420]
+geneexpression_MSI_related_untreated <- untreated_normalized[c("MLH3",
+"MLH1", "MSH6", "BATF", "BATF3"), 365:420]
 
 #which cellines MSI-H or L? Note them 
 #View(Cell_Line)
@@ -413,8 +422,10 @@ biomarkers_geneexpression_MSIL <- biomarkers_geneexpression[,-c(8,12,11,17,19,27
 geneexpression_MSI_related_MSIH <- geneexpression_MSI_related[,c(8,12,11,17,19,27,42,45)]
 geneexpression_MSI_related_MSIL <- geneexpression_MSI_related[,-c(8,12,11,17,19,27,42,45)]
 
-geneexpression_MSI_related_untreated_MSIH <- geneexpression_MSI_related_untreated                                                                                                           [, c(8,12,11,17,19,27,42,45)]
-geneexpression_MSI_related_untreated_MSIL <- geneexpression_MSI_related_untreated                                                                                                          [, -c(8,12,11,17,19,27,42,45)]
+geneexpression_MSI_related_untreated_MSIH <- geneexpression_MSI_related_untreated
+[, c(8,12,11,17,19,27,42,45)]
+geneexpression_MSI_related_untreated_MSIL <- geneexpression_MSI_related_untreated
+[, -c(8,12,11,17,19,27,42,45)]
 
 
 #packages which makes it possible to plot tow heatmaps next to each other
@@ -429,8 +440,10 @@ Does MSI status effect the expression of biomarkers after gemcitibine treatment?
 ```{r}
 #two heatmaps of FC of biomarkers in MSI-Low and MSI-High celllines
 
-ht_biomarkers_geneexpression_MSIH = Heatmap(biomarkers_geneexpression_MSIH,                                                            name = "FC MSI-High", column_title = "MSI-H", column_names_gp = gpar(fontsize = 7)) 
-ht_biomarkers_geneexpression_MSIL = Heatmap(biomarkers_geneexpression_MSIL,                                                             name = "FC MSI-Low", column_title = "MSI-L", column_names_gp = gpar(fontsize = 7))
+ht_biomarkers_geneexpression_MSIH = Heatmap(biomarkers_geneexpression_MSIH,
+name = "FC MSI-High", column_title = "MSI-H", column_names_gp = gpar(fontsize = 7)) 
+ht_biomarkers_geneexpression_MSIL = Heatmap(biomarkers_geneexpression_MSIL,
+name = "FC MSI-Low", column_title = "MSI-L", column_names_gp = gpar(fontsize = 7))
  
 ht_biomarkers_geneexpression_MSIH + ht_biomarkers_geneexpression_MSIL
 
