@@ -343,8 +343,7 @@ counting_mutations <- count(mutation_cellline, vars = NULL, wt_var = NULL)
 ```
 
 ```{r}
-#creating a new dataframe with the Celllines and whether the Microsatellite Instablility is high or not. 
-TRUE:High  False:Stable/Low
+#creating a new dataframe with the Celllines and whether the Microsatellite Instablility is high or not. TRUE:High  False:Stable/Low
 
 L=cannotation$Microsatellite_instability_status=="MSI-H"
 Cell_Line=data.frame("Cell Line name"= cannotation[1:61,1],"Microsatellite"= L)
