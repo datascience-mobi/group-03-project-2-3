@@ -13,6 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Loading the data
 
+Gemcitabine is a nucleoside analog used as chemotherapy. It is marketed as Gemzar. The drug replaces one of the building blocks of nucleic acids, in this case cytidine, during DNA replication. The process arrests tumor growth, as new nucleosides cannot be attached to the "faulty" nucleoside, resulting in apoptosis. Gemcitabine is used in various carcinomas: non-small cell lung cancer, pancreatic cancer, bladder cancer and breast cancer. It is being investigated for use in oesophageal cancer, and is used experimentally in lymphomas and various other tumor types.
 ```{r}
 #Set wd to the working directory where this Rscript is located
 wd = getwd()
