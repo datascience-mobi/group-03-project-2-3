@@ -625,8 +625,8 @@ library("pheatmap")
 quantile(HighGI50, c(.10, .20, .30, .40, .50, .60, .70, .80, .90, 1))
 
 pheatmap(HighGI50,color = colorRampPalette(c("blue","white","purple",
-"firebrick3","red","orange"))(10), breaks = c(4.8,10.7,15.0,19.0,26.4,66.6,149.
-0,390.3,2229.0), main= "Celllines with high GI50 fold change values")
+"firebrick3","red","orange"))(10), breaks = c(4.8,10.7,15.0,19.0,26.4,66.6,149.0,
+390.3,2229.0), main= "Celllines with high GI50 fold change values")
 
 
 
