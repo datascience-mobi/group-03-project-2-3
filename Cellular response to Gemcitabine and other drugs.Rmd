@@ -496,8 +496,7 @@ ggplot(Neg_LogGI50gemcitabine4, aes(x=`cell_line`, y=GI50value, label=GI50value)
           title= "Cell line and drug sensitivity") + 
 coord_flip()
 
-#looking at the previous mean graph plot now compare the differences in mutations of cell 
-lines which had high gemcitabine sensitivity and which had low sensitivity   
+#looking at the previous mean graph plot now compare the differences in mutations of cell lines which had high gemcitabine sensitivity and which had low sensitivity   
 
 #filter out celllines with 10 highest and 10 lowest GI50 values
 sort(NegLogGI50gemcitabine2, decreasing = FALSE)
