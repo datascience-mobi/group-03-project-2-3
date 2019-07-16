@@ -73,7 +73,8 @@ ylab = "geneexpression", xlab = "samples", names = FALSE)
 
 
 ## PCA
-PCA of the fold change, to investigate whether change in gene expression is tissue associated.
+PCA is a good method to reduce dimensionality of data. Here we carry out a PCA of the foldchange so the difference after in geneexpression before and after drug treatment. We also want to see whether it is maybe tissue assoicated as well.
+
 ```{r}
 fcgeneexpression <- treated_normalized - untreated_normalized
 pca_FC = prcomp(fcgeneexpression, center = F, scale. = F)
@@ -95,9 +96,27 @@ plot(pca_FC$rotation[, 3], pca_FC$rotation[, 4], pch = 20, xlab = "PC 3",
 ylab = "PC 4", col=drug_as_factor, main = "PC 3&4 of the fold change ")
 legend("right", inset=c(-0.5,0),levels(drug_as_factor), pch=20,
 col = levels, xpd =TRUE)
+
+#pca of untreated assigned to tissue
+
+pca_untreated = prcomp(untreated_normalized, center = F, scale. = F)
+plot(pca_untreated$rotation[, 1], pca_untreated$rotation[, 2], col = metadata[1:ncol(untreated), "tissue"], pch = 19, xlab = "PC1",
+ylab = "PC2")
+plot(pca_untreated$rotation[, 1], pca_untreated$rotation[, 2], col = metadata[1:ncol(untreated), "tissue"], pch = 19, xlab = "PC1", 
+ylab = "PC2")
+legend("right", inset=c(-0.5,0),levels(drug_as_factor), pch=20,
+col = levels, xpd =TRUE)
+
+#pca 1&2 of FC tissue associated
+pca_FC = prcomp(fcgeneexpression, center = F, scale. = F)
+plot(pca_FC$rotation[, 1], pca_FC$rotation[, 2], col = metadata[1:ncol(untreated), "tissue"], pch = 19, xlab = "PC 1", 
+ylab = "PC 2")
+legend("right", inset=c(-0.5,0),levels(drug_as_factor), pch=20,
+col = levels, xpd =TRUE)
+
 ```
 
-FC is obviously drug associated
+FC is obviously drug associated. 
 ## T-test
 
 Normalisation
