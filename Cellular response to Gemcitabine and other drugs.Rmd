@@ -68,7 +68,7 @@ levels=as.factor(levels(drugnames))
 legend("topright",inset=c(-0.4,0), legend=levels(drugnames),xpd=TRUE,pch=19,
 col=levels,title="drugs")
 ```
-As can be seen from the above diagram, each batch corresponds to a particular drug treatment. It can also be noted that the mean 
+As it can be seen from the above diagram, each batch corresponds to a particular drug treatment. It can also be noted that the mean 
 of the boxplots are not levelled. This indicates the lack of normalisation. Thus, the data is normalised and a boxploti is generated again.
 
 ```{r}
