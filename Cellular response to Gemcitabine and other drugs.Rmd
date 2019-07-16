@@ -34,16 +34,12 @@ metadata <- read.table(paste0(wd,"/NCI_TPW_metadata.tsv"), header = TRUE,
                        sep ="\t", stringsAsFactors = TRUE)
 ```
 
-## Normalization of data
+## Scaling of data
 
-loading library limma needed for normalization
-```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
-library(limma)
-```
 ```{r}
-#normalize treated & untreated
-untreated_normalized <- normalizeBetweenArrays(untreated)
-treated_normalized <- normalizeBetweenArrays(treated)
+#scale treated & untreated
+untreated_normalized <- scale(untreated)
+treated_normalized <- scale(treated)
 ```
 
 ## Comparing boxplots
