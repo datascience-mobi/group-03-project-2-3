@@ -370,8 +370,8 @@ To answer the question wheter MSI status affects the fold change after gemcitibi
 gmci <- grepl('gemcitibine', colnames(fcgeneexpression))
 
 #rows 365:420(gemcitibine), make dataframe with gemci and biomarkers
-colnames(fcgeneexpression) = metadata[1:ncol(treated),"drug"]
-biomarkers_geneexpression <- fcgeneexpression[c("ATF3", "CXCL8", "GADD45A","CDKN1A","TNFAIP3", "EGR1", "GDF15", "BTG2", "GEM", "CEACAM1", "DHRS2", "HBEGF","IL11", "TNFRSF9", "TXNIP"),"gemcitibine"]
+colnames(fcgeneexpression) = metadata[1:ncol(treated),"cell"]
+biomarkers_geneexpression <- fcgeneexpression[c("ATF3", "CXCL8", "GADD45A","CDKN1A","TNFAIP3", "EGR1", "GDF15", "BTG2", "GEM", "CEACAM1", "DHRS2", "HBEGF","IL11", "TNFRSF9", "TXNIP"),365:420]
 
 #MSI related genes, choosen after research, new matrix for untreated and FC
 geneexpression_MSI_related <- fcgeneexpression[c("MLH3", "MLH1", "MSH6","PMS2CL///PMS2", "BATF", "BATF3"), 365:420]
