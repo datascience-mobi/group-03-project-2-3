@@ -174,12 +174,11 @@ that deliver the most information. To this end, we will base the selection of th
 expression, or more specifically, the change in their expression before and after the treatment with the
 drug. These will be out biomarkers.  
 
-The first step is to perform a fold change to find the difference in gene expression between treated and untreated celllines.
+The first step is to calculate a fold change to find the difference in expression of every single gene between treated and untreated celllines.
 
 ```{r}
 fcgeneexpression <- treated_normalized - untreated_normalized
-#Absolute value of the data in fcgeneexpression, to find the biggest changes, regardless 
-#of if they are up- or down-regulated
+#Absolute value of the data in fcgeneexpression, to find the biggest changes in gene expression, regardless of if they are up- or down-regulated
 absvalfcgeneexpression <- abs(fcgeneexpression)
 ```
 
@@ -211,8 +210,8 @@ orderforvectors <- function(x) {
   return(y)
 }
 
+#The new function is applied to the columns of the fold change matrix
 matrixofbiomarkers <- apply(absvalfcge_gemcitabine, 2, orderforvectors) 
-#the 2 means it is applied to columns
 ```
 
 Check for most common genes in the first 15 rows of the new matrix
@@ -227,7 +226,7 @@ barplot(matrixtopgenes[1:30,], xlab = "", ylab = "Counts",
         cex.names = 0.7, las = 2, col = "#00CC66")
 mtext("Genes", side = 1, line = 4)
 ```
-We decided to take the top 15 genes as our biomarkers
+We decided to take the top 15 genes with the highest difference in expression before and after treatment as our biomarkers.
 
 List of our biomarkers:
 
