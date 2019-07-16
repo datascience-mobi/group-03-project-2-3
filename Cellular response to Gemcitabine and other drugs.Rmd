@@ -164,7 +164,10 @@ dim(Untreated_Cells_Gemcitabine)
 
 commondataframe=data.frame(Untreated_Cells_Gemcitabine,Treated_Cells_Gemcitabine)
 
-pValues <- apply(commondataframe, 1, function(x) t.test(x[1:56],x[57:112],paired = TRUE, alternative = "two.sided")$p.value)
+Column_untreated=grep("_0nM",colnames(commondataframe))
+Column_treated=grep("_2000nM",colnames(commondataframe))
+
+pValues <- apply(commondataframe, 1, function(x) t.test(x[Column_untreated],x[Column_treated],paired = TRUE, alternative = "two.sided")$p.value)
 commondataframe_pvalue <- data.frame(commondataframe, pValues)
 sum(pValues < 0.05)
 ```
