@@ -380,7 +380,7 @@ biomarkers_geneexpression <- fcgeneexpression[c("ATF3", "CXCL8", "GADD45A","CDKN
 
 #MSI related genes, choosen after research, new matrix for untreated and FC
 geneexpression_MSI_related <- fcgeneexpression[c("MLH3", "MLH1", "MSH6","PMS2CL///PMS2", "BATF", "BATF3"), 365:420]
-geneexpression_MSI_related_untreated <- untreated_normalized[c("MLH3","MLH1", "MSH6", "BATF", "BATF3"), 365:420]
+geneexpression_MSI_related_untreated <- untreated_normalized[c("MLH1", "MSH6"), 365:420]
 
 #which cellines MSI-H or L? Note them 
 #View(Cell_Line)
