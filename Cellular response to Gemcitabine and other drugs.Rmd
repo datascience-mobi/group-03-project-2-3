@@ -47,12 +47,16 @@ treated_normalized <- scale(treated)
 ```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
 library("viridis")
 ```
+
+The treated data is illustrated with a boxplot as follows.
 ```{r}
 
 boxplot(treated, main= "Gene Expression treated celllines",
 ylab="Gene expression", xlab="Samples", names = FALSE)
 ```
-Numerous batches are observed in the above plot. About 15 of them are counted. This corresponds to the number of drugs used.  
+Numerous batches are observed in the above plot. About 15 of them are counted. This number also corresponds to the number of drugs
+used. The boxplot is coloured according to the drug used in the following diagram to investigate the nature of the batches.
+
 ```{r}
 palette(viridis(15))
 drugnames <- metadata$drug
@@ -63,12 +67,13 @@ xaxt="n", boxwex=1, boxlty=0)#
 levels=as.factor(levels(drugnames))
 legend("topright",inset=c(-0.4,0), legend=levels(drugnames),xpd=TRUE,pch=19,
 col=levels,title="drugs")
+```
+As can be seen from the above diagram, each batch corresponds to a particular drug treatment. It can also be noted that the mean 
+of the boxplots are not levelled. This indicates the lack of normalisation. Thus, the data is normalised and a boxploti is generated again.
 
+```{r}
 boxplot(treated_normalized, main = "normalized geneexpression after treatment", 
 ylab = "geneexpression", xlab = "samples", names = FALSE) 
-
-
-
 ```
 
 
