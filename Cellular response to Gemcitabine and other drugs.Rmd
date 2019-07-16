@@ -48,6 +48,12 @@ treated_normalized <- scale(treated)
 library("viridis")
 ```
 ```{r}
+
+boxplot(treated, main= "Gene Expression treated celllines",
+ylab="Gene expression", xlab="Samples", names = FALSE)
+```
+Numerous batches are observed in the above plot. About 15 of them are counted. This corresponds to the number of drugs used.  
+```{r}
 palette(viridis(15))
 drugnames <- metadata$drug
 par(mar=c(5,4,5,9))
