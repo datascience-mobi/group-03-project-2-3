@@ -75,6 +75,7 @@ of the boxplots are not levelled. This indicates the lack of normalisation. Thus
 boxplot(treated_normalized, main = "normalized geneexpression after treatment", 
 ylab = "geneexpression", xlab = "samples", names = FALSE) 
 ```
+The levelled mean indicates normalisation.
 
 
 ## PCA
