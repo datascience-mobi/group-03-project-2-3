@@ -69,7 +69,7 @@ legend("topright",inset=c(-0.4,0), legend=levels(drugnames),xpd=TRUE,pch=19,
 col=levels,title="drugs")
 ```
 As can be seen from the above diagram, each batch corresponds to a particular drug treatment. It can also be noted that the mean 
-of the boxplots are not levelled. This indicates the lack of normalisation. Thus, the data is normalised and a boxplot is generated again.
+of the boxplots are not levelled. This indicates the lack of normalisation. Thus, the data is normalised and a boxploti is generated again.
 
 ```{r}
 boxplot(treated_normalized, main = "normalized geneexpression after treatment", 
@@ -123,38 +123,41 @@ col = levels, xpd =TRUE)
 
 FC is obviously drug associated. 
 ## T-test
-A T-Test is statistical hypothesis test used to determine if there is a significant difference between the means of two groups.
-In our case the two groups are treated and untreated data. One data in treated data corresponds to one in the untreated data. Thus, a paired T-test is carried out.
 
-The H0 Hypothesis: there is no change in the mean of the treated and untreated data.
-Alternative Hypothesis (H1): there is a difference in mean between the treated and untreated data.
-Chosen limit: when pValue < 0.05,  H0 is rejected
-
-However, normalised data is necessary for a T-test.
-
+Normalisation
 ```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
 library("car")
 ```
 ```{r}
-Gemcitabine_Column_treated= grep("gemcitibine",colnames(treated))
-Treated_Cells_Gemcitabine= treated[,Gemcitabine_Column_treated]
-Gemcitabine_Column_untreated=grep("gemcitibine",colnames(untreated))
-Untreated_Cells_Gemcitabine=untreated[,Gemcitabine_Column_untreated]
+grep("gemcitibine",colnames(treated))
+
+Treated_Cells_Gemcitabine= treated[,365:420]
+qqPlot(Treated_Cells_Gemcitabine)
+
+grep("gemcitibine",colnames(untreated))
+
+Untreated_Cells_Gemcitabine=untreated[,365:420]
+qqPlot(Untreated_Cells_Gemcitabine)
 ```
-
-
+Checking if normalization will have any effect on the QQ-Plots
 ```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
 library(BBmisc)
 ```
 ```{r}
 Treated_Gemcitabine_Normalised=normalize(Treated_Cells_Gemcitabine)
-Untreated_Gemcitabine_Normalised=normalize(Untreated_Cells_Gemcitabine)
-
-par(mfrow=c(1,2))
 qqPlot(Treated_Gemcitabine_Normalised)
+
+Untreated_Gemcitabine_Normalised=normalize(Untreated_Cells_Gemcitabine)
 qqPlot(Untreated_Gemcitabine_Normalised)
 ```
+A more pronounced linearity is observed
+But no significant change in shape, original data is used for further processing.
 
+## T.test
+
+The H0 Hypothesis: there is no change in the mean of the treated and untreated data.
+Alternative Hypothesis (H1): there is a difference in mean between the treated and untreated data.
+Chosen limit: when pValue < 0.05,  H0 is rejected
 
 ```{r}
 dim(Untreated_Cells_Gemcitabine)
@@ -365,7 +368,7 @@ a relationship between high drug sensitivity(Gemcitabine) and high microsatellit
 
 # Heatmap of biomarkers due to MSI status
 
-To answer the question wheter MSI status affects the fold change after gemcitibine treatment, we investigate the fold change of our 15 biomarkers for gemcitibine.
+To answer the question wheter MSI status affects the fold change after gemcitibine treatment, we investigate the fold change of our 15 biomarkers for gemcitibine. But at first of all, we want to see, which effect the MSI status has on the geneexpression, so we pick out 2 of the important genes for MSI Instability (MLH1 and MSH6) which both belong to the MMR system, the mismatch repair system. In MSI-H cancers they should be downregulated, so that the repair system does not work anymore.
 
 ```{r}
 #check which rows are for gemcitibine
@@ -376,8 +379,8 @@ colnames(fcgeneexpression) = metadata[1:ncol(treated),"cell"]
 biomarkers_geneexpression <- fcgeneexpression[c("ATF3", "CXCL8", "GADD45A","CDKN1A","TNFAIP3", "EGR1", "GDF15", "BTG2", "GEM", "CEACAM1", "DHRS2", "HBEGF","IL11", "TNFRSF9", "TXNIP"),365:420]
 
 #MSI related genes, choosen after research, new matrix for untreated and FC
-geneexpression_MSI_related <- fcgeneexpression[c("MLH3", "MLH1", "MSH6","PMS2CL///PMS2", "BATF", "BATF3"), 365:420]
-geneexpression_MSI_related_untreated <- untreated_normalized[c("MLH3","MLH1", "MSH6", "BATF", "BATF3"), 365:420]
+geneexpression_MSI_related <- fcgeneexpression[c("MLH1", "MSH6"), 365:420]
+geneexpression_MSI_related_untreated <- untreated_normalized[c("MLH1", "MSH6"), 365:420]
 
 #which cellines MSI-H or L? Note them 
 #View(Cell_Line)
@@ -394,17 +397,18 @@ geneexpression_MSI_related_MSIL <- geneexpression_MSI_related[,-c(8,12,11,17,19,
 
 geneexpression_MSI_related_untreated_MSIH <- geneexpression_MSI_related_untreated[, c(8,12,11,17,19,27,42,45)]
 geneexpression_MSI_related_untreated_MSIL <- geneexpression_MSI_related_untreated[, -c(8,12,11,17,19,27,42,45)]
-
-
-#packages which makes it possible to plot tow heatmaps next to each other
+#heatmap of untreated geneexpression with MSI related genes
+pheatmap(cbind(geneexpression_MSI_related_untreated_MSIH, geneexpression_MSI_related_untreated_MSIL), cluster_rows = FALSE, cluster_cols = FALSE)
 ```
+Here you can see, that there is a difference in the geneexpression in these two genes in MSI-H and MSI-L cancer cells. But does the MSI status even effect the expression of our biomarkers after gemcitibine treatment?
+
 ```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
 library("ComplexHeatmap")
 library("circlize")
 library("colorspace")
 library("GetoptLong")
 ```
-Does MSI status effect the expression of biomarkers after gemcitibine treatment?
+
 ```{r}
 #two heatmaps of FC of biomarkers in MSI-Low and MSI-High celllines
 
