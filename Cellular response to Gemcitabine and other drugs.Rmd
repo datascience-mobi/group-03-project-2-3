@@ -170,8 +170,8 @@ pValues <- apply(commondataframe, 1, function(x) t.test(x[Column_untreated],x[Co
 commondataframe_pvalue <- data.frame(commondataframe, pValues)
 sum(pValues < 0.05)
 ```
-6744 genes had a p value less than 0.05. Thus, this leads us to reject the null hypothesis 
-and assume that there could be a difference between the treated and untreated data for these particular genes.
+6744 genes have a p value less than 0.05. Thus, this leads to the rejection of the null hypothesis 
+and assumption that there could be a difference between the treated and untreated data for these particular genes.
 
 
 ## Biomarkers
