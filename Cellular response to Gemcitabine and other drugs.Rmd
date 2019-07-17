@@ -75,7 +75,6 @@ library("viridis")
 
 The treated data is illustrated with a boxplot as follows.
 ```{r}
-
 boxplot(treated, main= "Gene Expression treated celllines",
 ylab="Gene expression", xlab="Samples", names = FALSE)
 ```
@@ -413,7 +412,7 @@ biomarkers_geneexpression <- fcgeneexpression[c("ATF3", "CXCL8", "GADD45A","CDKN
 geneexpression_MSI_related <- fcgeneexpression[c("MLH1", "MSH6"), 365:420]
 geneexpression_MSI_related_untreated <- untreated_normalized[c("MLH1", "MSH6"), 365:420]
 
-#which cellines MSI-H or L? Note them 
+#which cellines MSI-H or L?
 #View(Cell_Line)
 
 #MSI-H in col = 8,12,11,17,19,27,42,45 of geneexpression MSI related which is only gemcitibine specific
