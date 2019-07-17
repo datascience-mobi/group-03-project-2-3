@@ -57,6 +57,7 @@ The treated data is illustrated with a boxplot as follows.
 boxplot(treated, main= "Gene Expression treated celllines",
 ylab="Gene expression", xlab="Samples", names = FALSE)
 ```
+
 Numerous batches are observed in the above plot. About 15 of them are counted. This number also corresponds to the number of drugs
 used. The boxplot is coloured according to the drug used in the following diagram to investigate the nature of the batches.
 
@@ -71,6 +72,7 @@ levels=as.factor(levels(drugnames))
 legend("topright",inset=c(-0.4,0), legend=levels(drugnames),xpd=TRUE,pch=19,
 col=levels,title="drugs")
 ```
+
 As it can be seen from the above diagram, each batch corresponds to a particular drug treatment. It can also be noted that the mean 
 of the boxplots are not levelled. This indicates the lack of normalisation. Thus, the data is normalised and a boxplot is generated again.
 
@@ -78,6 +80,7 @@ of the boxplots are not levelled. This indicates the lack of normalisation. Thus
 boxplot(treated_normalized, main = "normalized geneexpression after treatment", 
 ylab = "geneexpression", xlab = "samples", names = FALSE) 
 ```
+
 The levelled mean indicates normalisation.
 
 ***
@@ -376,7 +379,8 @@ basic=ggplot(everything, aes(Cell.Line.name, Gemcitabine.drug.sensitivity, colou
    geom_point()
 basic + ggtitle("Drug Sensitivity of Gemcitabine treated cell lines according to High Microsatellite Instability")+ xlab("Cell Line")+ylab("Drug Sensitivity")+theme(axis.text.x = element_text(angle = 90))
 ```
-a relationship between high drug sensitivity(Gemcitabine) and high microsatellite instability cannot be concluded.
+
+A relationship between high drug sensitivity(Gemcitabine) and high microsatellite instability cannot be concluded.
 
 # Heatmap of biomarkers due to MSI status
 
@@ -412,6 +416,7 @@ geneexpression_MSI_related_untreated_MSIL <- geneexpression_MSI_related_untreate
 #heatmap of untreated geneexpression with MSI related genes
 pheatmap(cbind(geneexpression_MSI_related_untreated_MSIH, geneexpression_MSI_related_untreated_MSIL), cluster_rows = FALSE, cluster_cols = FALSE)
 ```
+
 Here you can see, that there is a difference in the geneexpression in these two genes in MSI-H and MSI-L cancer cells. But does the MSI status even effect the expression of our biomarkers after gemcitibine treatment?
 
 ```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
@@ -437,7 +442,8 @@ ht_biomarkers_geneexpression_MSIH + ht_biomarkers_geneexpression_MSIL
 
 mean(biomarkers_geneexpression_MSIH) ;mean(biomarkers_geneexpression_MSIL)
 ```
-no significant difference between geneexpression in MSI-H and MSI-L biomarkers, positive prognosis of MSI tumors is probably caused by the recognition of the immune system.
+
+No significant difference between geneexpression in MSI-H and MSI-L biomarkers, positive prognosis of MSI tumors is probably caused by the recognition of the immune system.
 
 ***
 
