@@ -342,8 +342,7 @@ gemcitabine.
 ***
 
 ## Microsatellite instability
-MSI is defined as a mistake in MMR (Mismatch Repair system) so if we plot the number of mutations against the celllines, 
-MSI-H celllines are supposed to have more mutations, to check this, we do the following plot
+MSI is defined as a mistake in MMR (Mismatch Repair system). The defect is caused through a downregulation in the gene MLH1 and MSH6 for example. It leads to more mistakes while transcribing the DNA, so more mutations will occur. If we plot the number of mutations against the celllines, MSI-H celllines are supposed to have more mutations, to check this, we do the following plot
 
 ```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
 library(plyr)
@@ -366,39 +365,29 @@ drugsensitivity=t(drugsensitivity)
 
 #The the Cell_Line dataframe is directly merged with the Gemcitabine Drug Sensitivity Values.
 Cell_Line_no_nas <- na.omit(Cell_Line)
+
 table_of_mutations_na <- qpcR:::cbind.na(counting_mutations, Cell_Line_no_nas)
 table_of_mutations <- na.omit(table_of_mutations_na)
 mutation_plot <- qplot(
-
     x = table_of_mutations[,3],
-
     y = table_of_mutations[,2],
-
     data = table_of_mutations,
-
     color = Microsatellite, 
-
     main = "number of mutations per cellline coloured by MSI status", 
+    xlab = "Cell line",ylab = "mutations")
 
-    xlab = "Cell line",ylab = "mutations",
-)
 mutation_plot + ggtitle("number of mutations per cellline coloured by MSI 
 status")+ xlab("Cell Line")+ylab("mutations")+theme(axis.text.x = element_text(angle = 90))
 
 ```
-
-
-It is obvious that MSI status affects the number of mutations, due to mutations in the repair system, but does MSI status also effect the effect of gemcitibine? MSI-H cancers are known to have a better prognosis when it comes to immune activating therapies, because of more unknown antigens, being produced. But does it also effect non-immune mechanisms in the cell? A loss of system which repairs wrong parts could also lead to a worse proliferation of the cell.
+It is obvious that MSI status affects the number of mutations, due to mutations in the repair system, but does MSI status also effect the effect of gemcitibine? MSI-H cancers are known to have a better prognosis when it comes to immune activating therapies, because of more unknown antigens, being produced. But does it also effect non-immune mechanisms in the cell? A loss of system which repairs wrong parts could also lead to a worse proliferation of the cell on the one hand because it would destroy itself. On the other hand a faulty repair system could also cause a better proliferation, because it would be easier to "develop" drug escape mechanisms. At first we want to see if there is any visible relationship between the sensitivity of gemcitabine and the MSI status. So we plot the sensitivity against the celllines and colour them due to MSI status.
 
 ```{r, warning=FALSE}
 # Plotting the GI50 values relating to Gemcitabine treatment .
-
 drugsensitivity=t(drugsensitivity)
-
 gemcitabine_line=data.frame("Gemcitabine drug sensitivity"= drugsensitivity["gemcitibine",])
 everything=cbind(Cell_Line,gemcitabine_line)
 ```
-
 
 ```{r}
 basic=ggplot(everything, aes(Cell.Line.name, Gemcitabine.drug.sensitivity, colour = factor(Microsatellite), shape = factor(Microsatellite) )) +
@@ -410,7 +399,7 @@ A relationship between high drug sensitivity(Gemcitabine) and high microsatellit
 
 # Heatmap of biomarkers due to MSI status
 
-To answer the question wheter MSI status affects the fold change after gemcitibine treatment, we investigate the fold change of our 15 biomarkers for gemcitibine. But at first of all, we want to see, which effect the MSI status has on the geneexpression, so we pick out 2 of the important genes for MSI Instability (MLH1 and MSH6) which both belong to the MMR system, the mismatch repair system. In MSI-H cancers they should be downregulated, so that the repair system does not work anymore.
+To answer the question wheter MSI status affects the fold change after gemcitibine treatment, we have to investigate the fold change of our 15 biomarkers for gemcitibine in the different MSI-High and Low celllines. But at first of all, we want to know, whether we can see the effect on the geneexpression of the repair system, so we pick out 2 of the important genes for MSI Instability (MLH1 and MSH6). They belong to the repair system. In MSI-H cancers they should be downregulated, so that the repair system does not work anymore.
 
 ```{r}
 #check which rows are for gemcitibine
@@ -429,21 +418,16 @@ geneexpression_MSI_related_untreated <- untreated_normalized[c("MLH1", "MSH6"), 
 
 #MSI-H in col = 8,12,11,17,19,27,42,45 of geneexpression MSI related which is only gemcitibine specific
 
-#define new matrices to divide matrices in MSI-H and MSI-L
-MSI_H_vector <- c(8,12,11,17,19,27,42,45)
+#define new matrices to divide matrices of FC and untreated in MSI-H and MSI-L
 biomarkers_geneexpression_MSIH <- biomarkers_geneexpression[,c(8,12,11,17,19,27,42,45)]
 biomarkers_geneexpression_MSIL <- biomarkers_geneexpression[,-c(8,12,11,17,19,27,42,45)]
-
-geneexpression_MSI_related_MSIH <- geneexpression_MSI_related[,c(8,12,11,17,19,27,42,45)]
-geneexpression_MSI_related_MSIL <- geneexpression_MSI_related[,-c(8,12,11,17,19,27,42,45)]
-
 geneexpression_MSI_related_untreated_MSIH <- geneexpression_MSI_related_untreated[, c(8,12,11,17,19,27,42,45)]
 geneexpression_MSI_related_untreated_MSIL <- geneexpression_MSI_related_untreated[, -c(8,12,11,17,19,27,42,45)]
+
 #heatmap of untreated geneexpression with MSI related genes
 pheatmap(cbind(geneexpression_MSI_related_untreated_MSIH, geneexpression_MSI_related_untreated_MSIL), cluster_rows = FALSE, cluster_cols = FALSE)
 ```
-
-Here you can see, that there is a difference in the geneexpression in these two genes in MSI-H and MSI-L cancer cells. But does the MSI status even effect the expression of our biomarkers after gemcitibine treatment?
+Here you can see, that there is a difference in the geneexpression in these two genes in MSI-H and MSI-L cancer cells. But does the MSI status even effect the expression of our biomarkers after gemcitibine treatment? 
 
 ```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
 library("ComplexHeatmap")
@@ -461,15 +445,9 @@ ht_biomarkers_geneexpression_MSIL = Heatmap(biomarkers_geneexpression_MSIL,
 name = "FC MSI-Low", column_title = "MSI-L", column_names_gp = gpar(fontsize = 7))
  
 ht_biomarkers_geneexpression_MSIH + ht_biomarkers_geneexpression_MSIL
-
-
-#no obvious difference between MSI-H and MSI-L when it comes to FC after gemci treatment
-#sum mean of FC in MSI-L (48 celllines) and MSI-H (8 celllines)
-
-mean(biomarkers_geneexpression_MSIH) ;mean(biomarkers_geneexpression_MSIL)
 ```
 
-No significant difference between geneexpression in MSI-H and MSI-L biomarkers, positive prognosis of MSI tumors is probably caused by the recognition of the immune system.
+No obvious difference between geneexpression in MSI-H and MSI-L biomarkers, positive prognosis of MSI tumors is probably caused by the recognition of the immune system.
 
 ***
 
