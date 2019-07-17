@@ -113,8 +113,9 @@ PCA is a good method to reduce dimensionality of data. Here we carry out a PCA o
 ```{r}
 fcgeneexpression <- treated_normalized - untreated_normalized
 pca_FC = prcomp(fcgeneexpression, center = F, scale. = F)
+pca_untreated = prcomp(untreated_normalized, center = F, scale. = F)
 
-#plot PC 1-4 of FC
+#plot PC 1 and 2 of FC associated to the drug
 
 drug_as_factor <- as.factor(metadata[1:ncol(treated),"drug"])
 levels <- as.factor(levels(drug_as_factor))
@@ -126,6 +127,13 @@ ylab = "PC 2", col=drug_as_factor, main = "PC 1&2 of the fold change ")
 legend("right",inset = c(-0.3,0), levels(drug_as_factor), xpd = TRUE,
 pch=20, col = levels)
 
+#scree plot to show how much variance the PCs explain
+plot(pca_FC, type = "l", main = "PCA of the fold change")
+```
+A scree plot shows, how much variance a Principal Component explains. As you can see, PC 3 and 4 still explain 10 to 15 percent, we also plot them
+
+```{r}
+#plot PC 3 & 4 of FC associated to drug
 par(xpd=T, mar=par()$mar+c(0,0,0,5))
 plot(pca_FC$rotation[, 3], pca_FC$rotation[, 4], pch = 20, xlab = "PC 3",
 ylab = "PC 4", col=drug_as_factor, main = "PC 3&4 of the fold change ")
@@ -133,25 +141,19 @@ legend("right", inset=c(-0.5,0),levels(drug_as_factor), pch=20,
 col = levels, xpd =TRUE)
 
 #pca of untreated assigned to tissue
-
-pca_untreated = prcomp(untreated_normalized, center = F, scale. = F)
 plot(pca_untreated$rotation[, 1], pca_untreated$rotation[, 2], col = metadata[1:ncol(untreated), "tissue"], pch = 19, xlab = "PC1",
-ylab = "PC2")
-plot(pca_untreated$rotation[, 1], pca_untreated$rotation[, 2], col = metadata[1:ncol(untreated), "tissue"], pch = 19, xlab = "PC1", 
 ylab = "PC2")
 legend("right", inset=c(-0.5,0),levels(drug_as_factor), pch=20,
 col = levels, xpd =TRUE)
 
-#pca 1&2 of FC tissue associated
-pca_FC = prcomp(fcgeneexpression, center = F, scale. = F)
+#pca 1&2 of the fold change tissue associated
 plot(pca_FC$rotation[, 1], pca_FC$rotation[, 2], col = metadata[1:ncol(untreated), "tissue"], pch = 19, xlab = "PC 1", 
 ylab = "PC 2")
 legend("right", inset=c(-0.5,0),levels(drug_as_factor), pch=20,
 col = levels, xpd =TRUE)
 
 ```
-
-FC is obviously drug associated. 
+The fold change is obviously tissue associated, which shows that the drug treatment influences the geneexpression. On the other hand the geneexpression of the untreated cells is tissue associated, which also makes sense because same tissue means also a similar geneexpression due to same house-keepinge genes for example. 
 
 ***
 
