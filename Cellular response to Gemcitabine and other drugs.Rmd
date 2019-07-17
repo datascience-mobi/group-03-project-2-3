@@ -241,12 +241,13 @@ barplot(matrixtopgenes[1:30,], xlab = "", ylab = "Counts",
         cex.names = 0.7, las = 2, col = "#00CC66")
 mtext("Genes", side = 1, line = 4)
 ```
-We decided to take the top 15 genes with the highest difference in expression before and after treatment as our biomarkers.
+
+We decided to take the top 17 genes with the highest difference in expression before and after treatment as our biomarkers.
 
 List of our biomarkers:
 
 ```{r}
-biomarkers <- names(matrixtopgenes[1:15,1])
+biomarkers <- names(matrixtopgenes[1:17,1])
 biomarkers
 ```
 
@@ -319,6 +320,7 @@ MSI-H celllines are supposed to have more mutations, to check this, we do the fo
 library(plyr)
 library(qpcR)
 library(ggplot2)
+library(pheatmap)
 ```
 ```{r}
 mutation_cellline <- mutations[,"Tumor_Sample_Barcode"]
@@ -368,9 +370,7 @@ gemcitabine_line=data.frame("Gemcitabine drug sensitivity"= drugsensitivity["gem
 everything=cbind(Cell_Line,gemcitabine_line)
 ```
 
-```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
-library(ggplot2)
-```
+
 ```{r}
 basic=ggplot(everything, aes(Cell.Line.name, Gemcitabine.drug.sensitivity, colour = factor(Microsatellite), shape = factor(Microsatellite) )) +
    geom_point()
@@ -870,18 +870,18 @@ regression using all 15 biomarkers can be used to better predict a cellline's dr
 #### Gene expression vs. drug sensitivity
 
 ```{r}
-multipleregression.ge <- lm(DS_Gemcitabine~ATF3 + GADD45A + CDKN1A + TNFAIP3 + EGR1 
-                         + GDF15 + BTG2 + GEM + CEACAM1 + DHRS2 + HBEGF + IL11 + 
-                           TNFRSF9 + TXNIP, data = as.data.frame(genexp.drugsens))
+multipleregression.ge <- lm(DS_Gemcitabine~ATF3 + GADD45A + TNFAIP3 + CDKN1A + GDF15 + BTG2 + EGR1 
+                            + GEM + IL11 + TNFRSF9 + CEACAM1 + ANKRD1 + DHRS2 + BIRC3 + TP53I3 
+                            + TXNIP, data = as.data.frame(genexp.drugsens))
 summary(multipleregression.ge)
 ```
 
 #### Gene copy number vs. drug sensitivity
 
 ```{r}
-multipleregression.cn <- lm(DS_Gemcitabine~ATF3 + GADD45A + CDKN1A + TNFAIP3 + EGR1 
-                         + GDF15 + BTG2 + GEM + CEACAM1 + DHRS2 + HBEGF + IL11 + 
-                           TNFRSF9 + TXNIP, data = as.data.frame(copynum.drugsens))
+multipleregression.cn <- lm(DS_Gemcitabine~ATF3 + GADD45A + TNFAIP3 + CDKN1A + GDF15 + BTG2 + EGR1 
+                            + GEM + IL11 + TNFRSF9 + CEACAM1 + ANKRD1 + DHRS2 + BIRC3 + TP53I3 
+                            + TXNIP, data = as.data.frame(copynum.drugsens))
 summary(multipleregression.cn)
 ```
 
