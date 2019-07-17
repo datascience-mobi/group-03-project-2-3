@@ -136,21 +136,21 @@ A scree plot shows, how much variance a Principal Component explains. As you can
 par(xpd=T, mar=par()$mar+c(0,0,0,5))
 plot(pca_FC$rotation[, 3], pca_FC$rotation[, 4], pch = 20, xlab = "PC 3",
 ylab = "PC 4", col=drug_as_factor, main = "PC 3&4 of the fold change ")
-legend("right", inset=c(-0.5,0),levels(drug_as_factor), pch=20,
+legend("right", inset=c(-0.25,0),levels(drug_as_factor), pch=20,
 col = levels, xpd =TRUE)
 
 #pca of untreated assigned to tissue
 tissue_as_factor <- as.factor(metadata[1:ncol(treated), "tissue"])
 levels_t <- as.factor(levels(tissue_as_factor))
-plot(pca_untreated$rotation[, 1], pca_untreated$rotation[, 2], col = metadata[1:ncol(untreated), "tissue"], pch = 19, xlab = "PC1",
+plot(pca_untreated$rotation[, 1], pca_untreated$rotation[, 2], col = metadata[1:ncol(untreated), "tissue"], pch = 20, xlab = "PC1",
 ylab = "PC2")
-legend("right", inset=c(-0.5,0),levels(tissue_as_factor), pch=20,
+legend("right", inset=c(-0.25,0),levels(tissue_as_factor), pch=20,
 col = levels_t, xpd =TRUE)
 
 #pca 1&2 of the fold change tissue associated
-plot(pca_FC$rotation[, 1], pca_FC$rotation[, 2], col = metadata[1:ncol(untreated), "tissue"], pch = 19, xlab = "PC 1", 
+plot(pca_FC$rotation[, 1], pca_FC$rotation[, 2], col = metadata[1:ncol(untreated), "tissue"], pch = 20, xlab = "PC 1", 
 ylab = "PC 2")
-legend("right", inset=c(-0.5,0),levels(tissue_as_factor), pch=20,
+legend("right", inset=c(-0.25,0),levels(tissue_as_factor), pch=20,
 col = levels_t, xpd =TRUE)
 
 ```
@@ -411,6 +411,7 @@ biomarkers_geneexpression <- fcgeneexpression[c("ATF3", "CXCL8", "GADD45A","CDKN
 #MSI related genes, choosen after research, new matrix for untreated and FC
 geneexpression_MSI_related <- fcgeneexpression[c("MLH1", "MSH6"), 365:420]
 geneexpression_MSI_related_untreated <- untreated_normalized[c("MLH1", "MSH6"), 365:420]
+colnames(geneexpression_MSI_related_untreated) <- metadata[365:420, "cell"]
 
 #which cellines MSI-H or L?
 #View(Cell_Line)
@@ -439,9 +440,9 @@ library("GetoptLong")
 #two heatmaps of FC of biomarkers in MSI-Low and MSI-High celllines
 
 ht_biomarkers_geneexpression_MSIH = Heatmap(biomarkers_geneexpression_MSIH,
-name = "FC MSI-High", column_title = "MSI-H", column_names_gp = gpar(fontsize = 7)) 
+name = "FC MSI-High", column_title = "MSI-H", column_names_gp = gpar(fontsize = 5)) 
 ht_biomarkers_geneexpression_MSIL = Heatmap(biomarkers_geneexpression_MSIL,
-name = "FC MSI-Low", column_title = "MSI-L", column_names_gp = gpar(fontsize = 7))
+name = "FC MSI-Low", column_title = "MSI-L", column_names_gp = gpar(fontsize = 5))
  
 ht_biomarkers_geneexpression_MSIH + ht_biomarkers_geneexpression_MSIL
 ```
