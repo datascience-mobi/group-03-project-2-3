@@ -141,16 +141,18 @@ legend("right", inset=c(-0.5,0),levels(drug_as_factor), pch=20,
 col = levels, xpd =TRUE)
 
 #pca of untreated assigned to tissue
+tissue_as_factor <- as.factor(metadata[1:ncol(treated), "tissue"])
+levels_t <- as.factor(levels(tissue_as_factor))
 plot(pca_untreated$rotation[, 1], pca_untreated$rotation[, 2], col = metadata[1:ncol(untreated), "tissue"], pch = 19, xlab = "PC1",
 ylab = "PC2")
-legend("right", inset=c(-0.5,0),levels(drug_as_factor), pch=20,
-col = levels, xpd =TRUE)
+legend("right", inset=c(-0.5,0),levels(tissue_as_factor), pch=20,
+col = levels_t, xpd =TRUE)
 
 #pca 1&2 of the fold change tissue associated
 plot(pca_FC$rotation[, 1], pca_FC$rotation[, 2], col = metadata[1:ncol(untreated), "tissue"], pch = 19, xlab = "PC 1", 
 ylab = "PC 2")
-legend("right", inset=c(-0.5,0),levels(drug_as_factor), pch=20,
-col = levels, xpd =TRUE)
+legend("right", inset=c(-0.5,0),levels(tissue_as_factor), pch=20,
+col = levels_t, xpd =TRUE)
 
 ```
 The fold change is obviously tissue associated, which shows that the drug treatment influences the geneexpression. On the other hand the geneexpression of the untreated cells is tissue associated, which also makes sense because same tissue means also a similar geneexpression due to same house-keepinge genes for example. 
