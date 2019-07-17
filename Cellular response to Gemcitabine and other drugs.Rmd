@@ -11,9 +11,12 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Inhaltsverzeichnis fehlt noch!!
 
-## Loading the data
+## Gemcitabine
 
 Gemcitabine is a nucleoside analog used as chemotherapy. It is marketed as Gemzar. The drug replaces one of the building blocks of nucleic acids, in this case cytidine, during DNA replication. The process arrests tumor growth, as new nucleosides cannot be attached to the "faulty" nucleoside, resulting in apoptosis. Gemcitabine is used in various carcinomas: non-small cell lung cancer, pancreatic cancer, bladder cancer and breast cancer. It is being investigated for use in oesophageal cancer, and is used experimentally in lymphomas and various other tumor types.
+
+## Loading the data
+
 ```{r}
 #Set wd to the working directory where this Rscript is located
 wd = getwd()
@@ -77,6 +80,7 @@ ylab = "geneexpression", xlab = "samples", names = FALSE)
 ```
 The levelled mean indicates normalisation.
 
+***
 
 ## PCA
 PCA is a good method to reduce dimensionality of data. Here we carry out a PCA of the foldchange so the difference after in geneexpression before and after drug treatment. We also want to see whether it is maybe tissue assoicated as well.
@@ -123,6 +127,9 @@ col = levels, xpd =TRUE)
 ```
 
 FC is obviously drug associated. 
+
+***
+
 ## T-test
 
 A T-Test is a statistical hypothesis test which determines if there is a significant difference between the means of two groups. 
@@ -173,6 +180,7 @@ sum(pValues < 0.05)
 6744 genes have a p value less than 0.05. Thus, this leads to the rejection of the null hypothesis 
 and assumption that there could be a difference between the treated and untreated data for these particular genes.
 
+***
 
 ## Biomarkers
 
@@ -301,6 +309,8 @@ The one biomarker that is down-regulated (DHRS2) is an enzyme that metabolzes xe
 reduced expression is also beneficial, since it would presumably decrease the speed of degradation of 
 gemcitabine.
 
+***
+
 ## Microsatellite instability
 MSI is defined as a mistake in MMR (Mismatch Repair system) so if we plot the number of mutations against the celllines, 
 MSI-H celllines are supposed to have more mutations, to check this, we do the following plot
@@ -428,6 +438,8 @@ ht_biomarkers_geneexpression_MSIH + ht_biomarkers_geneexpression_MSIL
 mean(biomarkers_geneexpression_MSIH) ;mean(biomarkers_geneexpression_MSIL)
 ```
 no significant difference between geneexpression in MSI-H and MSI-L biomarkers, positive prognosis of MSI tumors is probably caused by the recognition of the immune system.
+
+***
 
 ## Drug sensitivity and cell line
 
@@ -641,7 +653,7 @@ print(mutations[which(mutations$Hugo_Symbol == "DCK"),"Tumor_Sample_Barcode"])
 The only cellline that has a DCK mutation is "HCC-2998" and it 
 corresponds to the fact that it is also a cellline with a low gemcitabine sensitivity. 
 
-
+***
 
 ## Linear regression Analysis
 
