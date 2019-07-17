@@ -425,7 +425,7 @@ geneexpression_MSI_related_untreated_MSIH <- geneexpression_MSI_related_untreate
 geneexpression_MSI_related_untreated_MSIL <- geneexpression_MSI_related_untreated[, -c(8,12,11,17,19,27,42,45)]
 
 #heatmap of untreated geneexpression with MSI related genes
-pheatmap(cbind(geneexpression_MSI_related_untreated_MSIH, geneexpression_MSI_related_untreated_MSIL), cluster_rows = FALSE, cluster_cols = FALSE)
+pheatmap(cbind(geneexpression_MSI_related_untreated_MSIH, geneexpression_MSI_related_untreated_MSIL), cluster_rows = FALSE, cluster_cols = FALSE, gaps_col = 8)
 ```
 Here you can see, that there is a difference in the geneexpression in these two genes in MSI-H and MSI-L cancer cells. But does the MSI status even effect the expression of our biomarkers after gemcitibine treatment? 
 
