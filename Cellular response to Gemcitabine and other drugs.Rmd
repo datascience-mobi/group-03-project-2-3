@@ -9,13 +9,35 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Inhaltsverzeichnis fehlt noch!!
+## Table of contents
 
+1. [Gemcitabine]  
+2. [Preparing the data]  
+3. [Comparing boxplots]  
+4. [PCA]  
+5. [T-test]  
+6. [Biomarkers]  
+    + [Further insight into our biomarkers]  
+    + [Cellular function of the biomarkers]  
+    + [Conclusion from the biomarkers]  
+7. [Microsatellite instability]  
+    + [Heatmap of biomarkers due to MSI status]  
+8. [Drug sensitivity and cell line]  
+9. [Linear regression analysis]  
+    + [Linear regression of gene expression vs. drug sensitivity]  
+    + [Linear regression of gene copy number vs. drug sensitivity]  
+10. [Multiple regression analysis]  
+    + [Gene expression vs. drug sensitivity]  
+    + [Gene copy number vs. drug sensitivity]  
+    
+    
 ## Gemcitabine
 
 Gemcitabine is a nucleoside analog used as chemotherapy. It is marketed as Gemzar. The drug replaces one of the building blocks of nucleic acids, in this case cytidine, during DNA replication. The process arrests tumor growth, as new nucleosides cannot be attached to the "faulty" nucleoside, resulting in apoptosis. Gemcitabine is used in various carcinomas: non-small cell lung cancer, pancreatic cancer, bladder cancer and breast cancer. It is being investigated for use in oesophageal cancer, and is used experimentally in lymphomas and various other tumor types.
 
-## Loading the data
+## Preparing the data
+
+Loading the data
 
 ```{r}
 #Set wd to the working directory where this Rscript is located
@@ -37,7 +59,7 @@ metadata <- read.table(paste0(wd,"/NCI_TPW_metadata.tsv"), header = TRUE,
                        sep ="\t", stringsAsFactors = TRUE)
 ```
 
-## Scaling of data
+### Scaling of data
 
 ```{r}
 #scale treated & untreated
@@ -254,7 +276,7 @@ biomarkers <- names(matrixtopgenes[1:17,1])
 biomarkers
 ```
 
-### Further insight into our biomarkers:
+### Further insight into our biomarkers
 
 Now that we know which genes have the highest difference in gene expression, we will check if each of 
 them is up- or down-regulated.
