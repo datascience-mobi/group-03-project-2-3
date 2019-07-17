@@ -797,7 +797,7 @@ Since the correlation of the two variables is so low, we will proceed with separ
 1. Gene expression vs. drug sensitivity  
 2. Gene copy number vs. drug sensitivity
 
-### 1. Linear regression of gene expression vs. drug sensitivity
+### Linear regression of gene expression vs. drug sensitivity
 
 The drug sensitivity matrix contains the EC50 values of several celllines when exposed to different
 drugs. First of all, we make sure to leave only the celllines that are contained in the other two
@@ -850,7 +850,7 @@ barplot(all.r.squared.ge, ylim = c(0,1), ylab = "R-squared value",
 mtext("Biomarkers", side = 1, line = 4)
 ```
 
-### 2. Linear regression of gene copy number vs. drug sensitivity
+### Linear regression of gene copy number vs. drug sensitivity
 
 The first step is to create a matrix with the gene copy number of the biomarkers and a row with the drug
 sensitivity of each cellline, just like it was done with the gene expression:
