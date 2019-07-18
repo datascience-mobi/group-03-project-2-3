@@ -477,7 +477,9 @@ theme_set(theme_bw())
 Neg_LogGI50gemcitabine4$`cell_line` <- rownames(Neg_LogGI50gemcitabine4)
 Neg_LogGI50gemcitabine4$GI50value_type<- ifelse(Neg_LogGI50gemcitabine4$GI50value< 0,
 "below", "above")
-ggplot(Neg_LogGI50gemcitabine4, aes(x=`cell_line`, y=GI50value, label=GI50value)) + 
+set.text <- element_text(face = "bold.italic", color = "black", size = 3)
+ggplot(Neg_LogGI50gemcitabine4, aes(x=`cell_line`, y=GI50value, label=GI50value)) 
++ theme(axis.text = set.text)+
     geom_bar(stat='identity', aes(fill=GI50value_type), width=0.7)  +
     scale_fill_manual(name="value", 
                        labels = c("Above Average", "Below Average"), 
