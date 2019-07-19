@@ -127,9 +127,9 @@ legend("right",inset = c(-0.3,0), levels(drug_as_factor), xpd = TRUE,
 pch=20, col = levels)
 
 #scree plot to show how much variance the PCs explain
-plot(pca_FC, type = "l", main = "PCA of the fold change")
+plot(pca_FC, type = "l", main = "PCAs of the fold change")
 ```
-A scree plot shows, how much variance a Principal Component explains. As you can see, PC 3 and 4 still explain 10 to 15 percent, we also plot them.
+A scree plot shows, how much variance a Principal Component explains. As you can see, PC 3 and 4 still explain the data, we also plot them. 
 
 ```{r}
 #plot PC 3 & 4 of FC associated to drug
@@ -154,7 +154,7 @@ legend("right", inset=c(-0.25,0),levels(tissue_as_factor), pch=20,
 col = levels_t, xpd =TRUE)
 
 ```
-The fold change is obviously drug associated, which shows that the drug treatment influences the geneexpression. On the other hand the geneexpression of the untreated cells is tissue associated, which also makes sense because same tissue means also a similar geneexpression due to same house-keepinge genes for example. What we cannot see is that the FC is associated to the tissue, which also makes sense because the PCA is carried out for all drugs. 
+The fold change is obviously drug associated, which shows that the drug treatment influences the geneexpression. On the other hand the geneexpression of the untreated cells is tissue associated, which also makes sense because same tissue means also a similar geneexpression due to same house-keepinge genes for example. What we cannot see is that the FC is associated to the tissue, which also makes sense because the PCA is carried out for all drugs. If we would have more samples treated with the same drug, maybe we then could see a relation to the tissue.
 
 ***
 
