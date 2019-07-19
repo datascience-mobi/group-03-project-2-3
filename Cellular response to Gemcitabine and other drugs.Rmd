@@ -473,7 +473,6 @@ Neg_LogGI50gemcitabine4 <- as.data.frame(GI50value)
 library(ggplot2)
 ```
 ```{r}
-theme_set(theme_bw())  
 Neg_LogGI50gemcitabine4$`cell_line` <- rownames(Neg_LogGI50gemcitabine4)
 Neg_LogGI50gemcitabine4$GI50value_type<- ifelse(Neg_LogGI50gemcitabine4$GI50value< 0,
 "below", "above")
