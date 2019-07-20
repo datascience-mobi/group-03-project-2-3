@@ -638,7 +638,7 @@ dimnames(HighGI50) = list(
     mutationtype)    
 
 #create a matrix for low GI50 values 
-LowGI50 <- cbind(missensenselow,silentlow,nonesenselow,splicesitelow,
+LowGI50 <- cbind(missenselow,silentlow,nonesenselow,splicesitelow,
 frameshiftlow,frameshiftinslow,denovolow)
 dimnames(LowGI50) = list( 
      c("HCC-2998","HS-578T","OVCAR-4","TK-10","PC-3","MDA-MB-231","SK-MEL-28",
