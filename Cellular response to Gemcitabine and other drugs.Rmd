@@ -391,12 +391,11 @@ It is obvious that MSI status affects the number of mutations, due to mutations 
 
 ```{r, warning=FALSE}
 # Plotting the GI50 values relating to Gemcitabine treatment .
-drugsensitivity=t(drugsensitivity)
 gemcitabine_line=data.frame("Gemcitabine drug sensitivity"= drugsensitivity["gemcitibine",])
-everything=cbind(Cell_Line,gemcitabine_line)
+everything=na.omit(cbind(Cell_Line,gemcitabine_line))
 ```
 
-```{r}
+```{r, warning = FALSE}
 basic=ggplot(everything, aes(Cell.Line.name, Gemcitabine.drug.sensitivity, colour = factor(Microsatellite), shape = factor(Microsatellite) )) +
    geom_point()
 basic + ggtitle("Drug Sensitivity of Gemcitabine treated cell lines according to High Microsatellite Instability")+ xlab("Cell Line")+ylab("Drug Sensitivity")+theme(axis.text.x = element_text(angle = 90, size = 7))
