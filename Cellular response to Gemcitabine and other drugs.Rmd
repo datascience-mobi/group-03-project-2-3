@@ -69,24 +69,11 @@ untreated_normalized <- scale(untreated)
 treated_normalized <- scale(treated)
 ```
 
-Loading the libraries of the packages required
-
-```{r, warning = FALSE, message = FALSE}
-library(viridis)
-library(car)
-library(BBmisc)
-library(plyr)
-library(dplyr)
-library(qpcR)
-library(ggplot2)
-library(pheatmap)
-library(ComplexHeatmap)
-library(circlize)
-library(colorspace)
-library(GetoptLong)
-```
-
 ## Comparing boxplots
+
+```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
+library("viridis")
+```
 
 The treated data is illustrated with a boxplot as follows.
 ```{r}
@@ -101,8 +88,8 @@ used. The boxplot is coloured according to the drug used in the following diagra
 palette(viridis(15))
 drugnames <- metadata$drug
 par(mar=c(5,4,5,9))
-boxplot(treated,medcol= "black", border=drugnames, col=drugnames, xlab="samples", 
-ylab="gene expression", main="Gene Expression treated celllines", names=FALSE, 
+boxplot(treated,medcol= "black", border=drugnames, col=drugnames, xlab="Samples/ Cell Lines", 
+ylab="Gene expression", main="Gene Expression of treated celllines", names=FALSE, 
 xaxt="n", boxwex=1, boxlty=0)#
 levels=as.factor(levels(drugnames))
 legend("topright",inset=c(-0.4,0), legend=levels(drugnames),xpd=TRUE,pch=19,
@@ -110,14 +97,14 @@ col=levels,title="drugs")
 ```
 
 As it can be seen from the above diagram, each batch corresponds to a particular drug treatment. It can also be noted that the mean 
-of the boxplots are not levelled. This indicates the lack of normalisation. Thus, the data is normalised and a boxplot is generated again.
+of the boxplots are not levelled. This indicates the lack of scaling. Thus, the data is scaled and a boxplot is generated again.
 
 ```{r}
-boxplot(treated_normalized, main = "normalized geneexpression after treatment", 
-ylab = "geneexpression", xlab = "samples", names = FALSE) 
+boxplot(treated_normalized, main = "Scaled gene expression after treatment", 
+ylab = "Gene expression", xlab = "Samples/ Cell Lines", names = FALSE) 
 ```
 
-The levelled mean indicates normalisation.
+The levelled mean indicates scaling.
 
 ***
 
@@ -138,17 +125,24 @@ palette(rainbow(15))
 
 par(xpd=T, mar=par()$mar+c(0,0,0,6))
 plot(pca_FC$rotation[, 1], pca_FC$rotation[, 2], pch = 20, xlab = "PC 1",
-ylab = "PC 2", col=drug_as_factor, main = "PC 1&2 of the fold change ")
+ylab = "PC 2", col=drug_as_factor, main = "PC 1 & 2 of the fold change ")
 legend("right",inset = c(-0.3,0), levels(drug_as_factor), xpd = TRUE,
 pch=20, col = levels)
 
-#scree plot to show how much variance the PCs explain
+#screen plot to show how much variance the PCs explain
 plot(pca_FC, type = "l", main = "PCAs of the fold change")
 ```
 
-A scree plot shows, how much variance a Principal Component explains. As you can see, there is a "knick" in the curve at PC 2, so we stop plotting any PCs.
+A scree plot shows, how much variance a Principal Component explains. As you can see, PC 3 and 4 still explain the data, we also plot them. 
 
 ```{r}
+#plot PC 3 & 4 of FC associated to drug
+par(xpd=T, mar=par()$mar+c(0,0,0,5))
+plot(pca_FC$rotation[, 3], pca_FC$rotation[, 4], pch = 20, xlab = "PC 3",
+ylab = "PC 4", col=drug_as_factor, main = "PC 3&4 of the fold change ")
+legend("right", inset=c(-0.25,0),levels(drug_as_factor), pch=20,
+col = levels, xpd =TRUE)
+
 #pca of untreated assigned to tissue
 tissue_as_factor <- as.factor(metadata[1:ncol(treated), "tissue"])
 levels_t <- as.factor(levels(tissue_as_factor))
@@ -181,6 +175,10 @@ Chosen limit: when pValue < 0.05,  H0 is rejected
 
 However, normalised data should be used for the T-Test. The data is normalised and illustrated in QQ plots as shown below.
 
+```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
+library("car")
+```
+
 ```{r}
 
 xGem= grep("gemcitibine",colnames(treated))
@@ -189,13 +187,16 @@ yGem= grep("gemcitibine",colnames(untreated))
 Untreated_Cells_Gemcitabine=untreated[,yGem]
 ```
 
+```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
+library(BBmisc)
+```
 ```{r}
 Treated_Gemcitabine_Normalised=normalize(Treated_Cells_Gemcitabine)
 Untreated_Gemcitabine_Normalised=normalize(Untreated_Cells_Gemcitabine)
 
 par(mfrow=c(1,2))
-qqPlot(Treated_Gemcitabine_Normalised)
-qqPlot(Untreated_Gemcitabine_Normalised)
+qqPlot(Treated_Gemcitabine_Normalised, main="Q-Q Plot Normalised treated data", ylab= "Normalised treated Gemcitabine data")
+qqPlot(Untreated_Gemcitabine_Normalised, main="Q-Q Plot Normalised untreated data", ylab= "Normalised untreated Gemcitabine data"  )
 ```
 
 
@@ -232,7 +233,9 @@ absvalfcgeneexpression <- abs(fcgeneexpression)
 
 New matrices containing only the celllines treated with gemcitabine:
 
-```{r}
+```{r, warning = FALSE, message = FALSE}
+library("dplyr")
+
 treated_gemcitabine <- select(as_tibble(treated_normalized), contains("gemcitibine"))
 treated_gemcitabine <- as.matrix(treated_gemcitabine)
 rownames(treated_gemcitabine) <- rownames(treated_normalized)
@@ -318,21 +321,19 @@ Biomarker | Description
 ----------|-------------
 ATF3      | This gene encodes for activating transcription factors. It is often highly expressed in cancer cells and is involved in the complex process of cellular stress response.
 CXCL8     | It codes for Interleukin-8, which induces the migration of immune cells towards sites of infection, stimulates phagocytisis and promotes angiogenesis.
+CDKN1A    | This gene codes for a cyclin-dependent kinase inhibitor, which plays a role in the regulation of the cell cycle, including DNA replication and DNA damage repair. Since gemcitabine produces broken DNA strands, it makes sense that this DNA-damage-repair protein would be up-regulated in cancer cells to counteract the drug's effects.
 GADD45A   | Member of a group of genes whose transcription increases when the cell is under stress or being treated with DNA-damaging agents, such as gemcitabine.
 TNFAIP3   | Encodes for TNF alpha induced protein 3, which is involved in the cytikine-mediated immune and inflammatory responses.
-CDKN1A    | This gene codes for a cyclin-dependent kinase inhibitor, which plays a role in the regulation of the cell cycle, including DNA replication and DNA damage repair. Since gemcitabine produces broken DNA strands, it makes sense that this DNA-damage-repair protein would be up-regulated in cancer cells to counteract the drug's effects.
-GDF15     | Encodes for a TGF-beta ligand, which regulates gene expression. Increased levels of the protein are linked with inflammation and oxidative stress.
+HBEGF     | Encodes for a growth factor involved in wound healing processes and known to be over-expressed in certain cancer celllines.
+GEM       | This gene encodes for a GTP-binding protein, which could have a regulatory function in receptor-mediated signal transduction.
+TXNIP     | Encodes for a thioredoxin-binding protein, which inhibits thioreduxin and results in the accumulation of reactive oxigen species in the cell and increased oxidative stress. It is suspected to function as a tumor-suppressor gene. 
 BTG2      | Encodes for a protein of the BTG/Tob family, which appears to have antiproliferative effects. 
 EGR1      | Encodes for a nuclear protein and transcription regulator; it works as a cancer suppressor gene.
-GEM       | This gene encodes for a GTP-binding protein, which could have a regulatory function in receptor-mediated signal transduction.
-IL11      | Encodes for Interleukin-11, which stimulates the development of immunoglobulin-dependent B-cells.
+GDF15     | Encodes for a TGF-beta ligand, which regulates gene expression. Increased levels of the protein are linked with inflammation and oxidative stress.
 TNFRSF9   | Encodes for a protein of the TNF-receptor superfamily, which contributes to the clonal expansion, survival and development of T-cells.
+IL11      | Encodes for Interleukin-11, which stimulates the development of immunoglobulin-dependent B-cells.
 CEACAM1   | Encodes for a cell-cell adhesion molecule that plays a role in angiogenesis, apoptosis, tumor suppression and metastasis.
-ANKRD1    | 
 DHRS2     | Encodes for a dehydrogenase/reductase of a family of enzymes known to metabolize different compounds such as prostaglandins, retinoids, lipids and xenobiotics.
-BIRC3     | 
-TP53I3    |
-TXNIP     | Encodes for a thioredoxin-binding protein, which inhibits thioreduxin and results in the accumulation of reactive oxigen species in the cell and increased oxidative stress. It is suspected to function as a tumor-suppressor gene. 
 
 #### Conclusion from the biomarkers
 
@@ -348,7 +349,12 @@ gemcitabine.
 # Microsatellite instability - Does gemcitabine has an effect on the geneexpression
 MSI is defined as a mistake in MMR (Mismatch Repair system). The defect is caused through a downregulation in the gene MLH1 and MSH6 for example. It leads to more mistakes while transcribing the DNA, so more mutations will occur. If we plot the number of mutations against the celllines, MSI-H celllines are supposed to have more mutations, to check this, we do the following plot
 
-
+```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
+library(plyr)
+library(qpcR)
+library(ggplot2)
+library(pheatmap)
+```
 ```{r}
 mutation_cellline <- mutations[,"Tumor_Sample_Barcode"]
 counting_mutations <- count(mutation_cellline, vars = NULL, wt_var = NULL)
@@ -384,10 +390,10 @@ It is obvious that MSI status affects the number of mutations, due to mutations 
 # Plotting the GI50 values relating to Gemcitabine treatment .
 drugsensitivity=t(drugsensitivity)
 gemcitabine_line=data.frame("Gemcitabine drug sensitivity"= drugsensitivity["gemcitibine",])
-everything=na.omit(cbind(Cell_Line,gemcitabine_line))
+everything=cbind(Cell_Line,gemcitabine_line)
 ```
 
-```{r, warning = FALSE}
+```{r}
 basic=ggplot(everything, aes(Cell.Line.name, Gemcitabine.drug.sensitivity, colour = factor(Microsatellite), shape = factor(Microsatellite) )) +
    geom_point()
 basic + ggtitle("Drug Sensitivity of Gemcitabine treated cell lines according to High Microsatellite Instability")+ xlab("Cell Line")+ylab("Drug Sensitivity")+theme(axis.text.x = element_text(angle = 90, size = 7))
@@ -430,6 +436,12 @@ pheatmap(cbind(geneexpression_MSI_related_untreated_MSIH, geneexpression_MSI_rel
 
 Here you can see, that there is a difference in the geneexpression in these two genes in MSI-H and MSI-L cancer cells. But does the MSI status even effect the expression of our biomarkers after gemcitibine treatment? 
 
+```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
+library("ComplexHeatmap")
+library("circlize")
+library("colorspace")
+library("GetoptLong")
+```
 
 ```{r}
 #two heatmaps of FC of biomarkers in MSI-Low and MSI-High celllines
@@ -464,6 +476,9 @@ GI50value <- NegLogGI50gemcitabine2 - 7.003322
 Neg_LogGI50gemcitabine4 <- as.data.frame(GI50value)
 ```
 
+```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
+library(ggplot2)
+```
 ```{r}
 Neg_LogGI50gemcitabine4$`cell_line` <- rownames(Neg_LogGI50gemcitabine4)
 Neg_LogGI50gemcitabine4$GI50value_type<- ifelse(Neg_LogGI50gemcitabine4$GI50value< 0,
@@ -506,7 +521,6 @@ for (i in (celllineshigh) ) {
 
 
 #missense mutation for celllines with low GI50 values 
-missenselow = c()
 for (i in (celllineslow) ) {print(sum(mutations[
 which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"] 
 == "Missense_Mutation"))}
@@ -603,7 +617,9 @@ dimnames(LowGI50) = list(
      "frame_shift_insertion","de_novo_out_of_frame")) 
 ```
 create heatmaps 
-
+```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
+library("pheatmap")
+```
 ```{r}
 #using quantiles to determine the colour coding breaks for the heatmap
 
@@ -870,7 +886,7 @@ mtext("Biomarkers", side = 1, line = 4)
 
 The linear regressions showed that the gene expression or copy number of each biomarker by itself does
 not account for the drug sensitivity of the cellline. Therefore, we will inspect if a multiple
-regression using all 17 biomarkers can be used to better predict a cellline's drug sensitivity.
+regression using all 15 biomarkers can be used to better predict a cellline's drug sensitivity.
 
 #### Gene expression vs. drug sensitivity
 
@@ -880,8 +896,6 @@ multipleregression.ge <- lm(DS_Gemcitabine~ATF3 + GADD45A + TNFAIP3 + CDKN1A + G
                             + TXNIP, data = as.data.frame(genexp.drugsens))
 summary(multipleregression.ge)
 ```
-
-This multiple regression has an R-squared value of 0.3142, which is higher than what each individual biomarker by itself had, but still not enough to be used as a predictor of the drug sensitivity of the celllines.
 
 #### Gene copy number vs. drug sensitivity
 
@@ -894,11 +908,5 @@ summary(multipleregression.cn)
 
 This regression has the highest R-squared value of all, but at 0.53 it still cannot be used to predict
 the drug sensitivity of the celllines.
-
-### Conclusion from the regression analyses
-
-All of the linear and multiple analyses performed yielded very low R-squared values. In an ideal case, when the variable or variables (gene expression and copy number) perfectly explained the behavior of another variable (the drug sensitivity in our case), this value would be equal to 1, but the highest value we got from our regressions was 0.544.  
-
-This was not entirely surprising, since the cellular response to a drug or any outside influence is a very complex process regulated by hundreds, if not thousands, of genes, so using only our 17 biomarkers to predict the cell's response to gemcitabine was unlikely to yield any meaningful results. Furthermore, many more variables come into play to determine the cell's response to a drug, such as specific mutations in particular genes, which we did not take into account for our analysis. 
 
 </div>
