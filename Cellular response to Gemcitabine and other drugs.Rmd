@@ -351,7 +351,7 @@ gemcitabine.
 
 ***
 
-# Microsatellite instability - Does gemcitabine has an effect on the geneexpression
+# Microsatellite instability - Does MSI status has an effect on the geneexpression after gemcitabine treatment
 MSI is defined as a mistake in MMR (Mismatch Repair system). The defect is caused through a downregulation in the gene MLH1 and MSH6 for example. It leads to more mistakes while transcribing the DNA, so more mutations will occur. If we plot the number of mutations against the celllines, MSI-H celllines are supposed to have more mutations, to check this, we do the following plot
 
 ```{r}
