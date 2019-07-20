@@ -172,7 +172,7 @@ col = levels_t, xpd =TRUE)
 ```
 
 
-After the PCA of the fold change, you can see some clusters. So the fold change is drug associated, which shows that the drug treatment influences the geneexpression. On the other hand the geneexpression of the untreated cells is tissue associated, which also makes sense because same tissue means also a similar geneexpression due to same house-keepinge genes for example. What we cannot see is that the FC is associated to the tissue, which also makes sense because the PCA is carried out for all drugs. If we would have more samples treated with the same drug, maybe we then could see a relation to the tissue.
+After the PCA of the fold change, you can see some clusters. So the fold change is drug associated, which shows that the drug treatment influences the gene expression. On the other hand the gene expression of the untreated cells is tissue associated, which also makes sense because same tissue means also a similar gene expression due to same house-keepinge genes for example. What we cannot see is that the FC is associated to the tissue, which also makes sense because the PCA is carried out for all drugs. If we would have more samples treated with the same drug, maybe we then could see a relation to the tissue.
 
 ***
 
