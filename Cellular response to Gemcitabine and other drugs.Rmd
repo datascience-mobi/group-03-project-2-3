@@ -123,7 +123,7 @@ The levelled mean indicates scaling.
 ***
 
 ## PCA
-PCA is a good method to reduce dimensionality of data. Here we carry out a PCA of the foldchange so the difference after in geneexpression after drug treatment. The fold change is calculated by substracting the untreated from the treated data. We also want to see whether it is maybe tissue assoicated as well.
+PCA is a good method to reduce dimensionality of data. Here we carry out a PCA of the foldchange so the difference in geneexpression after drug treatment. The fold change is calculated by substracting the untreated from the treated data. We also want to see whether it is maybe tissue assoicated as well.
 
 ```{r}
 #At first of all we calculate the change of gene expression after treatment
