@@ -77,7 +77,7 @@ library("viridis")
 
 The treated data is illustrated with a boxplot as follows.
 ```{r}
-boxplot(treated, main= "Gene Expression treated celllines",
+boxplot(treated, main= "Gene Expression of treated celllines",
 ylab="Gene expression", xlab="Samples", names = FALSE)
 ```
 
