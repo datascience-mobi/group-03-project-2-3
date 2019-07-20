@@ -26,7 +26,7 @@ knitr::opts_chunk$set(echo = TRUE)
     + [Heatmap of biomarkers due to MSI status]  
 8. [Is the drug sensitivity related to the cell line and the somatic mutation type?]  
     + [Mean graph plot]
-    + []
+    + [Celllines and different somatic mutation types]
 9. [Can a cell line's sensitivity to gemcitabine be predicted based on the expression or copy number of its biomarkers?]
     + [Linear regression analysis]  
        + [Linear regression of gene expression vs. drug sensitivity]  
@@ -486,9 +486,12 @@ theme(axis.text = set.text)+
      labs(subtitle=" ", 
           title= "Cell line and drug sensitivity") + 
 coord_flip()
+```
 
-``
 From the mean graph plot it can be observed that the different celllines had differences in gemcitabine sensitivity. The next step is to investigate how the count of different somatic mutation types differ for celllines with a high and a low gemcitabine sensitivity.  
+
+### Celllines and different somatic mutation types
+	
 ```{r}
 
 #filter out celllines with 10 highest and 10 lowest EC50 values
