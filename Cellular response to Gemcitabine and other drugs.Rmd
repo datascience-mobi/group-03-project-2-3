@@ -456,7 +456,7 @@ No obvious difference between geneexpression in MSI-H and MSI-L biomarkers, posi
 
 ## Drug sensitivity and cell line
 
-```{r}
+```{r, warning = FALSE}
 #is the drug sensitivity for gemcitabine dependend on the cell line? 
 #plotting mean graph plot 
 
