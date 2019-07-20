@@ -24,7 +24,9 @@ knitr::opts_chunk$set(echo = TRUE)
     + [Conclusion from the biomarkers]  
 7. [Microsatellite instability]  
     + [Heatmap of biomarkers due to MSI status]  
-8. [Drug sensitivity and cell line]  
+8. [Is the drug sensitivity related to the cell line and the somatic mutation type?]  
+    + [Mean graph plot]
+    + []
 9. [Linear regression analysis]  
     + [Linear regression of gene expression vs. drug sensitivity]  
     + [Linear regression of gene copy number vs. drug sensitivity]  
@@ -449,7 +451,9 @@ No conclusion can be drawn from the heatmaps above, of whether the gene expressi
 ## Is the drug sensitivity related to the cell line and the somatic mutation type?
 
 In this part it is invastigated how the gemcitabine sensitivity is dependend on the cellline and further dependend on the different types of somatic mutations.  
-In order to investigate the difference in gemcitabine sensitivity for different cell lines a mean graph plot is plottet. 
+In order to investigate the difference in gemcitabine sensitivity for different cell lines a mean graph plot is used. 
+
+### Mean graph plot
 
 ```{r, message = FALSE}
 
@@ -482,7 +486,9 @@ theme(axis.text = set.text)+
           title= "Cell line and drug sensitivity") + 
 coord_flip()
 
-#looking at the previous mean graph plot now compare the differences in mutations of cell lines which had high gemcitabine sensitivity and which had low sensitivity   
+``
+From the mean graph plot it can be observed that the different celllines had differences in gemcitabine sensitivity. The next step is to investigate how the count of different somatic mutation types differ for celllines with a high and a low gemcitabine sensitivity.  
+```{r}
 
 #filter out celllines with 10 highest and 10 lowest EC50 values
 sort(NegLogGI50gemcitabine2, decreasing = FALSE)
@@ -641,7 +647,7 @@ for (i in (celllineslow) ) {
   denovolow = c(denovolow, r)}
 ```
 
-Create a matrix for celllines with high EC50 values 
+Matrix for celllines with high EC50 values 
 ```{r}
 
 mutationtype <-  c("missense", "silent", "nonsense","splicesite","frame_shift_deletion",
@@ -655,7 +661,7 @@ dimnames(HighEC50) = list(
     ACHN"),       
     mutationtype)    
 ```
-Create a matrix for celllines with low EC50 values 
+Matrix for celllines with low EC50 values 
 ```{r}
 
 LowEC50 <- cbind(missenselow,silentlow,nonsenselow,splicesitelow,
@@ -666,7 +672,7 @@ dimnames(LowEC50) = list(
      mutationtype) 
 ```
 
-Create heatmaps 
+Heatmaps 
 
 
 ```{r}
