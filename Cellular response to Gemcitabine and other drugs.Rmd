@@ -22,17 +22,18 @@ knitr::opts_chunk$set(echo = TRUE)
     + [Further insight into our biomarkers]  
     + [Cellular function of the biomarkers]  
     + [Conclusion from the biomarkers]  
-7. [Microsatellite instability]  
+7. [Microsatellite instability - Does the MSI status of a cell line have an effect on the gene expression after gemcitabine treatment?]  
     + [Heatmap of biomarkers due to MSI status]  
 8. [Is the drug sensitivity related to the cell line and the somatic mutation type?]  
     + [Mean graph plot]
-    + [Celllines and different somatic mutation types]
-9. [Linear regression analysis]  
-    + [Linear regression of gene expression vs. drug sensitivity]  
-    + [Linear regression of gene copy number vs. drug sensitivity]  
-10. [Multiple regression analysis]  
-    + [Gene expression vs. drug sensitivity]  
-    + [Gene copy number vs. drug sensitivity]  
+    + []
+9. [Can a cell line's sensitivity to gemcitabine be predicted based on the expression or copy number of its biomarkers?]
+    + [Linear regression analysis]  
+       + [Linear regression of gene expression vs. drug sensitivity]  
+       + [Linear regression of gene copy number vs. drug sensitivity]  
+    + [Multiple regression analysis]  
+       + [Gene expression vs. drug sensitivity]  
+       + [Gene copy number vs. drug sensitivity]  
     
     
 ## Gemcitabine
@@ -344,7 +345,7 @@ gemcitabine.
 
 ***
 
-# Microsatellite instability - Does MSI status has an effect on the geneexpression after gemcitabine treatment
+# Microsatellite instability - Does the MSI status of a cell line have an effect on the gene expression after gemcitabine treatment?
 MSI is defined as a mistake in MMR (Mismatch Repair system). The defect is caused by a downregulation in the gene MLH1 and MSH6. This result in more mistakes while transcribing the DNA, so more mutations will occur. If we plot the number of mutations against the celllines, MSI-H celllines are supposed to have more mutations, to check this, we do the following plot
 
 ```{r}
@@ -486,11 +487,8 @@ theme(axis.text = set.text)+
           title= "Cell line and drug sensitivity") + 
 coord_flip()
 
-```
+``
 From the mean graph plot it can be observed that the different celllines had differences in gemcitabine sensitivity. The next step is to investigate how the count of different somatic mutation types differ for celllines with a high and a low gemcitabine sensitivity.  
-
-### Celllines and different somatic mutation types
-
 ```{r}
 
 #filter out celllines with 10 highest and 10 lowest EC50 values
