@@ -34,6 +34,7 @@ knitr::opts_chunk$set(echo = TRUE)
     + [Multiple regression analysis]  
        + [Gene expression vs. drug sensitivity]  
        + [Gene copy number vs. drug sensitivity]  
+    + [Conclusion from the regression analyses]
     
     
 ## Gemcitabine
