@@ -505,7 +505,7 @@ celllineslow <- c("HCC-2998","HS-578T","OVCAR-4","TK-10","PC-3","MDA-MB-231",
 #missense mutation for celllines with high GI50 values 
 missensehigh = c()
 for (i in (celllineshigh) ) {
-  b= print(sum(mutations[
+  b= (sum(mutations[
     which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"]
     == "Missense_Mutation"))
      missensehigh = c(missensehigh, b)}
@@ -513,7 +513,7 @@ for (i in (celllineshigh) ) {
 #missense mutation for celllines with low GI50 values 
 missenselow = c()
 for (i in (celllineslow) ) {
-  a = print(sum(mutations[
+  a = (sum(mutations[
   which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"] 
   == "Missense_Mutation"))
   missenselow = c(missenselow, a)}
@@ -521,7 +521,7 @@ for (i in (celllineslow) ) {
 #silent mutation for celllines with high GI50 values 
 silenthigh = c()
 for (i in (celllineshigh) ) {
-  c =print(sum(mutations[
+  c =(sum(mutations[
   which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"]
   == "Silent"))
   silenthigh = c(silenthigh, c)}
@@ -530,7 +530,7 @@ for (i in (celllineshigh) ) {
 #silent mutation for celllines with low GI50 values 
 silentlow = c()
 for (i in (celllineslow) ) {
-  d = print(sum(mutations[
+  d = (sum(mutations[
   which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"] 
   == "Silent"))
   silentlow = c(silentlow, d)}
@@ -538,7 +538,7 @@ for (i in (celllineslow) ) {
 #nonsense mutation for celllines with high GI50 values 
 nonsensehigh =c()
 for (i in (celllineshigh) ) {
-  e =print(sum(mutations[
+  e =(sum(mutations[
   which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"] 
   == "Nonsense_Mutation"))
   nonsensehigh= c(nonsensehigh, e)}
@@ -547,7 +547,7 @@ for (i in (celllineshigh) ) {
 #nonsense mutation for celllines with low GI50 values 
 nonsenselow =c()
 for (i in (celllineslow) ) {
-  f= print(sum(mutations[
+  f= (sum(mutations[
   which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"]
   == "Nonsense_Mutation"))
   nonsenselow= c(nonsenselow, f)}
@@ -556,7 +556,7 @@ for (i in (celllineslow) ) {
 #splice site mutation for celllines with high GI50 values
 splicesitehigh = c()
 for (i in (celllineshigh) ) {
-  g =print(sum(mutations[
+  g =(sum(mutations[
   which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"] 
   == "Splice_Site"))
   splicesitehigh = c(splicesitehigh, g)}
@@ -565,7 +565,7 @@ for (i in (celllineshigh) ) {
 #splice site mutation for celllines with low GI50 values 
 splicesitelow = c()
 for (i in (celllineslow) ) {
-  h = print(sum(mutations[
+  h = (sum(mutations[
   which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"]
   == "Splice_Site"))
   splicesitelow = c(splicesitelow, h)}
@@ -574,7 +574,7 @@ for (i in (celllineslow) ) {
 #frame shift deletion for celllines with high GI50 values 
 frameshifthigh = c()
 for (i in (celllineshigh) ) {
-  j= print(sum(mutations[
+  j= (sum(mutations[
   which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"]
   == "Frame_Shift_Del"))
   frameshifthigh = c(frameshifthigh, j)}
@@ -583,7 +583,7 @@ for (i in (celllineshigh) ) {
 #frame shift deletion for celllines with low GI50 values
 frameshiftlow = c()
 for (i in (celllineslow) ) {
-  k = print(sum(mutations[
+  k = (sum(mutations[
   which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"]
   == "Frame_Shift_Del"))
   frameshiftlow = c(frameshiftlow, k)}
@@ -592,7 +592,7 @@ for (i in (celllineslow) ) {
 #frame shift insertion for celllines with high GI50 values 
 frameshiftinshigh= c()
 for (i in (celllineshigh) ) {
-  l= print(sum(mutations[
+  l= (sum(mutations[
   which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"] 
   == "Frame_Shift_Ins"))
   frameshiftinshigh= c(frameshiftinshigh,l)}
@@ -601,7 +601,7 @@ for (i in (celllineshigh) ) {
 #frame shift insertion for celllines with low GI50 values 
 frameshiftinslow = c()
 for (i in (celllineslow) ) {
-  p= print(sum(mutations[
+  p= (sum(mutations[
   which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"]
   == "Frame_Shift_Ins"))
   frameshiftinslow = c(frameshiftinslow, p)}
@@ -610,7 +610,7 @@ for (i in (celllineslow) ) {
 #de novo out of frame mutation for celllines with high GI50 values
 denovohigh = c()
 for (i in (celllineshigh) ) {
-  u= print(sum(mutations[
+  u= (sum(mutations[
   which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"]
   == "De_novo_Start_OutOfFrame"))
   denovohigh= c(denovohigh, u)}
@@ -619,7 +619,7 @@ for (i in (celllineshigh) ) {
 #de novo out of frame mutation for celllines with low GI50 values 
 denovolow = c()
 for (i in (celllineslow) ) {
-  r= print(sum(mutations[
+  r= (sum(mutations[
   which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"] 
   == "De_novo_Start_OutOfFrame"))
   denovolow = c(denovolow, r)}
@@ -637,7 +637,7 @@ dimnames(HighGI50) = list(
     mutationtype)    
 
 #create a matrix for low GI50 values 
-LowGI50 <- cbind(missenselow,silentlow,nonesenselow,splicesitelow,
+LowGI50 <- cbind(missenselow,silentlow,nonsenselow,splicesitelow,
 frameshiftlow,frameshiftinslow,denovolow)
 dimnames(LowGI50) = list( 
      c("HCC-2998","HS-578T","OVCAR-4","TK-10","PC-3","MDA-MB-231","SK-MEL-28",
