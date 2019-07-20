@@ -476,7 +476,7 @@ library(ggplot2)
 ```
 ```{r}
 Neg_LogGI50gemcitabine4$`cell_line` <- rownames(Neg_LogGI50gemcitabine4)
-Neg_LogGI50gemcitabine4$GI50value_type<- ifelse(Neg_LogGI50gemcitabine4$GI50value< 0,"below", "above")
+Neg_LogGI50gemcitabine4$GI50value_type<- ifelse(Neg_LogGI50gemcitabine4$EC50value< 0,"below", "above")
 set.text <- element_text(face = "bold.italic", color = "black", size = 3)
 ggplot(Neg_LogGI50gemcitabine4, aes(x=`cell_line`, y=EC50value, label=EC50value)) +
 theme(axis.text = set.text)+
