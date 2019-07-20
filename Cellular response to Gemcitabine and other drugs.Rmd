@@ -509,6 +509,8 @@ for (i in (celllineshigh) ) {
     which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"]
     == "Missense_Mutation"))
      missensehigh = c(missensehigh, b)}
+     
+     
 
 #missense mutation for celllines with low GI50 values 
 missenselow = c()
@@ -517,6 +519,7 @@ for (i in (celllineslow) ) {
   which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"] 
   == "Missense_Mutation"))
   missenselow = c(missenselow, a)}
+  
 
 #silent mutation for celllines with high GI50 values 
 silenthigh = c()
@@ -534,6 +537,7 @@ for (i in (celllineslow) ) {
   which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"] 
   == "Silent"))
   silentlow = c(silentlow, d)}
+
 
 #nonsense mutation for celllines with high GI50 values 
 nonsensehigh =c()
@@ -629,12 +633,14 @@ for (i in (celllineslow) ) {
 mutationtype <-  c("missense", "silent", "nonsense","splicesite","frame_shift_deletion",
                 "frame_shift_insertion","de_novo_out_of_frame")
                 
+                
 HighGI50 <- cbind(missensehigh,silenthigh,nonsensehigh,splicesitehigh,
 frameshifthigh,frameshiftinshigh,denovohigh)
 dimnames(HighGI50) = list( 
     c("OVCAR-8","CAKI-1","NCI-H23","HCT-116","NCI-H460","M14","MCF7","786-0","
     ACHN"),       
     mutationtype)    
+
 
 #create a matrix for low GI50 values 
 LowGI50 <- cbind(missenselow,silentlow,nonsenselow,splicesitelow,
