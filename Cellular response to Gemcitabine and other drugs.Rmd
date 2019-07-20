@@ -476,8 +476,7 @@ library(ggplot2)
 ```
 ```{r}
 Neg_LogGI50gemcitabine4$`cell_line` <- rownames(Neg_LogGI50gemcitabine4)
-Neg_LogGI50gemcitabine4$GI50value_type<- ifelse(Neg_LogGI50gemcitabine4$GI50value< 0,
-"below", "above")
+Neg_LogGI50gemcitabine4$GI50value_type<- ifelse(Neg_LogGI50gemcitabine4$GI50value< 0,"below", "above")
 set.text <- element_text(face = "bold.italic", color = "black", size = 3)
 ggplot(Neg_LogGI50gemcitabine4, aes(x=`cell_line`, y=EC50value, label=EC50value)) +
 theme(axis.text = set.text)+
@@ -506,7 +505,7 @@ celllineshigh <- c("OVCAR-8","CAKI-1","NCI-H23","HCT-116","NCI-H460","M14",
 celllineslow <- c("HCC-2998","HS-578T","OVCAR-4","TK-10","PC-3","MDA-MB-231",
 "SK-MEL-28","OVCAR-3","KM12","HCT-15")
 ```
-missense mutation for celllines with high EC50 fold change values 
+Missense mutation for celllines with high EC50 values 
 
 ```{r}
 missensehigh = c()
@@ -517,7 +516,7 @@ for (i in (celllineshigh) ) {
      missensehigh = c(missensehigh, b)}
      
 ```
-missense mutation for celllines with low EC50 values 
+Missense mutation for celllines with low EC50 values 
 
 ```{r}
 missenselow = c()
@@ -528,7 +527,7 @@ for (i in (celllineslow) ) {
   missenselow = c(missenselow, a)}
   
 ```
-silent mutation for celllines with high EC50 values 
+Silent mutation for celllines with high EC50 values 
 
 ```{r}
 silenthigh = c()
@@ -538,7 +537,7 @@ for (i in (celllineshigh) ) {
   == "Silent"))
   silenthigh = c(silenthigh, c)}
 ```
-silent mutation for celllines with low EC50 values 
+Silent mutation for celllines with low EC50 values 
 ```{r}
 silentlow = c()
 for (i in (celllineslow) ) {
@@ -547,7 +546,7 @@ for (i in (celllineslow) ) {
   == "Silent"))
   silentlow = c(silentlow, d)}
 ```
-nonsense mutation for celllines with high EC50 values 
+Nonsense mutation for celllines with high EC50 values 
 ```{r}
 nonsensehigh =c()
 for (i in (celllineshigh) ) {
@@ -557,7 +556,7 @@ for (i in (celllineshigh) ) {
   nonsensehigh= c(nonsensehigh, e)}
   
 ```
-nonsense mutation for celllines with low EC50 values 
+Nonsense mutation for celllines with low EC50 values 
 ```{r}
 nonsenselow =c()
 for (i in (celllineslow) ) {
@@ -566,7 +565,7 @@ for (i in (celllineslow) ) {
   == "Nonsense_Mutation"))
   nonsenselow= c(nonsenselow, f)}
 ``` 
-splice site mutation for celllines with high EC50 values
+Splice site mutation for celllines with high EC50 values
 ```{r}
 splicesitehigh = c()
 for (i in (celllineshigh) ) {
@@ -575,7 +574,7 @@ for (i in (celllineshigh) ) {
   == "Splice_Site"))
   splicesitehigh = c(splicesitehigh, g)}
 ```
-splice site mutation for celllines with low EC50 values 
+Splice site mutation for celllines with low EC50 values 
 ```{r}
 
 splicesitelow = c()
@@ -585,7 +584,7 @@ for (i in (celllineslow) ) {
   == "Splice_Site"))
   splicesitelow = c(splicesitelow, h)}
  ```
-frame shift deletion for celllines with high EC50 values 
+Frame shift deletion for celllines with high EC50 values 
 
 ```{r}
 frameshifthigh = c()
@@ -596,7 +595,7 @@ for (i in (celllineshigh) ) {
   frameshifthigh = c(frameshifthigh, j)}
 
 ```
-frame shift deletion for celllines with low EC50 values
+Frame shift deletion for celllines with low EC50 values
 ```{r}
 
 frameshiftlow = c()
@@ -606,7 +605,7 @@ for (i in (celllineslow) ) {
   == "Frame_Shift_Del"))
   frameshiftlow = c(frameshiftlow, k)}
 ```
-frame shift insertion for celllines with high EC50 values 
+Frame shift insertion for celllines with high EC50 values 
 ```{r}
 
 frameshiftinshigh= c()
@@ -616,7 +615,7 @@ for (i in (celllineshigh) ) {
   == "Frame_Shift_Ins"))
   frameshiftinshigh= c(frameshiftinshigh,l)}
 ```
-frame shift insertion for celllines with low EC50 values 
+Frame shift insertion for celllines with low EC50 values 
 ```{r}
 
 frameshiftinslow = c()
@@ -626,7 +625,7 @@ for (i in (celllineslow) ) {
   == "Frame_Shift_Ins"))
   frameshiftinslow = c(frameshiftinslow, p)}
 ```
-de novo out of frame mutation for celllines with high EC50 values
+De novo out of frame mutation for celllines with high EC50 values
 ```{r}
 
 denovohigh = c()
@@ -637,7 +636,7 @@ for (i in (celllineshigh) ) {
   denovohigh= c(denovohigh, u)}
 
 ```
-de novo out of frame mutation for celllines with low EC50 values 
+De novo out of frame mutation for celllines with low EC50 values 
 ```{r}
 
 denovolow = c()
@@ -648,7 +647,7 @@ for (i in (celllineslow) ) {
   denovolow = c(denovolow, r)}
 ```
 
-create a matrix for high EC50 values 
+Create a matrix for celllines with high EC50 values 
 ```{r}
 
 mutationtype <-  c("missense", "silent", "nonsense","splicesite","frame_shift_deletion",
@@ -662,7 +661,7 @@ dimnames(HighEC50) = list(
     ACHN"),       
     mutationtype)    
 ```
-create a matrix for low EC50 values 
+Create a matrix for celllines with low EC50 values 
 ```{r}
 
 LowEC50 <- cbind(missenselow,silentlow,nonsenselow,splicesitelow,
