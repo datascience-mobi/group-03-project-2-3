@@ -468,12 +468,7 @@ NegLogGI50gemcitabine2<- NegLogGI50gemcitabine[-2:-8,]
 #substract the value 7,003322 for GI50 value of gemcitabine for every cell line 
 EC50value <- NegLogGI50gemcitabine2 - 7.003322
 Neg_LogGI50gemcitabine4 <- as.data.frame(EC50value)
-```
 
-```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
-library(ggplot2)
-```
-```{r}
 Neg_LogGI50gemcitabine4$`cell_line` <- rownames(Neg_LogGI50gemcitabine4)
 Neg_LogGI50gemcitabine4$EC50value_type<- ifelse(Neg_LogGI50gemcitabine4$EC50value< 0,"below", "above")
 set.text <- element_text(face = "bold.italic", color = "black", size = 3)
