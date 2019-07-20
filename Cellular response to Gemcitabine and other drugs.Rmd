@@ -344,7 +344,8 @@ gemcitabine.
 ***
 
 ## Microsatellite instability - Does the MSI status of a cell line have an effect on the gene expression after gemcitabine treatment?
-MSI is defined as a mistake in MMR (Mismatch Repair system). The defect is caused by a downregulation in the gene MLH1 and MSH6. This result in more mistakes while transcribing the DNA, so more mutations will occur. If we plot the number of mutations against the celllines, MSI-H celllines are supposed to have more mutations, to check this, we do the following plot
+
+MSI is defined as a deficit in the MMR (Mismatch Repair system). The defect is caused by a downregulation in the gene MLH1 and MSH6. This result in more mistakes while transcribing the DNA, so more mutations will occur. If we plot the number of mutations against the celllines, MSI-H celllines should have more mutations. To check this, we do the following plot.
 
 ```{r}
 mutation_cellline <- mutations[,"Tumor_Sample_Barcode"]
@@ -377,9 +378,9 @@ mutation_plot + ggtitle("Number of mutations per cellline coloured by MSI
 status")+ xlab("Cell Line")+ylab("Mutations")+theme(axis.text.x = element_text(angle = 90, size = 7))
 ```
   
-CHECK THIS PARAGRAPH
-
-It can be observed that MSI status affects the number of mutations, due to mutations in the repair system. From this observation arises the following question: does MSI status also affect the effect of gemcitabine? MSI-H cancers have a better prognosis when it comes to immune activating therapies, because of new immunogenic antigens, being produced. But does it also affect non-immune mechanisms in the cell? A loss of system which repairs wrong parts could also lead to an increased proliferation of the cell on the one hand because it would destroy itself. On the other hand a faulty repair system could also cause a better proliferation, because it would be easier to "develop" drug escape mechanisms. At first we want to see if there is any visible relationship between the sensitivity of gemcitabine and the MSI status. So we plot the sensitivity against the celllines and colour them due to MSI status.
+It can be observed from the previous plot that the MSI-H cells tend to have a higher number of mutations than MSI-L cells. From this observation arises the question of whether the MSI status also affect the sensitivity of cells to gemcitabine.   
+MSI-H cancers have a better prognosis when it comes to immune activating therapies, because of new immunogenic antigens being produced. However, the question remains open, of whether the Microsatellite Instability also affect other non-immune mechanisms in the cell. The deficit in the MMR could result in faulty essential proteins being produced, which would lead to cell death, but the higher mutation rate could also lead to a faster development of drug escape mechanisms.  
+In order to investigate the relationship between sensitivity to gemcitabine and the MSI status, we plot the EC50 value of all cell lines and colour them according to the MSI status.
 
 ```{r, warning=FALSE}
 # Plotting the GI50 values relating to Gemcitabine treatment .
