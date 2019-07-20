@@ -34,3 +34,9 @@ ylab = "PC 2")
 
 
 #you can see that untreated is tissue associated and the FC is drug associated
+#plot PC 3 & 4 of FC associated to drug
+par(xpd=T, mar=par()$mar+c(0,0,0,5))
+plot(pca_FC$rotation[, 3], pca_FC$rotation[, 4], pch = 20, xlab = "PC 3",
+ylab = "PC 4", col=drug_as_factor, main = "PC 3&4 of the fold change ")
+legend("right", inset=c(-0.25,0),levels(drug_as_factor), pch=20,
+col = levels, xpd =TRUE)
