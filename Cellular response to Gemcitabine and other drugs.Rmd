@@ -913,7 +913,7 @@ mtext("Biomarkers", side = 1, line = 4)
 
 The linear regressions showed that the gene expression or copy number of each biomarker by itself does
 not account for the drug sensitivity of the cellline. Therefore, we will inspect if a multiple
-regression using all 15 biomarkers can be used to better predict a cellline's drug sensitivity.
+regression using all 17 biomarkers can be used to better predict a cellline's drug sensitivity.
 
 #### Gene expression vs. drug sensitivity
 
@@ -923,6 +923,8 @@ multipleregression.ge <- lm(DS_Gemcitabine~ATF3 + GADD45A + TNFAIP3 + CDKN1A + G
                             + TXNIP, data = as.data.frame(genexp.drugsens))
 summary(multipleregression.ge)
 ```
+
+This multiple regression has an R-squared value of 0.3142, which is higher than what each individual biomarker by itself had, but still not enough to be used as a predictor of the drug sensitivity of the celllines.
 
 #### Gene copy number vs. drug sensitivity
 
@@ -935,5 +937,11 @@ summary(multipleregression.cn)
 
 This regression has the highest R-squared value of all, but at 0.53 it still cannot be used to predict
 the drug sensitivity of the celllines.
+
+### Conclusion from the regression analyses
+
+All of the linear and multiple analyses performed yielded very low R-squared values. In an ideal case, when the variable or variables (gene expression and copy number) perfectly explained the behavior of another variable (the drug sensitivity in our case), this value would be equal to 1, but the highest value we got from our regressions was 0.544.  
+
+This was not entirely surprising, since the cellular response to a drug or any outside influence is a very complex process regulated by hundreds, if not thousands, of genes, so using only our 17 biomarkers to predict the cell's response to gemcitabine was unlikely to yield any meaningful results. Furthermore, many more variables come into play to determine the cell's response to a drug, such as specific mutations in particular genes, which we did not take into account for our analysis. 
 
 </div>
