@@ -61,7 +61,7 @@ metadata <- read.table(paste0(wd,"/NCI_TPW_metadata.tsv"), header = TRUE,
                        sep ="\t", stringsAsFactors = TRUE)
 ```
 
-### Scaling of data
+#### Scaling of data
 
 ```{r}
 #scale treated & untreated
@@ -69,7 +69,7 @@ untreated_normalized <- scale(untreated)
 treated_normalized <- scale(treated)
 ```
 
-### Loading the libraries required
+#### Loading the libraries required
 
 ```{r, warning = FALSE, message = FALSE}
 library(viridis)
@@ -178,16 +178,14 @@ After the PCA of the fold change, you can see some clusters. So the fold change 
 
 ## T-test
 
-A T-Test is a statistical hypothesis test which determines if there is a significant difference between the means of two groups. 
+A T-test is a statistical hypothesis test which determines if there is a significant difference between the means of two groups. 
 Here our 2 groups are the set of treated and untreated data. Since each piece of treated data corresponds 
-to to one piece of untreated data, a paired T-Test is carried out using the following Hypothesis:
+to one piece of untreated data, a paired T-test is carried out using the following Hypothesis:  
+The H0 Hypothesis: there is no change in the mean of the treated and untreated data.  
+Alternative Hypothesis (H1): there is a difference in mean between the treated and untreated data.  
+Chosen limit: when pValue < 0.05,  H0 is rejected  
 
-
-The H0 Hypothesis: there is no change in the mean of the treated and untreated data.
-Alternative Hypothesis (H1): there is a difference in mean between the treated and untreated data.
-Chosen limit: when pValue < 0.05,  H0 is rejected
-
-However, normalised data should be used for the T-Test. The data is normalised and illustrated in QQ plots as shown below.
+However, normalised data should be used for the T-test. The data is normalised and illustrated in Q-Q plots as shown below.
 
 
 ```{r}
@@ -198,9 +196,6 @@ yGem= grep("gemcitibine",colnames(untreated))
 Untreated_Cells_Gemcitabine=untreated[,yGem]
 ```
 
-```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
-library(BBmisc)
-```
 ```{r}
 Treated_Gemcitabine_Normalised=normalize(Treated_Cells_Gemcitabine)
 Untreated_Gemcitabine_Normalised=normalize(Untreated_Cells_Gemcitabine)
@@ -229,12 +224,12 @@ and assumption that there could be a difference between the treated and untreate
 
 ## Biomarkers
 
-In order to asses the effect that gemcitabine has in the cancer cells, we will define certain genes,
+In order to assess the effect that gemcitabine has in the cancer cells, we will define certain genes,
 that deliver the most information. To this end, we will base the selection of the genes on their
 expression, or more specifically, the change in their expression before and after the treatment with the
-drug. These will be out biomarkers.  
+drug. These will be our biomarkers.  
 
-The first step is to calculate a fold change to find the difference in expression of every single gene between treated and untreated celllines.
+The first step is to calculate a fold change to find the difference in expression of every single gene between treated and untreated cell lines.
 
 ```{r}
 fcgeneexpression <- treated_normalized - untreated_normalized
@@ -242,18 +237,9 @@ fcgeneexpression <- treated_normalized - untreated_normalized
 absvalfcgeneexpression <- abs(fcgeneexpression)
 ```
 
-New matrices containing only the celllines treated with gemcitabine:
+Taking only the cell lines in the fold change matrix that were treated with gemcitabine
 
 ```{r}
-treated_gemcitabine <- dplyr::select(as_tibble(treated_normalized), contains("gemcitibine"))
-treated_gemcitabine <- as.matrix(treated_gemcitabine)
-rownames(treated_gemcitabine) <- rownames(treated_normalized)
-
-untreated_gemcitabine <- 
-  dplyr::select(as_tibble(untreated_normalized), contains("gemcitibine"))
-untreated_gemcitabine <- as.matrix(untreated_gemcitabine)
-rownames(untreated_gemcitabine) <- rownames(untreated_normalized)
-
 absvalfcge_gemcitabine <- 
   dplyr::select(as_tibble(absvalfcgeneexpression), contains("gemcitibine"))
 absvalfcge_gemcitabine <- as.matrix(absvalfcge_gemcitabine)
@@ -272,7 +258,7 @@ orderforvectors <- function(x) {
 matrixofbiomarkers <- apply(absvalfcge_gemcitabine, 2, orderforvectors) 
 ```
 
-Check for most common genes in the first 15 rows of the new matrix
+Check for the most common genes in the first 15 rows of the new matrix
 
 ```{r}
 topgenes <- sort(table(as.vector(matrixofbiomarkers[1:15,])))
@@ -357,7 +343,7 @@ gemcitabine.
 ***
 
 # Microsatellite instability - Does MSI status has an effect on the geneexpression after gemcitabine treatment
-MSI is defined as a mistake in MMR (Mismatch Repair system). The defect is caused through a downregulation in the gene MLH1 and MSH6 for example. It leads to more mistakes while transcribing the DNA, so more mutations will occur. If we plot the number of mutations against the celllines, MSI-H celllines are supposed to have more mutations, to check this, we do the following plot
+MSI is defined as a mistake in MMR (Mismatch Repair system). The defect is caused by a downregulation in the gene MLH1 and MSH6. This result in more mistakes while transcribing the DNA, so more mutations will occur. If we plot the number of mutations against the celllines, MSI-H celllines are supposed to have more mutations, to check this, we do the following plot
 
 ```{r}
 mutation_cellline <- mutations[,"Tumor_Sample_Barcode"]
@@ -365,14 +351,16 @@ counting_mutations <- plyr::count(mutation_cellline, vars = NULL, wt_var = NULL)
 ```
 
 ```{r}
-#creating a new dataframe with the Celllines and whether the Microsatellite Instablility is high or not. TRUE:High  False:Stable/Low
+#creating a new dataframe with the Celllines and high/low Microsatellite Instablility. 
+#TRUE:High  
+#FALSE:Stable/Low
 
 L=cannotation$Microsatellite_instability_status=="MSI-H"
 Cell_Line=data.frame("Cell Line name"= cannotation[,"Cell_Line_Name"],"Microsatellite"= L)
 Cell_Line <- Cell_Line[order(Cell_Line$Cell.Line.name),]
 drugsensitivity_transposed=t(drugsensitivity)
 
-#The the Cell_Line dataframe is directly merged with the Gemcitabine Drug Sensitivity Values.
+#The Cell_Line dataframe is directly merged with the Gemcitabine Drug Sensitivity Values.
 Cell_Line_no_nas <- na.omit(Cell_Line)
 
 table_of_mutations_na <- qpcR:::cbind.na(counting_mutations, Cell_Line_no_nas)
@@ -386,11 +374,11 @@ mutation_plot <- qplot(
 
 mutation_plot + ggtitle("Number of mutations per cellline coloured by MSI 
 status")+ xlab("Cell Line")+ylab("Mutations")+theme(axis.text.x = element_text(angle = 90, size = 7))
-
 ```
+  
+CHECK THIS PARAGRAPH
 
-
-It is obvious that MSI status affects the number of mutations, due to mutations in the repair system, but does MSI status also effect the effect of gemcitibine? MSI-H cancers are known to have a better prognosis when it comes to immune activating therapies, because of more unknown antigens, being produced. But does it also effect non-immune mechanisms in the cell? A loss of system which repairs wrong parts could also lead to a worse proliferation of the cell on the one hand because it would destroy itself. On the other hand a faulty repair system could also cause a better proliferation, because it would be easier to "develop" drug escape mechanisms. At first we want to see if there is any visible relationship between the sensitivity of gemcitabine and the MSI status. So we plot the sensitivity against the celllines and colour them due to MSI status.
+It can be observed that MSI status affects the number of mutations, due to mutations in the repair system. From this observation arises the following question: does MSI status also affect the effect of gemcitabine? MSI-H cancers have a better prognosis when it comes to immune activating therapies, because of new immunogenic antigens, being produced. But does it also affect non-immune mechanisms in the cell? A loss of system which repairs wrong parts could also lead to an increased proliferation of the cell on the one hand because it would destroy itself. On the other hand a faulty repair system could also cause a better proliferation, because it would be easier to "develop" drug escape mechanisms. At first we want to see if there is any visible relationship between the sensitivity of gemcitabine and the MSI status. So we plot the sensitivity against the celllines and colour them due to MSI status.
 
 ```{r, warning=FALSE}
 # Plotting the GI50 values relating to Gemcitabine treatment .
@@ -404,17 +392,17 @@ basic=ggplot(everything, aes(Cell.Line.name, Gemcitabine.drug.sensitivity, colou
 basic + ggtitle("Drug Sensitivity of Gemcitabine treated cell lines according to High Microsatellite Instability")+ xlab("Cell Line")+ylab("Drug Sensitivity")+theme(axis.text.x = element_text(angle = 90, size = 7))
 ```
 
-A relationship between high drug sensitivity(Gemcitabine) and high microsatellite instability cannot be concluded.
+A relationship between high drug sensitivity and high microsatellite instability cannot be concluded from this plot.
 
 ## Heatmap of biomarkers due to MSI status
 
-To answer the question wheter MSI status affects the fold change after gemcitibine treatment, we have to investigate the fold change of our 15 biomarkers for gemcitibine in the different MSI-High and Low celllines. But at first of all, we want to know, whether we can see the effect on the geneexpression of the repair system, so we pick out 2 of the important genes for MSI Instability (MLH1 and MSH6). They belong to the repair system. In MSI-H cancers they should be downregulated, so that the repair system does not work anymore.
+To investigate wether MSI status affects the fold change after gemcitabine treatment, we have to explore the fold change of our 17 biomarkers for gemcitabine in the MSI-High and MSI-Low celllines. Furthermore, the question arises of wether the gene expression of key genes involved in the DNA repair mechanisms is also affected. To this we picked MLH1 and MSH6, which should theoretically be downregulated.
 
 ```{r}
-#check which rows are for gemcitibine
+#Select the columns names that contain gemcitabine
 gmci <- grepl('gemcitibine', colnames(fcgeneexpression))
 
-#rows 365:420(gemcitibine), make dataframe with gemci and biomarkers
+#rows 365:420(gemcitibine), make dataframe with gmci and biomarkers
 colnames(fcgeneexpression) = metadata[1:ncol(treated),"cell"]
 biomarkers_geneexpression <- fcgeneexpression[c("ATF3", "CXCL8", "GADD45A","CDKN1A","TNFAIP3", "EGR1", "GDF15", "BTG2", "GEM", "CEACAM1", "DHRS2", "HBEGF","IL11", "TNFRSF9", "TXNIP"),365:420]
 
