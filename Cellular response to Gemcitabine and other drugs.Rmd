@@ -206,8 +206,8 @@ Treated_Gemcitabine_Normalised=normalize(Treated_Cells_Gemcitabine)
 Untreated_Gemcitabine_Normalised=normalize(Untreated_Cells_Gemcitabine)
 
 par(mfrow=c(1,2))
-qqPlot(Treated_Gemcitabine_Normalised, main="Q-Q Plot Normalised treated data", ylab= "Normalised treated Gemcitabine data")
-qqPlot(Untreated_Gemcitabine_Normalised, main="Q-Q Plot Normalised untreated data", ylab= "Normalised untreated Gemcitabine data"  )
+qqPlot(Treated_Gemcitabine_Normalised, main="Q-Q Plot Normalised treated data", ylab= "Normalised treated Gemcitabine data", id=FALSE)
+qqPlot(Untreated_Gemcitabine_Normalised, main="Q-Q Plot Normalised untreated data", ylab= "Normalised untreated Gemcitabine data",id= FALSE  )
 ```
 
 
