@@ -381,7 +381,7 @@ mutation_plot <- qplot(
     main = "number of mutations per cellline coloured by MSI status", 
     xlab = "Cell line",ylab = "mutations")
 
-mutation_plot + ggtitle("number of mutations per cellline coloured by MSI 
+mutation_plot + ggtitle("Number of mutations per cellline coloured by MSI 
 status")+ xlab("Cell Line")+ylab("mutations")+theme(axis.text.x = element_text(angle = 90))
 
 ```
