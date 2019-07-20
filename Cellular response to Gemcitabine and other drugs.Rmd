@@ -9,6 +9,8 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+<div style="text-align: justify">
+
 ## Table of contents
 
 1. [Gemcitabine]  
@@ -899,3 +901,5 @@ summary(multipleregression.cn)
 
 This regression has the highest R-squared value of all, but at 0.53 it still cannot be used to predict
 the drug sensitivity of the celllines.
+
+</div>
