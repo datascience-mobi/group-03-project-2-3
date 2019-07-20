@@ -69,11 +69,24 @@ untreated_normalized <- scale(untreated)
 treated_normalized <- scale(treated)
 ```
 
-## Comparing boxplots
+Loading the libraries of the packages required
 
-```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
-library("viridis")
+```{r, warning = FALSE, message = FALSE}
+library(viridis)
+library(car)
+library(BBmisc)
+library(plyr)
+library(dplyr)
+library(qpcR)
+library(ggplot2)
+library(pheatmap)
+library(ComplexHeatmap)
+library(circlize)
+library(colorspace)
+library(GetoptLong)
 ```
+
+## Comparing boxplots
 
 The treated data is illustrated with a boxplot as follows.
 ```{r}
@@ -175,10 +188,6 @@ Chosen limit: when pValue < 0.05,  H0 is rejected
 
 However, normalised data should be used for the T-Test. The data is normalised and illustrated in QQ plots as shown below.
 
-```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
-library("car")
-```
-
 ```{r}
 
 xGem= grep("gemcitibine",colnames(treated))
@@ -187,9 +196,6 @@ yGem= grep("gemcitibine",colnames(untreated))
 Untreated_Cells_Gemcitabine=untreated[,yGem]
 ```
 
-```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
-library(BBmisc)
-```
 ```{r}
 Treated_Gemcitabine_Normalised=normalize(Treated_Cells_Gemcitabine)
 Untreated_Gemcitabine_Normalised=normalize(Untreated_Cells_Gemcitabine)
@@ -233,9 +239,7 @@ absvalfcgeneexpression <- abs(fcgeneexpression)
 
 New matrices containing only the celllines treated with gemcitabine:
 
-```{r, warning = FALSE, message = FALSE}
-library("dplyr")
-
+```{r}
 treated_gemcitabine <- select(as_tibble(treated_normalized), contains("gemcitibine"))
 treated_gemcitabine <- as.matrix(treated_gemcitabine)
 rownames(treated_gemcitabine) <- rownames(treated_normalized)
@@ -349,12 +353,7 @@ gemcitabine.
 # Microsatellite instability - Does gemcitabine has an effect on the geneexpression
 MSI is defined as a mistake in MMR (Mismatch Repair system). The defect is caused through a downregulation in the gene MLH1 and MSH6 for example. It leads to more mistakes while transcribing the DNA, so more mutations will occur. If we plot the number of mutations against the celllines, MSI-H celllines are supposed to have more mutations, to check this, we do the following plot
 
-```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
-library(plyr)
-library(qpcR)
-library(ggplot2)
-library(pheatmap)
-```
+
 ```{r}
 mutation_cellline <- mutations[,"Tumor_Sample_Barcode"]
 counting_mutations <- count(mutation_cellline, vars = NULL, wt_var = NULL)
@@ -436,12 +435,6 @@ pheatmap(cbind(geneexpression_MSI_related_untreated_MSIH, geneexpression_MSI_rel
 
 Here you can see, that there is a difference in the geneexpression in these two genes in MSI-H and MSI-L cancer cells. But does the MSI status even effect the expression of our biomarkers after gemcitibine treatment? 
 
-```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
-library("ComplexHeatmap")
-library("circlize")
-library("colorspace")
-library("GetoptLong")
-```
 
 ```{r}
 #two heatmaps of FC of biomarkers in MSI-Low and MSI-High celllines
@@ -476,9 +469,6 @@ GI50value <- NegLogGI50gemcitabine2 - 7.003322
 Neg_LogGI50gemcitabine4 <- as.data.frame(GI50value)
 ```
 
-```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
-library(ggplot2)
-```
 ```{r}
 Neg_LogGI50gemcitabine4$`cell_line` <- rownames(Neg_LogGI50gemcitabine4)
 Neg_LogGI50gemcitabine4$GI50value_type<- ifelse(Neg_LogGI50gemcitabine4$GI50value< 0,
@@ -512,86 +502,61 @@ celllineslow <- c("HCC-2998","HS-578T","OVCAR-4","TK-10","PC-3","MDA-MB-231",
 "SK-MEL-28","OVCAR-3","KM12","HCT-15")
 
 #missense mutation for celllines with high GI50 values 
-misssensehigh = c()
+misssensehigh3 = c()
 for (i in (celllineshigh) ) {
   b= print(sum(mutations[
     which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"]
     == "Missense_Mutation"))
-     missensehigh = c(missensehigh, b)}
+     missensehigh3 = c(missensehigh3, b)}
 
 
 #missense mutation for celllines with low GI50 values 
-missenselow = c()
-for (i in (celllineslow) ) {
-  a= print(sum(mutations[
-     which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"] 
-      == "Missense_Mutation"))
-      missenselow = c(missenselow, a)}
-
+for (i in (celllineslow) ) {print(sum(mutations[
+which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"] 
+== "Missense_Mutation"))}
+missensenselow <- c(6021,172,334,243,119,357,242,173,2492,6716)
 
 #silent mutation for celllines with high GI50 values 
-silenthigh = c()
-for (i in (celllineshigh) ) {
-    c= print(sum(mutations[
-    which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"]
-     == "Silent"))
-     silenthigh = c(silenthigh, c)}
-
+for (i in (celllineshigh) ) {print(sum(mutations[
+which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"]
+== "Silent"))}
+silenthigh <- c(130,56,387,1039,113,555,153,120,37)
 
 #silent mutation for celllines with low GI50 values 
-silentlow = c()
-for (i in (celllineslow) ) {
-      d= print(sum(mutations[
-      which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"] 
-      == "Silent"))
-      silentlow = c(silentlow, d)}
-
+for (i in (celllineslow) ) {print(sum(mutations[
+which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"] 
+== "Silent"))}
+silentlow <- c(1540,49,145,102,45,142,172,82,1305,2635)
 
 #nonsense mutation for celllines with high GI50 values 
-nonsensehigh = c()
-for (i in (celllineshigh) ) {
-      e= print(sum(mutations[
-      which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"] 
-       == "Nonsense_Mutation"))
-       nonsensehigh= c(nonsensehigh, e}
-
+for (i in (celllineshigh) ) {print(sum(mutations[
+which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"] 
+== "Nonsense_Mutation"))}
+nonsensehigh <- c(17,10,68,113,19,62,30,17,5)
 
 #nonsense mutation for celllines with low GI50 values 
-nonsenselow = c()
-for (i in (celllineslow) ) {
-     f= print(sum(mutations[
-     which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"]
-      == "Nonsense_Mutation"))
-      nonsenselow = c(nonsenselow, f}
+for (i in (celllineslow) ) {print(sum(mutations[
+which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"]
+== "Nonsense_Mutation"))}
 nonesenselow <- c(772,8,5,11,4,22,20,13,135,366)
 
 #splice site mutation for celllines with high GI50 values
-splicesitehigh = c()
-for (i in (celllineshigh) ) {
-      g = print(sum(mutations[
-      which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"] 
-      == "Splice_Site"))
-      splicesitehigh = c(splicesitehigh, g)}
-
+for (i in (celllineshigh) ) {print(sum(mutations[
+which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"] 
+== "Splice_Site"))}
+splicesitehigh <- c(19,10,66, 161,14,57,20,24,11)
 
 #splice site mutation for celllines with low GI50 values 
-splicesitelow = c()
-for (i in (celllineslow) ) {
-     h =print(sum(mutations[
-     which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"]
-     == "Splice_Site"))
-     splicesitelow = c(splicesitelow,h)}
-
+for (i in (celllineslow) ) {print(sum(mutations[
+which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"]
+== "Splice_Site"))}
+splicesitelow <- c(187,11,18,12,6,22,26,17,176,541)
 
 #frame shift deletion for celllines with high GI50 values 
-frameshifthigh = c()
-for (i in (celllineshigh) ) {
-     o = print(sum(mutations[
-    which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"]
-     == "Frame_Shift_Del"))
-     frameshifthigh = c(frameshifthigh, o}
-
-
+for (i in (celllineshigh) ) {print(sum(mutations[
+which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"]
+== "Frame_Shift_Del"))}
+frameshifthigh <- c(16,14,40,631,21,5,9,18,3)
 
 #frame shift deletion for celllines with low GI50 values
 for (i in (celllineslow) ) {print(sum(mutations[
@@ -642,9 +607,7 @@ dimnames(LowGI50) = list(
      "frame_shift_insertion","de_novo_out_of_frame")) 
 ```
 create heatmaps 
-```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
-library("pheatmap")
-```
+
 ```{r}
 #using quantiles to determine the colour coding breaks for the heatmap
 
@@ -911,7 +874,7 @@ mtext("Biomarkers", side = 1, line = 4)
 
 The linear regressions showed that the gene expression or copy number of each biomarker by itself does
 not account for the drug sensitivity of the cellline. Therefore, we will inspect if a multiple
-regression using all 15 biomarkers can be used to better predict a cellline's drug sensitivity.
+regression using all 17 biomarkers can be used to better predict a cellline's drug sensitivity.
 
 #### Gene expression vs. drug sensitivity
 
@@ -921,6 +884,8 @@ multipleregression.ge <- lm(DS_Gemcitabine~ATF3 + GADD45A + TNFAIP3 + CDKN1A + G
                             + TXNIP, data = as.data.frame(genexp.drugsens))
 summary(multipleregression.ge)
 ```
+
+This multiple regression has an R-squared value of 0.3142, which is higher than what each individual biomarker by itself had, but still not enough to be used as a predictor of the drug sensitivity of the celllines.
 
 #### Gene copy number vs. drug sensitivity
 
@@ -933,5 +898,11 @@ summary(multipleregression.cn)
 
 This regression has the highest R-squared value of all, but at 0.53 it still cannot be used to predict
 the drug sensitivity of the celllines.
+
+### Conclusion from the regression analyses
+
+All of the linear and multiple analyses performed yielded very low R-squared values. In an ideal case, when the variable or variables (gene expression and copy number) perfectly explained the behavior of another variable (the drug sensitivity in our case), this value would be equal to 1, but the highest value we got from our regressions was 0.544.  
+
+This was not entirely surprising, since the cellular response to a drug or any outside influence is a very complex process regulated by hundreds, if not thousands, of genes, so using only our 17 biomarkers to predict the cell's response to gemcitabine was unlikely to yield any meaningful results. Furthermore, many more variables come into play to determine the cell's response to a drug, such as specific mutations in particular genes, which we did not take into account for our analysis. 
 
 </div>
