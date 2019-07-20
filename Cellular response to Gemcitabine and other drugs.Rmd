@@ -512,10 +512,13 @@ celllineslow <- c("HCC-2998","HS-578T","OVCAR-4","TK-10","PC-3","MDA-MB-231",
 "SK-MEL-28","OVCAR-3","KM12","HCT-15")
 
 #missense mutation for celllines with high GI50 values 
-for (i in (celllineshigh) ) {print(sum(mutations[
-which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"] == 
-"Missense_Mutation"))}
-missensehigh <- c(292,148,907,2229,317,993,420,285,96)
+misssensehigh3 = c()
+for (i in (celllineshigh) ) {
+  b= print(sum(mutations[
+    which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"]
+    == "Missense_Mutation"))
+     missensehigh3 = c(missensehigh3, b)}
+
 
 #missense mutation for celllines with low GI50 values 
 for (i in (celllineslow) ) {print(sum(mutations[
