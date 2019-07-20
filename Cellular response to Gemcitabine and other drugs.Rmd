@@ -324,19 +324,21 @@ Biomarker | Description
 ----------|-------------
 ATF3      | This gene encodes for activating transcription factors. It is often highly expressed in cancer cells and is involved in the complex process of cellular stress response.
 CXCL8     | It codes for Interleukin-8, which induces the migration of immune cells towards sites of infection, stimulates phagocytisis and promotes angiogenesis.
-CDKN1A    | This gene codes for a cyclin-dependent kinase inhibitor, which plays a role in the regulation of the cell cycle, including DNA replication and DNA damage repair. Since gemcitabine produces broken DNA strands, it makes sense that this DNA-damage-repair protein would be up-regulated in cancer cells to counteract the drug's effects.
 GADD45A   | Member of a group of genes whose transcription increases when the cell is under stress or being treated with DNA-damaging agents, such as gemcitabine.
 TNFAIP3   | Encodes for TNF alpha induced protein 3, which is involved in the cytikine-mediated immune and inflammatory responses.
-HBEGF     | Encodes for a growth factor involved in wound healing processes and known to be over-expressed in certain cancer celllines.
-GEM       | This gene encodes for a GTP-binding protein, which could have a regulatory function in receptor-mediated signal transduction.
-TXNIP     | Encodes for a thioredoxin-binding protein, which inhibits thioreduxin and results in the accumulation of reactive oxigen species in the cell and increased oxidative stress. It is suspected to function as a tumor-suppressor gene. 
+CDKN1A    | This gene codes for a cyclin-dependent kinase inhibitor, which plays a role in the regulation of the cell cycle, including DNA replication and DNA damage repair. Since gemcitabine produces broken DNA strands, it makes sense that this DNA-damage-repair protein would be up-regulated in cancer cells to counteract the drug's effects.
+GDF15     | Encodes for a TGF-beta ligand, which regulates gene expression. Increased levels of the protein are linked with inflammation and oxidative stress.
 BTG2      | Encodes for a protein of the BTG/Tob family, which appears to have antiproliferative effects. 
 EGR1      | Encodes for a nuclear protein and transcription regulator; it works as a cancer suppressor gene.
-GDF15     | Encodes for a TGF-beta ligand, which regulates gene expression. Increased levels of the protein are linked with inflammation and oxidative stress.
-TNFRSF9   | Encodes for a protein of the TNF-receptor superfamily, which contributes to the clonal expansion, survival and development of T-cells.
+GEM       | This gene encodes for a GTP-binding protein, which could have a regulatory function in receptor-mediated signal transduction.
 IL11      | Encodes for Interleukin-11, which stimulates the development of immunoglobulin-dependent B-cells.
+TNFRSF9   | Encodes for a protein of the TNF-receptor superfamily, which contributes to the clonal expansion, survival and development of T-cells.
 CEACAM1   | Encodes for a cell-cell adhesion molecule that plays a role in angiogenesis, apoptosis, tumor suppression and metastasis.
+ANKRD1    | 
 DHRS2     | Encodes for a dehydrogenase/reductase of a family of enzymes known to metabolize different compounds such as prostaglandins, retinoids, lipids and xenobiotics.
+BIRC3     | 
+TP53I3    |
+TXNIP     | Encodes for a thioredoxin-binding protein, which inhibits thioreduxin and results in the accumulation of reactive oxigen species in the cell and increased oxidative stress. It is suspected to function as a tumor-suppressor gene. 
 
 #### Conclusion from the biomarkers
 
