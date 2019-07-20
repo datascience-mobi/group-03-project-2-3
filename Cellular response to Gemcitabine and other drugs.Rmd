@@ -181,6 +181,8 @@ After the PCA of the fold change, you can see some clusters. So the fold change 
 A T-Test is a statistical hypothesis test which determines if there is a significant difference between the means of two groups. 
 Here our 2 groups are the set of treated and untreated data. Since each piece of treated data corresponds 
 to to one piece of untreated data, a paired T-Test is carried out using the following Hypothesis:
+
+
 The H0 Hypothesis: there is no change in the mean of the treated and untreated data.
 Alternative Hypothesis (H1): there is a difference in mean between the treated and untreated data.
 Chosen limit: when pValue < 0.05,  H0 is rejected
