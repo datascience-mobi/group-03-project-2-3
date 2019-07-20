@@ -726,13 +726,15 @@ corresponds to the fact that it is also a cellline with a low gemcitabine sensit
 
 ***
 
-## Linear regression Analysis
+## Can a cell line's sensitivity to gemcitabine be predicted based on the expression or copy number of its biomarkers?
 
 As seen previously, the analyzed celllines have different sensitivities to the treatment with
 gemcitabine. It would be useful to be able to predict the cell's response to the drug before starting
 the treatment and be able to apply this knowledge in the real world. The ultimate goal would be to be
 able to predict the response of a patient's cancer to the drug, so as to better decide if it is the
-ideal therapy in each case.
+ideal therapy in each case. To this end, we will use both linear and multiple regression analyses.
+
+## Linear regression Analysis
 
 This linear regression will attempt to find a relation between:  
 1. The drug sensitivity of the celllines (GI50 value) and the gene expression of their biomarkers when
