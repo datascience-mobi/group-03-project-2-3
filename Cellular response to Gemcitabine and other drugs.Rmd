@@ -283,7 +283,7 @@ biomarkers <- names(matrixtopgenes[1:17,1])
 biomarkers
 ```
 
-### Further insight into our biomarkers
+#### Further insight into our biomarkers
 
 Now that we know which genes have the highest difference in gene expression, we will check if each of 
 them is up- or down-regulated.
@@ -307,7 +307,7 @@ mtext("Biomarkers", side = 1, line = 4)
 
 Apparently most of the biomarkers are up-regulated after the treatment with gemcitabine. Only DHRS2 is down-regulated.
 
-### Cellular function of the biomarkers
+#### Cellular function of the biomarkers
 
 To further understand the effects of gemcitabine in the cells, we decided to compile the main functions 
 of each biomarker. The information about each gene was taken from the gene database of the National 
@@ -345,7 +345,7 @@ gemcitabine.
 
 ***
 
-# Microsatellite instability - Does the MSI status of a cell line have an effect on the gene expression after gemcitabine treatment?
+## Microsatellite instability - Does the MSI status of a cell line have an effect on the gene expression after gemcitabine treatment?
 MSI is defined as a mistake in MMR (Mismatch Repair system). The defect is caused by a downregulation in the gene MLH1 and MSH6. This result in more mistakes while transcribing the DNA, so more mutations will occur. If we plot the number of mutations against the celllines, MSI-H celllines are supposed to have more mutations, to check this, we do the following plot
 
 ```{r}
