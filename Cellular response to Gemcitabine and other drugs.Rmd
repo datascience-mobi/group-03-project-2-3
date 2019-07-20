@@ -355,7 +355,7 @@ MSI is defined as a mistake in MMR (Mismatch Repair system). The defect is cause
 
 ```{r}
 mutation_cellline <- mutations[,"Tumor_Sample_Barcode"]
-counting_mutations <- count(mutation_cellline, vars = NULL, wt_var = NULL)
+counting_mutations <- plyr::count(mutation_cellline, vars = NULL, wt_var = NULL)
 ```
 
 ```{r}
