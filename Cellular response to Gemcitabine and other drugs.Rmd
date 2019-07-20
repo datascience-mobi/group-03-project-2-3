@@ -143,7 +143,7 @@ ylab = "PC 2", col=drug_as_factor, main = "PC 1 & 2 of the fold change ")
 legend("right",inset = c(-0.3,0), levels(drug_as_factor), xpd = TRUE,
 pch=20, col = levels)
 
-#screen plot to show how much variance the PCs explain
+#scree plot to show how much variance the PCs explain
 plot(pca_FC, type = "l", main = "PCAs of the fold change")
 ```
 
