@@ -391,7 +391,7 @@ everything=na.omit(cbind(Cell_Line,gemcitabine_line))
 ```{r, warning = FALSE}
 basic=ggplot(everything, aes(Cell.Line.name, Gemcitabine.drug.sensitivity, colour = factor(Microsatellite), shape = factor(Microsatellite) )) +
    geom_point()
-basic + ggtitle("Drug Sensitivity of Gemcitabine treated cell lines according to High Microsatellite Instability")+ xlab("Cell Line")+ylab("Drug Sensitivity")+theme(axis.text.x = element_text(angle = 90, size = 7))
+basic + ggtitle("Drug Sensitivity of Gemcitabine treated cell lines according to MSI status")+ xlab("Cell Line")+ylab("Drug Sensitivity")+theme(axis.text.x = element_text(angle = 90, size = 7))
 ```
 
 A relationship between high drug sensitivity and high microsatellite instability cannot be concluded from this plot.
@@ -455,7 +455,7 @@ In order to investigate the difference in gemcitabine sensitivity for different 
 
 ### Mean graph plot
 
-```{r, message = FALSE}
+```{r, warning = FALSE, message = FALSE}
 
 #calculation of EC50 mean for gemcitabine
 rowMeans(drugsensitivity, na.rm = TRUE, dims = 1)
