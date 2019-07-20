@@ -386,6 +386,8 @@ mutation_plot + ggtitle("Number of mutations per cellline coloured by MSI
 status")+ xlab("Cell Line")+ylab("Mutations")+theme(axis.text.x = element_text(angle = 90, size = 7))
 
 ```
+
+
 It is obvious that MSI status affects the number of mutations, due to mutations in the repair system, but does MSI status also effect the effect of gemcitibine? MSI-H cancers are known to have a better prognosis when it comes to immune activating therapies, because of more unknown antigens, being produced. But does it also effect non-immune mechanisms in the cell? A loss of system which repairs wrong parts could also lead to a worse proliferation of the cell on the one hand because it would destroy itself. On the other hand a faulty repair system could also cause a better proliferation, because it would be easier to "develop" drug escape mechanisms. At first we want to see if there is any visible relationship between the sensitivity of gemcitabine and the MSI status. So we plot the sensitivity against the celllines and colour them due to MSI status.
 
 ```{r, warning=FALSE}
