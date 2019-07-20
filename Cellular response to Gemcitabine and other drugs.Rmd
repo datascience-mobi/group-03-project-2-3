@@ -455,16 +455,16 @@ No obvious difference between geneexpression in MSI-H and MSI-L biomarkers, posi
 #is the drug sensitivity for gemcitabine dependend on the cell line? 
 #plotting mean graph plot 
 
-#calculation of GI50 mean for gemcitabine
+#calculation of EC50 mean for gemcitabine
 rowMeans(drugsensitivity, na.rm = TRUE, dims = 1)
-#GI50 mean value is 7,003322 for gemcitabine
-#creating a vector for GI50 values of gemcitabine only 
+#EC50 mean value is 7,003322 for gemcitabine
+#creating a vector for EC50 values of gemcitabine only 
 NegLogGI50gemcitabine<- drugsensitivity[-1:-7,]
 NegLogGI50gemcitabine2<- NegLogGI50gemcitabine[-2:-8,]
 
 #substract the value 7,003322 for GI50 value of gemcitabine for every cell line 
-GI50value <- NegLogGI50gemcitabine2 - 7.003322
-Neg_LogGI50gemcitabine4 <- as.data.frame(GI50value)
+EC50value <- NegLogGI50gemcitabine2 - 7.003322
+Neg_LogGI50gemcitabine4 <- as.data.frame(EC50value)
 ```
 
 ```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
@@ -475,9 +475,9 @@ Neg_LogGI50gemcitabine4$`cell_line` <- rownames(Neg_LogGI50gemcitabine4)
 Neg_LogGI50gemcitabine4$GI50value_type<- ifelse(Neg_LogGI50gemcitabine4$GI50value< 0,
 "below", "above")
 set.text <- element_text(face = "bold.italic", color = "black", size = 3)
-ggplot(Neg_LogGI50gemcitabine4, aes(x=`cell_line`, y=GI50value, label=GI50value)) +
+ggplot(Neg_LogGI50gemcitabine4, aes(x=`cell_line`, y=EC50value, label=EC50value)) +
 theme(axis.text = set.text)+
-    geom_bar(stat='identity', aes(fill=GI50value_type), width=0.7)  +
+    geom_bar(stat='identity', aes(fill=EC50value_type), width=0.7)  +
     scale_fill_manual(name="value", 
                        labels = c("Above Average", "Below Average"), 
                        values = c("above"="#00ba38", "below"="#f8766d")) + 
@@ -487,22 +487,22 @@ coord_flip()
 
 #looking at the previous mean graph plot now compare the differences in mutations of cell lines which had high gemcitabine sensitivity and which had low sensitivity   
 
-#filter out celllines with 10 highest and 10 lowest GI50 values
+#filter out celllines with 10 highest and 10 lowest EC50 values
 sort(NegLogGI50gemcitabine2, decreasing = FALSE)
 
-#cell lines with highest GI50 values are SNB-19, OVCAR-8 ,CAKI-1,NCI-H23 ,HCT-116,
+#cell lines with highest EC50 values are SNB-19, OVCAR-8 ,CAKI-1,NCI-H23 ,HCT-116,
 #NCI-H460 ,M14,MCF7 ,786-0,ACHN
 #since SNB-19 is not part of the mutations data I am going to proceed with the
 #nine other celllines
 celllineshigh <- c("OVCAR-8","CAKI-1","NCI-H23","HCT-116","NCI-H460","M14",
 "MCF7","786-0","ACHN")
 
-#cell lines with lowest GI50 values are HCC-2998, HS-578T, OVCAR-4 , TK-10, PC-3, 
+#cell lines with lowest EC50 values are HCC-2998, HS-578T, OVCAR-4 , TK-10, PC-3, 
 #MDA-MB-231, SK-MEL-28 , OVCAR-3 ,KM12, HCT-15
 celllineslow <- c("HCC-2998","HS-578T","OVCAR-4","TK-10","PC-3","MDA-MB-231",
 "SK-MEL-28","OVCAR-3","KM12","HCT-15")
 ```
-missense mutation for celllines with high GI50 fold change values 
+missense mutation for celllines with high EC50 fold change values 
 
 ```{r}
 missensehigh = c()
@@ -513,7 +513,7 @@ for (i in (celllineshigh) ) {
      missensehigh = c(missensehigh, b)}
      
 ```
-missense mutation for celllines with low GI50 values 
+missense mutation for celllines with low EC50 values 
 
 ```{r}
 missenselow = c()
@@ -524,7 +524,7 @@ for (i in (celllineslow) ) {
   missenselow = c(missenselow, a)}
   
 ```
-silent mutation for celllines with high GI50 values 
+silent mutation for celllines with high EC50 values 
 
 ```{r}
 silenthigh = c()
@@ -534,7 +534,7 @@ for (i in (celllineshigh) ) {
   == "Silent"))
   silenthigh = c(silenthigh, c)}
 ```
-silent mutation for celllines with low GI50 values 
+silent mutation for celllines with low EC50 values 
 ```{r}
 silentlow = c()
 for (i in (celllineslow) ) {
@@ -543,7 +543,7 @@ for (i in (celllineslow) ) {
   == "Silent"))
   silentlow = c(silentlow, d)}
 ```
-nonsense mutation for celllines with high GI50 values 
+nonsense mutation for celllines with high EC50 values 
 ```{r}
 nonsensehigh =c()
 for (i in (celllineshigh) ) {
@@ -553,7 +553,7 @@ for (i in (celllineshigh) ) {
   nonsensehigh= c(nonsensehigh, e)}
   
 ```
-nonsense mutation for celllines with low GI50 values 
+nonsense mutation for celllines with low EC50 values 
 ```{r}
 nonsenselow =c()
 for (i in (celllineslow) ) {
@@ -562,7 +562,7 @@ for (i in (celllineslow) ) {
   == "Nonsense_Mutation"))
   nonsenselow= c(nonsenselow, f)}
 ``` 
-splice site mutation for celllines with high GI50 values
+splice site mutation for celllines with high EC50 values
 ```{r}
 splicesitehigh = c()
 for (i in (celllineshigh) ) {
@@ -571,7 +571,7 @@ for (i in (celllineshigh) ) {
   == "Splice_Site"))
   splicesitehigh = c(splicesitehigh, g)}
 ```
-splice site mutation for celllines with low GI50 values 
+splice site mutation for celllines with low EC50 values 
 ```{r}
 
 splicesitelow = c()
@@ -581,7 +581,7 @@ for (i in (celllineslow) ) {
   == "Splice_Site"))
   splicesitelow = c(splicesitelow, h)}
  ```
-frame shift deletion for celllines with high GI50 values 
+frame shift deletion for celllines with high EC50 values 
 
 ```{r}
 frameshifthigh = c()
@@ -592,7 +592,7 @@ for (i in (celllineshigh) ) {
   frameshifthigh = c(frameshifthigh, j)}
 
 ```
-frame shift deletion for celllines with low GI50 values
+frame shift deletion for celllines with low EC50 values
 ```{r}
 
 frameshiftlow = c()
@@ -602,7 +602,7 @@ for (i in (celllineslow) ) {
   == "Frame_Shift_Del"))
   frameshiftlow = c(frameshiftlow, k)}
 ```
-frame shift insertion for celllines with high GI50 values 
+frame shift insertion for celllines with high EC50 values 
 ```{r}
 
 frameshiftinshigh= c()
@@ -612,7 +612,7 @@ for (i in (celllineshigh) ) {
   == "Frame_Shift_Ins"))
   frameshiftinshigh= c(frameshiftinshigh,l)}
 ```
-frame shift insertion for celllines with low GI50 values 
+frame shift insertion for celllines with low EC50 values 
 ```{r}
 
 frameshiftinslow = c()
@@ -622,7 +622,7 @@ for (i in (celllineslow) ) {
   == "Frame_Shift_Ins"))
   frameshiftinslow = c(frameshiftinslow, p)}
 ```
-de novo out of frame mutation for celllines with high GI50 values
+de novo out of frame mutation for celllines with high EC50 values
 ```{r}
 
 denovohigh = c()
@@ -633,7 +633,7 @@ for (i in (celllineshigh) ) {
   denovohigh= c(denovohigh, u)}
 
 ```
-de novo out of frame mutation for celllines with low GI50 values 
+de novo out of frame mutation for celllines with low EC50 values 
 ```{r}
 
 denovolow = c()
@@ -644,26 +644,26 @@ for (i in (celllineslow) ) {
   denovolow = c(denovolow, r)}
 ```
 
-create a matrix for high GI50 values 
+create a matrix for high EC50 values 
 ```{r}
 
 mutationtype <-  c("missense", "silent", "nonsense","splicesite","frame_shift_deletion",
                 "frame_shift_insertion","de_novo_out_of_frame")
                 
                 
-HighGI50 <- cbind(missensehigh,silenthigh,nonsensehigh,splicesitehigh,
+HighEC50 <- cbind(missensehigh,silenthigh,nonsensehigh,splicesitehigh,
 frameshifthigh,frameshiftinshigh,denovohigh)
-dimnames(HighGI50) = list( 
+dimnames(HighEC50) = list( 
     c("OVCAR-8","CAKI-1","NCI-H23","HCT-116","NCI-H460","M14","MCF7","786-0","
     ACHN"),       
     mutationtype)    
 ```
-create a matrix for low GI50 values 
+create a matrix for low EC50 values 
 ```{r}
 
-LowGI50 <- cbind(missenselow,silentlow,nonsenselow,splicesitelow,
+LowEC50 <- cbind(missenselow,silentlow,nonsenselow,splicesitelow,
 frameshiftlow,frameshiftinslow,denovolow)
-dimnames(LowGI50) = list( 
+dimnames(LowEC50) = list( 
      c("HCC-2998","HS-578T","OVCAR-4","TK-10","PC-3","MDA-MB-231","SK-MEL-28",
      "OVCAR-3","KM12","HCT-15"),        
      mutationtype) 
@@ -674,27 +674,26 @@ Create heatmaps
 
 ```{r}
 
-pheatmap(HighGI50,color = colorRampPalette(c("blue","white","purple",
+pheatmap(HighEC50,color = colorRampPalette(c("blue","white","purple",
 "firebrick3","red","orange"))(10), breaks = c(4.8,10.7,15.0,19.0,26.4,66.6,149.0,
-390.3,2229.0), main= "Celllines with high GI50 fold change values")
+390.3,2229.0), main= "Celllines with high EC50 fold change values")
 
 
-pheatmap(LowGI50,color = colorRampPalette(c("blue","white","purple","firebrick3",
+pheatmap(LowEC50,color = colorRampPalette(c("blue","white","purple","firebrick3",
 "red","orange"))(10), breaks = c(4.0,6.8,10.4,14.0,22.0,74.8,142.9,
-198.0,564.1,6716.0), main= "Celllines with low GI50 fold change values")
+198.0,564.1,6716.0), main= "Celllines with low EC50 fold change values")
 
 ```
 
 
-GI50 is the concentration for 50% of maximal inhibition of cell proliferation.
-However, since our values are -log10 transformed, higher values indicate higher 
-sensitivity.The most prominent difference in mutation pattern between the celllines 
-with high and low gemcitabine sensitivity is that the celllines with a low GI50 value
+EC50 is the concentration for 50% of maximal inhibition of cell proliferation.
+Higher values indicate higher sensitivity.The most prominent difference in mutation pattern between the celllines 
+with high and low gemcitabine sensitivity is that the celllines with a low EC50 value
 have a much higher  count of mutations. Further we are going to look at the portion
 of different mutation types. In the heatmap it is visible that for most mutation 
 type the mutation count pattern is similar. However, for nonsense and splice site
-mutation you can see that the celllines with low GI50 values have a higher portion 
-in those mutations in comparison to the celllines with high GI50 values. It is
+mutation you can see that the celllines with low EC50 values have a higher portion 
+in those mutations in comparison to the celllines with high EC50 values. It is
 maybe linked to the fact that gemcitabine is an antimetabolite and stops DNA synthesis 
 by inducing a masked chain termination. Nonsense mutations have the same effect of 
 inducing a stop of DNA synthesis. Celllines in which a stop of DNA synthesis occur 
