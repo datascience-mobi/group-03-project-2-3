@@ -396,7 +396,7 @@ A relationship between high drug sensitivity and high microsatellite instability
 
 ## Heatmap of biomarkers due to MSI status
 
-To investigate wether MSI status affects the fold change after gemcitabine treatment, we have to explore the fold change of our 17 biomarkers for gemcitabine in the MSI-High and MSI-Low celllines. Furthermore, the question arises of wether the gene expression of key genes involved in the DNA repair mechanisms is also affected. To this we picked MLH1 and MSH6, which should theoretically be downregulated.
+To investigate whether MSI status affects the fold change after gemcitabine treatment, we explore the fold change of our 17 biomarkers for gemcitabine in the MSI-High and MSI-Low celllines. Furthermore, the question arises of whether the gene expression of key genes involved in the DNA repair mechanisms is also affected. To this end, we picked MLH1 and MSH6, which should theoretically be downregulated.
 
 ```{r}
 #Select the columns names that contain gemcitabine
@@ -427,11 +427,12 @@ pheatmap(cbind(geneexpression_MSI_related_untreated_MSIH, geneexpression_MSI_rel
 ```
 
 
-Here you can see, that there is a difference in the geneexpression in these two genes in MSI-H and MSI-L cancer cells. But does the MSI status even effect the expression of our biomarkers after gemcitibine treatment? 
+In the previous graph can be observed that there is a difference in the expression of these two genes in MSI-H and MSI-L cancer cells.  
 
+Next we investigate if the MSI status affects the expression of our biomarkers after gemcitabine treatment.
 
 ```{r}
-#two heatmaps of FC of biomarkers in MSI-Low and MSI-High celllines
+#Two heatmaps of the biomarkers' FC in MSI-Low and MSI-High celllines
 
 ht_biomarkers_geneexpression_MSIH = Heatmap(biomarkers_geneexpression_MSIH,
 name = "FC MSI-High", column_title = "MSI-H", column_names_gp = gpar(fontsize = 5)) 
@@ -441,15 +442,16 @@ name = "FC MSI-Low", column_title = "MSI-L", column_names_gp = gpar(fontsize = 5
 ht_biomarkers_geneexpression_MSIH + ht_biomarkers_geneexpression_MSIL
 ```
 
-No obvious difference between geneexpression in MSI-H and MSI-L biomarkers, positive prognosis of MSI tumors is probably caused by the recognition of the immune system.
+No conclusion can be drawn from the heatmaps above, of whether the gene expression of the biomarkers in MSI-H and MSI-L cells differs importantly. 
 
 ***
 
-## Drug sensitivity and cell line
+## Drug sensitivity and cell line - FORMULATE AS QUESTION
 
-```{r, warning = FALSE}
-#is the drug sensitivity for gemcitabine dependend on the cell line? 
-#plotting mean graph plot 
+In this part it is invastigated how the gemcitabine sensitivity is dependend on the cellline and further dependend on the different types of somatic mutations.  
+In order to investigate the difference in gemcitabine sensitivity for different cell lines a mean graph plot is plottet. 
+
+```{r, message = FALSE}
 
 #calculation of EC50 mean for gemcitabine
 rowMeans(drugsensitivity, na.rm = TRUE, dims = 1)
@@ -671,20 +673,21 @@ Create heatmaps
 
 pheatmap(HighEC50,color = colorRampPalette(c("blue","white","purple",
 "firebrick3","red","orange"))(10), breaks = c(4.8,10.7,15.0,19.0,26.4,66.6,149.0,
-390.3,2229.0), main= "Celllines with high EC50 fold change values")
+390.3,2229.0), main= "Celllines with high EC50 values")
 
 
 pheatmap(LowEC50,color = colorRampPalette(c("blue","white","purple","firebrick3",
 "red","orange"))(10), breaks = c(4.0,6.8,10.4,14.0,22.0,74.8,142.9,
-198.0,564.1,6716.0), main= "Celllines with low EC50 fold change values")
+198.0,564.1,6716.0), main= "Celllines with low EC50 values")
 
 ```
 
 
 EC50 is the concentration for 50% of maximal inhibition of cell proliferation.
-Higher values indicate higher sensitivity.The most prominent difference in mutation pattern between the celllines 
+Higher values indicate higher sensitivity. The most prominent difference in somatic mutation pattern between the celllines 
 with high and low gemcitabine sensitivity is that the celllines with a low EC50 value
-have a much higher  count of mutations. Further we are going to look at the portion
+have a much higher count of mutations which could indicate that the count of mutations has an impact on gemcitabine sensitivtiy.
+Further we are going to look at the portion
 of different mutation types. In the heatmap it is visible that for most mutation 
 type the mutation count pattern is similar. However, for nonsense and splice site
 mutation you can see that the celllines with low EC50 values have a higher portion 
@@ -693,10 +696,11 @@ maybe linked to the fact that gemcitabine is an antimetabolite and stops DNA syn
 by inducing a masked chain termination. Nonsense mutations have the same effect of 
 inducing a stop of DNA synthesis. Celllines in which a stop of DNA synthesis occur 
 more often due to nonsense mutation are maybe therefore less sensitive to gemcitabine. 
-However mutation frequency alone is insufficient to identify and predict the drug 
+
+However mutation frequency or type alone is insufficient to identify and predict the drug 
 sensitivity of a cellline towards gemcitabine. 
 
-Other possibilities to explain a celllines sensitivity to gemcitabine are 
+A more effective way to Other possibilities to explain a celllines sensitivity to gemcitabine are 
 mutations of genes that play an important role in the mechanisms gemcitabine 
 is involved in. One enzyme that plays an important role in converting gemcitabine 
 from the prodrug into the final active drug form is deoxycytidine kinase (DCK) . 
