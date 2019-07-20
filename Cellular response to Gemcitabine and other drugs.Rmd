@@ -69,11 +69,25 @@ untreated_normalized <- scale(untreated)
 treated_normalized <- scale(treated)
 ```
 
+Loading the libraries required
+
+```{r, warning = FALSE, message = FALSE}
+library(viridis)
+library(car)
+library(BBmisc)
+library(plyr)
+library(dplyr)
+library(qpcR)
+library(ggplot2)
+library(pheatmap)
+library(ComplexHeatmap)
+library(circlize)
+library(colorspace)
+library(GetoptLong)
+```
+
 ## Comparing boxplots
 
-```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
-library("viridis")
-```
 
 The treated data is illustrated with a boxplot as follows.
 ```{r}
@@ -175,9 +189,6 @@ Chosen limit: when pValue < 0.05,  H0 is rejected
 
 However, normalised data should be used for the T-Test. The data is normalised and illustrated in QQ plots as shown below.
 
-```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
-library("car")
-```
 
 ```{r}
 
@@ -233,9 +244,7 @@ absvalfcgeneexpression <- abs(fcgeneexpression)
 
 New matrices containing only the celllines treated with gemcitabine:
 
-```{r, warning = FALSE, message = FALSE}
-library("dplyr")
-
+```{r}
 treated_gemcitabine <- select(as_tibble(treated_normalized), contains("gemcitibine"))
 treated_gemcitabine <- as.matrix(treated_gemcitabine)
 rownames(treated_gemcitabine) <- rownames(treated_normalized)
@@ -349,12 +358,6 @@ gemcitabine.
 # Microsatellite instability - Does gemcitabine has an effect on the geneexpression
 MSI is defined as a mistake in MMR (Mismatch Repair system). The defect is caused through a downregulation in the gene MLH1 and MSH6 for example. It leads to more mistakes while transcribing the DNA, so more mutations will occur. If we plot the number of mutations against the celllines, MSI-H celllines are supposed to have more mutations, to check this, we do the following plot
 
-```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
-library(plyr)
-library(qpcR)
-library(ggplot2)
-library(pheatmap)
-```
 ```{r}
 mutation_cellline <- mutations[,"Tumor_Sample_Barcode"]
 counting_mutations <- count(mutation_cellline, vars = NULL, wt_var = NULL)
@@ -436,12 +439,6 @@ pheatmap(cbind(geneexpression_MSI_related_untreated_MSIH, geneexpression_MSI_rel
 
 Here you can see, that there is a difference in the geneexpression in these two genes in MSI-H and MSI-L cancer cells. But does the MSI status even effect the expression of our biomarkers after gemcitibine treatment? 
 
-```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
-library("ComplexHeatmap")
-library("circlize")
-library("colorspace")
-library("GetoptLong")
-```
 
 ```{r}
 #two heatmaps of FC of biomarkers in MSI-Low and MSI-High celllines
@@ -653,10 +650,10 @@ dimnames(LowGI50) = list(
      "OVCAR-3","KM12","HCT-15"),        
      mutationtype) 
 ```
-create heatmaps 
-```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
-library("pheatmap")
-```
+
+Create heatmaps 
+
+
 ```{r}
 
 pheatmap(HighGI50,color = colorRampPalette(c("blue","white","purple",
