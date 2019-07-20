@@ -509,7 +509,7 @@ for (i in (celllineshigh) ) {
   b= print(sum(mutations[
     which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"]
     == "Missense_Mutation"))
-     missensehigh3 = c(missensehigh, b)}
+     missensehigh = c(missensehigh, b)}
 
 #missense mutation for celllines with low GI50 values 
 missenselow = c()
