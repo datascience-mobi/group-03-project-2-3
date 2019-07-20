@@ -69,11 +69,24 @@ untreated_normalized <- scale(untreated)
 treated_normalized <- scale(treated)
 ```
 
-## Comparing boxplots
+Loading the libraries of the packages required
 
-```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
-library("viridis")
+```{r, warning = FALSE, message = FALSE}
+library(viridis)
+library(car)
+library(BBmisc)
+library(plyr)
+library(dplyr)
+library(qpcR)
+library(ggplot2)
+library(pheatmap)
+library(ComplexHeatmap)
+library(circlize)
+library(colorspace)
+library(GetoptLong)
 ```
+
+## Comparing boxplots
 
 The treated data is illustrated with a boxplot as follows.
 ```{r}
@@ -175,10 +188,6 @@ Chosen limit: when pValue < 0.05,  H0 is rejected
 
 However, normalised data should be used for the T-Test. The data is normalised and illustrated in QQ plots as shown below.
 
-```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
-library("car")
-```
-
 ```{r}
 
 xGem= grep("gemcitibine",colnames(treated))
@@ -187,9 +196,6 @@ yGem= grep("gemcitibine",colnames(untreated))
 Untreated_Cells_Gemcitabine=untreated[,yGem]
 ```
 
-```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
-library(BBmisc)
-```
 ```{r}
 Treated_Gemcitabine_Normalised=normalize(Treated_Cells_Gemcitabine)
 Untreated_Gemcitabine_Normalised=normalize(Untreated_Cells_Gemcitabine)
@@ -233,9 +239,7 @@ absvalfcgeneexpression <- abs(fcgeneexpression)
 
 New matrices containing only the celllines treated with gemcitabine:
 
-```{r, warning = FALSE, message = FALSE}
-library("dplyr")
-
+```{r}
 treated_gemcitabine <- select(as_tibble(treated_normalized), contains("gemcitibine"))
 treated_gemcitabine <- as.matrix(treated_gemcitabine)
 rownames(treated_gemcitabine) <- rownames(treated_normalized)
@@ -349,12 +353,7 @@ gemcitabine.
 # Microsatellite instability - Does gemcitabine has an effect on the geneexpression
 MSI is defined as a mistake in MMR (Mismatch Repair system). The defect is caused through a downregulation in the gene MLH1 and MSH6 for example. It leads to more mistakes while transcribing the DNA, so more mutations will occur. If we plot the number of mutations against the celllines, MSI-H celllines are supposed to have more mutations, to check this, we do the following plot
 
-```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
-library(plyr)
-library(qpcR)
-library(ggplot2)
-library(pheatmap)
-```
+
 ```{r}
 mutation_cellline <- mutations[,"Tumor_Sample_Barcode"]
 counting_mutations <- count(mutation_cellline, vars = NULL, wt_var = NULL)
@@ -436,12 +435,6 @@ pheatmap(cbind(geneexpression_MSI_related_untreated_MSIH, geneexpression_MSI_rel
 
 Here you can see, that there is a difference in the geneexpression in these two genes in MSI-H and MSI-L cancer cells. But does the MSI status even effect the expression of our biomarkers after gemcitibine treatment? 
 
-```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
-library("ComplexHeatmap")
-library("circlize")
-library("colorspace")
-library("GetoptLong")
-```
 
 ```{r}
 #two heatmaps of FC of biomarkers in MSI-Low and MSI-High celllines
@@ -476,9 +469,6 @@ GI50value <- NegLogGI50gemcitabine2 - 7.003322
 Neg_LogGI50gemcitabine4 <- as.data.frame(GI50value)
 ```
 
-```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
-library(ggplot2)
-```
 ```{r}
 Neg_LogGI50gemcitabine4$`cell_line` <- rownames(Neg_LogGI50gemcitabine4)
 Neg_LogGI50gemcitabine4$GI50value_type<- ifelse(Neg_LogGI50gemcitabine4$GI50value< 0,
@@ -512,40 +502,31 @@ celllineslow <- c("HCC-2998","HS-578T","OVCAR-4","TK-10","PC-3","MDA-MB-231",
 "SK-MEL-28","OVCAR-3","KM12","HCT-15")
 
 #missense mutation for celllines with high GI50 values 
-misssensehigh = c()
+misssensehigh3 = c()
 for (i in (celllineshigh) ) {
   b= print(sum(mutations[
     which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"]
     == "Missense_Mutation"))
-     missensehigh = c(missensehigh, b)}
+     missensehigh3 = c(missensehigh3, b)}
 
 
 #missense mutation for celllines with low GI50 values 
-missenselow = c()
-for (i in (celllineslow) ) {
-  a= print(sum(mutations[
-     which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"] 
-      == "Missense_Mutation"))
-      missenselow = c(missenselow, a)}
-
+for (i in (celllineslow) ) {print(sum(mutations[
+which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"] 
+== "Missense_Mutation"))}
+missensenselow <- c(6021,172,334,243,119,357,242,173,2492,6716)
 
 #silent mutation for celllines with high GI50 values 
-silenthigh = c()
-for (i in (celllineshigh) ) {
-    c= print(sum(mutations[
-    which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"]
-     == "Silent"))
-     silenthigh = c(silenthigh, c)}
-
+for (i in (celllineshigh) ) {print(sum(mutations[
+which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"]
+== "Silent"))}
+silenthigh <- c(130,56,387,1039,113,555,153,120,37)
 
 #silent mutation for celllines with low GI50 values 
-silentlow = c()
-for (i in (celllineslow) ) {
-      d= print(sum(mutations[
-      which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"] 
-      == "Silent"))
-      silentlow = c(silentlow, d)}
-
+for (i in (celllineslow) ) {print(sum(mutations[
+which(mutations$Tumor_Sample_Barcode == i),"Variant_Classification"] 
+== "Silent"))}
+silentlow <- c(1540,49,145,102,45,142,172,82,1305,2635)
 
 #nonsense mutation for celllines with high GI50 values 
 for (i in (celllineshigh) ) {print(sum(mutations[
@@ -626,9 +607,7 @@ dimnames(LowGI50) = list(
      "frame_shift_insertion","de_novo_out_of_frame")) 
 ```
 create heatmaps 
-```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
-library("pheatmap")
-```
+
 ```{r}
 #using quantiles to determine the colour coding breaks for the heatmap
 
