@@ -346,7 +346,7 @@ gemcitabine.
 
 ***
 
-## Microsatellite instability
+# Microsatellite instability - Does gemcitabine has an effect on the geneexpression
 MSI is defined as a mistake in MMR (Mismatch Repair system). The defect is caused through a downregulation in the gene MLH1 and MSH6 for example. It leads to more mistakes while transcribing the DNA, so more mutations will occur. If we plot the number of mutations against the celllines, MSI-H celllines are supposed to have more mutations, to check this, we do the following plot
 
 ```{r echo=TRUE, results = 'hide', warning=FALSE, message = F}
@@ -402,7 +402,7 @@ basic + ggtitle("Drug Sensitivity of Gemcitabine treated cell lines according to
 
 A relationship between high drug sensitivity(Gemcitabine) and high microsatellite instability cannot be concluded.
 
-# Heatmap of biomarkers due to MSI status
+## Heatmap of biomarkers due to MSI status
 
 To answer the question wheter MSI status affects the fold change after gemcitibine treatment, we have to investigate the fold change of our 15 biomarkers for gemcitibine in the different MSI-High and Low celllines. But at first of all, we want to know, whether we can see the effect on the geneexpression of the repair system, so we pick out 2 of the important genes for MSI Instability (MLH1 and MSH6). They belong to the repair system. In MSI-H cancers they should be downregulated, so that the repair system does not work anymore.
 
