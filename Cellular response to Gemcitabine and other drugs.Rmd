@@ -1,7 +1,7 @@
 ---
 title: "Cellular response to Gemcitabine and other drugs"
 author: "Diego Montero Solano, Sophie Zhu, Tabita Häßner, Shivani Nundoo"
-date: "6/5/2019"
+date: "20/7/2019"
 output: html_document
 ---
 
@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 <div style="text-align: justify">
 
-## Table of contents
+## Table of content
 
 1. [Gemcitabine]  
 2. [Preparing the data]  
@@ -35,7 +35,7 @@ knitr::opts_chunk$set(echo = TRUE)
     
 ## Gemcitabine
 
-Gemcitabine is a nucleoside analog used as chemotherapy. It is marketed as Gemzar. The drug replaces one of the building blocks of nucleic acids, in this case cytidine, during DNA replication. The process arrests tumor growth, as new nucleosides cannot be attached to the "faulty" nucleoside, resulting in apoptosis. Gemcitabine is used in various carcinomas: non-small cell lung cancer, pancreatic cancer, bladder cancer and breast cancer. It is being investigated for use in oesophageal cancer, and is used experimentally in lymphomas and various other tumor types.
+Gemcitabine is a nucleoside analogue used as chemotherapy. It is marketed as Gemzar. The drug replaces one of the building blocks of nucleic acids, in this case cytidine, during DNA replication. The process arrest tumor growth because gemcitabine induces mast chain termination. Gemcitabine is used in various carcinomas: non-small cell lung cancer, pancreatic cancer, bladder cancer and breast cancer. It is being investigated for use in oesophageal cancer, and is used experimentally in lymphomas and various other tumor types. 
 
 ## Preparing the data
 
@@ -69,7 +69,7 @@ untreated_normalized <- scale(untreated)
 treated_normalized <- scale(treated)
 ```
 
-Loading the libraries required
+### Loading the libraries required
 
 ```{r, warning = FALSE, message = FALSE}
 library(viridis)
