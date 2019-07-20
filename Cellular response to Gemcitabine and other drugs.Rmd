@@ -754,8 +754,7 @@ The second biomarker is not in this matrix, so it has to be removed from the gen
 
 ```{r}
 commonbiomarkers.lr <- intersect(rownames(copynumber), biomarkers)
-#There is no need to intersect with the untreated matrix, because it was used to define 
-#the biomarkers, so it definitely contains all of them.
+#There is no need to intersect with the untreated matrix, because it was used to define the biomarkers, so it definitely contains all of them.
 ```
 
 Keep only the common biomarkers in both matrices and order alphabetically:
@@ -765,21 +764,10 @@ cnforlr <- copynumber[order(rownames(copynumber)),]
 cnforlr <- cnforlr[which(rownames(cnforlr) %in% commonbiomarkers.lr),]
 
 untreatedforlr <- untreated_normalized[order(rownames(untreated_normalized)),]
-untreatedforlr <- 
-  untreatedforlr[which(rownames(untreatedforlr) %in% commonbiomarkers.lr),]
+untreatedforlr <- untreatedforlr[which(rownames(untreatedforlr) %in% commonbiomarkers.lr),]
 ```
 
-Check the dimensions of the matrices:
-
-```{r}
-dim(cnforlr)
-dim(untreatedforlr)
-
-colnames(untreatedforlr[,1:3])
-```
-
-The matrix for untreated has many more columns because it contains a measurement for each cellline
-before starting the treatment with each drug. Since no drug has been applied to any of them, all columns
+The matrix for untreated has many more columns than the one of the copy number because it contains a measurement for each cellline before starting the treatment with each drug. Since no drug has been applied to any of them, all columns
 regarding a given cellline can be merged, and the information of drug, dose and time in the column name
 can be eliminated.
 
