@@ -295,7 +295,7 @@ them is up- or down-regulated.
 
 ```{r}
 fcge_gemcitabine <- 
-  select(as_tibble(fcgeneexpression), contains("gemcitibine"))
+  dplyr::select(as_tibble(fcgeneexpression), contains("gemcitibine"))
 fcge_gemcitabine <- as.matrix(fcge_gemcitabine)
 rownames(fcge_gemcitabine) <- rownames(fcgeneexpression)
 
