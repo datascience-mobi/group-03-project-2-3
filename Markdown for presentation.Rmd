@@ -261,7 +261,8 @@ matrixofbiomarkers <- apply(absvalfcge_gemcitabine, 2, orderforvectors)
 
 Check for the most common genes in the first 15 rows of the new matrix
 
-```{r}
+
+```{r echo=-8}
 topgenes <- sort(table(as.vector(matrixofbiomarkers[1:15,])))
 
 matrixtopgenes <- as.matrix(topgenes[order(-topgenes)])
@@ -271,6 +272,7 @@ barplot(matrixtopgenes[1:30,], xlab = "", ylab = "Counts",
         cex.names = 0.7, las = 2, col = "#00CC66")
 mtext("Genes", side = 1, line = 4)
 ```
+
 
 We decided to take the top 17 genes with the highest difference in expression before and after treatment as our biomarkers.
 
@@ -286,9 +288,8 @@ biomarkers
 Now that we know which genes have the highest difference in gene expression, we will check if each of 
 them is up- or down-regulated.
 
-```{r}
-fcge_gemcitabine <- 
-  dplyr::select(as_tibble(fcgeneexpression), contains("gemcitibine"))
+```{r echo=-13, echo=-2:3}
+fcge_gemcitabine <- dplyr::select(as_tibble(fcgeneexpression), contains("gemcitibine"))
 fcge_gemcitabine <- as.matrix(fcge_gemcitabine)
 rownames(fcge_gemcitabine) <- rownames(fcgeneexpression)
 
@@ -312,25 +313,25 @@ of each biomarker. The information about each gene was taken from the gene datab
 Center for Biotechnology Information (NCBI) of the USA.
 
 
-Biomarker | Description
+Biomarker | Function
 ----------|-------------
-ATF3      | This gene encodes for activating transcription factors. It is often highly expressed in cancer cells and is involved in the complex process of cellular stress response.
-CXCL8     | It codes for Interleukin-8, which induces the migration of immune cells towards sites of infection, stimulates phagocytisis and promotes angiogenesis.
-GADD45A   | Member of a group of genes whose transcription increases when the cell is under stress or being treated with DNA-damaging agents, such as gemcitabine.
-TNFAIP3   | Encodes for TNF alpha induced protein 3, which is involved in the cytikine-mediated immune and inflammatory responses.
-CDKN1A    | This gene codes for a cyclin-dependent kinase inhibitor, which plays a role in the regulation of the cell cycle, including DNA replication and DNA damage repair. Since gemcitabine produces broken DNA strands, it makes sense that this DNA-damage-repair protein would be up-regulated in cancer cells to counteract the drug's effects.
-GDF15     | Encodes for a TGF-beta ligand, which regulates gene expression. Increased levels of the protein are linked with inflammation and oxidative stress.
-BTG2      | Encodes for a protein of the BTG/Tob family, which appears to have antiproliferative effects. 
-EGR1      | Encodes for a nuclear protein and transcription regulator; it works as a cancer suppressor gene.
-GEM       | This gene encodes for a GTP-binding protein, which could have a regulatory function in receptor-mediated signal transduction.
-IL11      | Encodes for Interleukin-11, which stimulates the development of immunoglobulin-dependent B-cells.
-TNFRSF9   | Encodes for a protein of the TNF-receptor superfamily, which contributes to the clonal expansion, survival and development of T-cells.
-CEACAM1   | Encodes for a cell-cell adhesion molecule that plays a role in angiogenesis, apoptosis, tumor suppression and metastasis.
-ANKRD1    | Encodes for a transcription factor, and its expression is induced bu IL-1 and TNF-alpha.
-DHRS2     | Encodes for a dehydrogenase/reductase of a family of enzymes known to metabolize different compounds such as prostaglandins, retinoids, lipids and xenobiotics.
-BIRC3     | Encodes for a protein that inhibits apoptosis by binding to TNF receptor-associated factors.
-TP53I3    | The expression of this gene is induced by the tumor suppressor p53 and is thought to be involved in p53-mediated cell death.
-TXNIP     | Encodes for a thioredoxin-binding protein, which inhibits thioreduxin and results in the accumulation of reactive oxigen species in the cell and increased oxidative stress. It is suspected to function as a tumor-suppressor gene. 
+ATF3      | Activating transcription factor, highly expressed in cancer cells
+CXCL8     | Interleukin-8: immune activation and angiogenesis
+GADD45A   | Cell response to DNA damage
+TNFAIP3   | Immune and inflammatory response
+CDKN1A    | Regulation of cell cycle and DNA damage repair
+GDF15     | Response to inflammation and oxidative stress
+BTG2      | Antiproliferative 
+EGR1      | Cancer suppressor gene
+GEM       | Regulator of signal transduction
+IL11      | Interleukin-11: development of B-cells.
+TNFRSF9   | Activation and development of T-cells.
+CEACAM1   | Regulates angiogenesis, apoptosis, tumor suppression and metastasis.
+ANKRD1    | Immune-induced transcription factor
+DHRS2     | Enzyme to process xenobiotics and other compounds.
+BIRC3     | Inhibits apoptosis
+TP53I3    | Tumor supressor
+TXNIP     | Tumor supressor 
 
 #### Conclusion from the biomarkers
 
