@@ -736,11 +736,6 @@ The biomarkers were selected from the treated and untreated matrices, so first w
 are in the copy number matrix too.
 
 ```{r}
-biomarkers %in% rownames(copynumber)
-```
-The second biomarker is not in this matrix, so it has to be removed from the gene expression one as well.
-
-```{r}
 commonbiomarkers.lr <- intersect(rownames(copynumber), biomarkers)
 #There is no need to intersect with the untreated matrix, because it was used to define the biomarkers, so it definitely contains all of them.
 ```
@@ -764,7 +759,6 @@ colnames(untreatedforlr) <- sub("_.*", "", colnames(untreatedforlr))
 
 untreatedforlr <- sapply(split(seq_len(ncol(untreatedforlr)),colnames(untreatedforlr)),
                          function(cis) rowMeans(untreatedforlr[,cis,drop=F]))
-dim(untreatedforlr)
 ```
 
 The matrix for untreated still lists more columns than the gene copy number, so only the common ones are
@@ -784,7 +778,7 @@ cnforlr <- cnforlr[,order(colnames(cnforlr))]
 
 The Spearman correlation of the copy number and gene expression of each biomarker is calculated.
 
-```{r}
+```{r echo=-15}
 cnforlr.t <- t(cnforlr)
 untreatedforlr.t <- t(untreatedforlr)
 
@@ -832,8 +826,7 @@ cellline, to be used for the linear regressions:
 
 ```{r}
 genexp.drugsens <- rbind(untreatedforlr, dsforlr["gemcitibine",])
-rownames(genexp.drugsens) <- c(rownames(genexp.drugsens)[1:nrow(genexp.drugsens)-1], 
-                               "DS_Gemcitabine")
+rownames(genexp.drugsens) <- c(rownames(genexp.drugsens)[1:nrow(genexp.drugsens)-1], "DS_Gemcitabine")
 genexp.drugsens <- t(genexp.drugsens)
 ```
 
@@ -849,7 +842,7 @@ abline(lm(DS_Gemcitabine~ATF3, data = as.data.frame(genexp.drugsens)), col = "#3
 
 R-squared values of the linear regression of each biomarker:
 
-```{r}
+```{r echo=-16}
 DS_gemcitabine <- genexp.drugsens[,"DS_Gemcitabine"]
 all.r.squared.ge <- c()
 
@@ -875,8 +868,7 @@ sensitivity of each cellline, just like it was done with the gene expression:
 
 ```{r}
 copynum.drugsens <- rbind(cnforlr, dsforlr["gemcitibine",])
-rownames(copynum.drugsens) <- c(rownames(copynum.drugsens)[1:nrow(copynum.drugsens)-1], 
-                               "DS_Gemcitabine")
+rownames(copynum.drugsens) <- c(rownames(copynum.drugsens)[1:nrow(copynum.drugsens)-1], "DS_Gemcitabine")
 copynum.drugsens <- t(copynum.drugsens)
 ```
 
@@ -892,7 +884,7 @@ abline(lm(DS_Gemcitabine~ATF3, data = as.data.frame(copynum.drugsens)), col = "#
 
 R-squared values of the linear regression of each biomarker:
 
-```{r}
+```{r echo=-12}
 all.r.squared.cn <- c()
 for (i in 1:length(commonbiomarkers.lr)) {
   r.squared.i.cn <- 
