@@ -738,7 +738,7 @@ ideal therapy in each case. To this end, we will use both linear and multiple re
 ## Linear regression Analysis
 
 This linear regression will attempt to find a relation between:  
-1. The drug sensitivity of the celllines (GI50 value) and the gene expression of their biomarkers when
+1. The drug sensitivity of the celllines (EC50 value) and the gene expression of their biomarkers when
 untreated.  
 2. The drug sensitivity and the gene copy number of the biomarkers.  
 
