@@ -794,7 +794,23 @@ cnforlr <- cnforlr[,order(colnames(cnforlr))]
 
 The Spearman correlation of the copy number and gene expression of each biomarker is calculated.
 
-```{r echo=-15}
+```{r eval=FALSE}
+cnforlr.t <- t(cnforlr)
+untreatedforlr.t <- t(untreatedforlr)
+
+correlations.cn.genexp <- c()
+
+for (i in 1:ncol(cnforlr.t)) {
+  cor.i <- cor(cnforlr.t[,i], untreatedforlr.t[,i], method = "spearman")
+  correlations.cn.genexp <- c(correlations.cn.genexp, cor.i)
+}
+names(correlations.cn.genexp) <- colnames(untreatedforlr.t)
+
+barplot(correlations.cn.genexp, ylim = c(-1,1), las = 2, cex.names = 0.8, col = "#3399FF", 
+        ylab = "Correlation coefficient", 
+        main = "Correlation between gene expression and copy number" )
+```
+```{r echo=FALSE}
 cnforlr.t <- t(cnforlr)
 untreatedforlr.t <- t(untreatedforlr)
 
@@ -858,7 +874,24 @@ abline(lm(DS_Gemcitabine~ATF3, data = as.data.frame(genexp.drugsens)), col = "#3
 
 R-squared values of the linear regression of each biomarker:
 
-```{r echo=-16}
+```{r eval=FALSE}
+DS_gemcitabine <- genexp.drugsens[,"DS_Gemcitabine"]
+all.r.squared.ge <- c()
+
+for (i in 1:length(commonbiomarkers.lr)) {
+  r.squared.ge.i <- 
+    summary(lm(DS_gemcitabine~genexp.drugsens[,i], 
+               data = as.data.frame(genexp.drugsens)))$r.squared
+  all.r.squared.ge <- c(all.r.squared.ge, r.squared.ge.i)
+}
+
+names(all.r.squared.ge) <- colnames(genexp.drugsens[,1:ncol(genexp.drugsens)-1])
+
+barplot(all.r.squared.ge, ylim = c(0,1), ylab = "R-squared value", 
+        main = "R-squared values of the linear regressions using gene expression", 
+        cex.names = 0.7, las = 2, col = "#3399FF")
+```
+```{r echo=FALSE}
 DS_gemcitabine <- genexp.drugsens[,"DS_Gemcitabine"]
 all.r.squared.ge <- c()
 
@@ -900,7 +933,7 @@ abline(lm(DS_Gemcitabine~ATF3, data = as.data.frame(copynum.drugsens)), col = "#
 
 R-squared values of the linear regression of each biomarker:
 
-```{r echo=-12}
+```{r eval=FALSE}
 all.r.squared.cn <- c()
 for (i in 1:length(commonbiomarkers.lr)) {
   r.squared.i.cn <- 
@@ -913,6 +946,19 @@ barplot(all.r.squared.cn, ylim = c(0,1), ylab = "R-squared value",
         main = "R-squared values of the linear regressions using gene copy number", 
         cex.names = 0.7, las = 2, col = "#3399FF")
 mtext("Biomarkers", side = 1, line = 4)
+```
+```{r echo=FALSE}
+all.r.squared.cn <- c()
+for (i in 1:length(commonbiomarkers.lr)) {
+  r.squared.i.cn <- 
+    summary(lm(DS_gemcitabine~copynum.drugsens[,i], 
+               data = as.data.frame(copynum.drugsens)))$r.squared
+  all.r.squared.cn <- c(all.r.squared.cn, r.squared.i.cn)
+}
+names(all.r.squared.cn) <- colnames(copynum.drugsens[,1:ncol(copynum.drugsens)-1])
+barplot(all.r.squared.cn, ylim = c(0,1), ylab = "R-squared value", 
+        main = "R-squared values of the linear regressions using gene copy number", 
+        cex.names = 0.7, las = 2, col = "#3399FF")
 ```
 
 ## Multiple regression analysis
@@ -951,3 +997,4 @@ All of the linear and multiple analyses performed yielded very low R-squared val
 This was not entirely surprising, since the cellular response to a drug or any outside influence is a very complex process regulated by hundreds, if not thousands, of genes, so using only our 17 biomarkers to predict the cell's response to gemcitabine was unlikely to yield any meaningful results. Furthermore, many more variables come into play to determine the cell's response to a drug, such as specific mutations in particular genes, which we did not take into account for our analysis. 
 
 </div>
+
