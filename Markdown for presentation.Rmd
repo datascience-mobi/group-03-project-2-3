@@ -378,10 +378,9 @@ L=cannotation$Microsatellite_instability_status=="MSI-H"
 Cell_Line=data.frame("Cell Line name"= cannotation[,"Cell_Line_Name"],"Microsatellite"= L)
 Cell_Line <- Cell_Line[order(Cell_Line$Cell.Line.name),]
 drugsensitivity_transposed=t(drugsensitivity)
-
-#The Cell_Line dataframe is directly merged with the Gemcitabine Drug Sensitivity Values.
 Cell_Line_no_nas <- na.omit(Cell_Line)
 
+#plotting mutations against cell line
 table_of_mutations_na <- qpcR:::cbind.na(counting_mutations, Cell_Line_no_nas)
 table_of_mutations <- na.omit(table_of_mutations_na)
 mutation_plot <- qplot(
