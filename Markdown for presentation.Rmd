@@ -436,16 +436,18 @@ In order to investigate the difference in gemcitabine sensitivity for different 
 
 ### Mean graph plot
 
-```{r, warning = FALSE, message = FALSE}
+```{r, warning = FALSE, message = FALSE, results ="hide"}
 
 #calculation of EC50 mean for gemcitabine
 rowMeans(drugsensitivity, na.rm = TRUE, dims = 1)
-#EC50 mean value is 7,003322 for gemcitabine
+```
+EC50 mean value for gemcitabine is 7,003322.
+```{r, warning = FALSE, message = FALSE}
 #creating a vector for EC50 values of gemcitabine only 
 NegLogGI50gemcitabine<- drugsensitivity[-1:-7,]
 NegLogGI50gemcitabine2<- NegLogGI50gemcitabine[-2:-8,]
 
-#substract the value 7,003322 for GI50 value of gemcitabine for every cell line 
+#substract the value 7,003322 for EC50 value of gemcitabine for every cell line 
 EC50value <- NegLogGI50gemcitabine2 - 7.003322
 Neg_LogGI50gemcitabine4 <- as.data.frame(EC50value)
 
