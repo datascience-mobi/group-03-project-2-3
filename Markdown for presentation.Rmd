@@ -148,7 +148,7 @@ legend("right",inset = c(-0.3,0), levels(drug_as_factor), xpd = TRUE,
 pch=20, col = levels)
 
 #scree plot to show how much variance the PCs explain
-plot(pca_FC, type = "l", main = "PCAs of the fold change")
+plot(pca_FC, type = "l", main = "PCA of the fold change")
 ```
 
 A scree plot shows, how much variance a Principal Component explains. As you can see, the knick in the curve is at PC 2. 
