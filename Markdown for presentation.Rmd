@@ -474,19 +474,20 @@ From the mean graph plot it can be observed that the different celllines had dif
 #select celllines with 10 highest and 10 lowest EC50 values
 sort(NegLogGI50gemcitabine2, decreasing = FALSE)
 ```
+Cell lines with the highest EC50 values are SNB-19, OVCAR-8 ,CAKI-1,NCI-H23 ,HCT-116,
+NCI-H460 ,M14,MCF7 ,786-0,ACHN. Since SNB-19 is not part of the "mutations" data I am going to proceed with the
+nine remaining celllines.
+Cell lines with lowest EC50 values are HCC-2998, HS-578T, OVCAR-4 , TK-10, PC-3, 
+MDA-MB-231, SK-MEL-28 , OVCAR-3 ,KM12, HCT-15.
+
 ```{r}
 
-#cell lines with highest EC50 values are SNB-19, OVCAR-8 ,CAKI-1,NCI-H23 ,HCT-116,
-#NCI-H460 ,M14,MCF7 ,786-0,ACHN
-#since SNB-19 is not part of the mutations data I am going to proceed with the
-#nine other celllines
 celllineshigh <- c("OVCAR-8","CAKI-1","NCI-H23","HCT-116","NCI-H460","M14",
 "MCF7","786-0","ACHN")
 
-#cell lines with lowest EC50 values are HCC-2998, HS-578T, OVCAR-4 , TK-10, PC-3, 
-#MDA-MB-231, SK-MEL-28 , OVCAR-3 ,KM12, HCT-15
 celllineslow <- c("HCC-2998","HS-578T","OVCAR-4","TK-10","PC-3","MDA-MB-231",
 "SK-MEL-28","OVCAR-3","KM12","HCT-15")
+
 ```
 Missense mutation for celllines with high EC50 values 
 
