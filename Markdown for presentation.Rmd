@@ -163,13 +163,13 @@ legend("right", inset=c(-0.25,0),levels(drug_as_factor), pch=20,col = levels, xp
 tissue_as_factor <- as.factor(metadata[1:ncol(treated), "tissue"])
 levels_t <- as.factor(levels(tissue_as_factor))
 plot(pca_untreated$rotation[, 1], pca_untreated$rotation[, 2], col = metadata[1:ncol(untreated), "tissue"], pch = 20, xlab = "PC1",
-ylab = "PC2")
+ylab = "PC2", main = "PC 1&2 of gene expression before treatment")
 legend("right", inset=c(-0.25,0),levels(tissue_as_factor), pch=20,
 col = levels_t, xpd =TRUE)
 
 #pca 1&2 of the fold change tissue associated
 plot(pca_FC$rotation[, 1], pca_FC$rotation[, 2], col = metadata[1:ncol(untreated), "tissue"], pch = 20, xlab = "PC 1", 
-ylab = "PC 2")
+ylab = "PC 2", main = "PC 1&2 of the fold change")
 legend("right", inset=c(-0.25,0),levels(tissue_as_factor), pch=20,
 col = levels_t, xpd =TRUE)
 
@@ -380,27 +380,13 @@ status")+ xlab("Cell Line")+ylab("Mutations")+theme(axis.text.x = element_text(a
   
 It can be observed from the previous plot that the MSI-H cells tend to have a higher number of mutations than MSI-L cells. From this observation arises the question of whether the MSI status also affect the sensitivity of cells to gemcitabine.   
 MSI-H cancers have a better prognosis when it comes to immune activating therapies, because of new immunogenic antigens being produced. However, the question remains open, of whether the Microsatellite Instability also affect other non-immune mechanisms in the cell. The deficit in the MMR could result in faulty essential proteins being produced, which would lead to cell death, but the higher mutation rate could also lead to a faster development of drug escape mechanisms.  
-In order to investigate the relationship between sensitivity to gemcitabine and the MSI status, we plot the EC50 value of all cell lines and colour them according to the MSI status.
 
-```{r, warning=FALSE}
-# Plotting the GI50 values relating to Gemcitabine treatment .
-gemcitabine_line=data.frame("Gemcitabine drug sensitivity"= drugsensitivity_transposed[,"gemcitibine"])
-everything=na.omit(cbind(Cell_Line,gemcitabine_line))
-```
-
-```{r, warning = FALSE}
-basic=ggplot(everything, aes(Cell.Line.name, Gemcitabine.drug.sensitivity, colour = factor(Microsatellite), shape = factor(Microsatellite) )) +
-   geom_point()
-basic + ggtitle("Drug Sensitivity of Gemcitabine treated cell lines according to MSI status")+ xlab("Cell Line")+ylab("Drug Sensitivity")+theme(axis.text.x = element_text(angle = 90, size = 7))
-```
-
-A relationship between high drug sensitivity and high microsatellite instability cannot be concluded from this plot.
 
 ## Heatmap of biomarkers due to MSI status
 
-To investigate whether MSI status affects the fold change after gemcitabine treatment, we explore the fold change of our 17 biomarkers for gemcitabine in the MSI-High and MSI-Low celllines. Furthermore, the question arises of whether the gene expression of key genes involved in the DNA repair mechanisms is also affected. To this end, we picked MLH1 and MSH6, which should theoretically be downregulated.
+To investigate whether MSI status affects the fold change after gemcitabine treatment, we explore the fold change of our 17 biomarkers for gemcitabine in the MSI-High and MSI-Low celllines. 
 
-```{r}
+```{r, echo = FALSE}
 #Select the columns names that contain gemcitabine
 gmci <- grepl('gemcitibine', colnames(fcgeneexpression))
 
@@ -424,14 +410,9 @@ biomarkers_geneexpression_MSIL <- biomarkers_geneexpression[,-c(8,12,11,17,19,27
 geneexpression_MSI_related_untreated_MSIH <- geneexpression_MSI_related_untreated[, c(8,12,11,17,19,27,42,45)]
 geneexpression_MSI_related_untreated_MSIL <- geneexpression_MSI_related_untreated[, -c(8,12,11,17,19,27,42,45)]
 
-#heatmap of untreated geneexpression with MSI related genes
-pheatmap(cbind(geneexpression_MSI_related_untreated_MSIH, geneexpression_MSI_related_untreated_MSIL), cluster_rows = FALSE, cluster_cols = FALSE, gaps_col = 8, cellheight = 20, name = "MLH1 and MSH6")
-```
+```  
 
-
-In the previous graph can be observed that there is a difference in the expression of these two genes in MSI-H and MSI-L cancer cells.  
-
-Next we investigate if the MSI status affects the expression of our biomarkers after gemcitabine treatment.
+Now we investigate if the MSI status affects the expression of our biomarkers after gemcitabine treatment.
 
 ```{r}
 #Two heatmaps of the biomarkers' FC in MSI-Low and MSI-High celllines
