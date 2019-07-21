@@ -288,7 +288,7 @@ biomarkers
 Now that we know which genes have the highest difference in gene expression, we will check if each of 
 them is up- or down-regulated.
 
-```{r echo=-13, echo=-2:3}
+```{r echo=-13, echo=-2, echo=-3}
 fcge_gemcitabine <- dplyr::select(as_tibble(fcgeneexpression), contains("gemcitibine"))
 fcge_gemcitabine <- as.matrix(fcge_gemcitabine)
 rownames(fcge_gemcitabine) <- rownames(fcgeneexpression)
