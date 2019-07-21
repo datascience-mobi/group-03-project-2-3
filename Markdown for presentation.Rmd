@@ -469,10 +469,12 @@ From the mean graph plot it can be observed that the different celllines had dif
 
 ### Celllines and different somatic mutation types
 	
-```{r}
+```{r, results="hide"}
 
-#filter out celllines with 10 highest and 10 lowest EC50 values
+#select celllines with 10 highest and 10 lowest EC50 values
 sort(NegLogGI50gemcitabine2, decreasing = FALSE)
+```
+```{r}
 
 #cell lines with highest EC50 values are SNB-19, OVCAR-8 ,CAKI-1,NCI-H23 ,HCT-116,
 #NCI-H460 ,M14,MCF7 ,786-0,ACHN
