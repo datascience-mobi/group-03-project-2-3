@@ -238,7 +238,10 @@ absvalfcgeneexpression <- abs(fcgeneexpression)
 
 Taking only the cell lines in the fold change matrix that were treated with gemcitabine
 
-```{r}
+```{r eval=FALSE}
+absvalfcge_gemcitabine <- dplyr::select(as_tibble(absvalfcgeneexpression), contains("gemcitibine"))
+```
+```{r echo=FALSE}
 absvalfcge_gemcitabine <- dplyr::select(as_tibble(absvalfcgeneexpression), contains("gemcitibine"))
 absvalfcge_gemcitabine <- as.matrix(absvalfcge_gemcitabine)
 rownames(absvalfcge_gemcitabine) <- rownames(absvalfcgeneexpression)
