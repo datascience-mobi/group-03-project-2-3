@@ -266,7 +266,7 @@ topgenes <- sort(table(as.vector(matrixofbiomarkers[1:15,])))
 
 matrixtopgenes <- as.matrix(topgenes[order(-topgenes)])
 
-barplot(matrixtopgenes[1:30,], xlab = "", ylab = "Counts", 
+barplot(matrixtopgenes[1:30,], xlab = "Genes", ylab = "Counts", 
         main = "Top differentially expressed genes", 
         cex.names = 0.7, las = 2, col = "#00CC66")
 ```
@@ -303,7 +303,7 @@ fcge_gemcitabine <- fcge_gemcitabine[which(rownames(fcge_gemcitabine) %in% bioma
 meanfcge_gemcitabine <- apply(fcge_gemcitabine, 1, mean)
 meanfcge_gemcitabine <- meanfcge_gemcitabine[order(-meanfcge_gemcitabine)]
 
-barplot(meanfcge_gemcitabine, xlab = "", ylab = "Fold change", ylim = c(-1, 3), 
+barplot(meanfcge_gemcitabine, xlab = "Biomarkers", ylab = "Fold change", ylim = c(-1, 3), 
         main = "Mean change in gene expression of the biomarkers with gemcitabine", 
         cex.names = 0.9, las = 2, col = "#00CC66")
 ```
