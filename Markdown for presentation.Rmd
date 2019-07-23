@@ -39,7 +39,7 @@ knitr::opts_chunk$set(echo = TRUE)
     
 ## Gemcitabine
 
-Gemcitabine is a nucleoside analogue used as chemotherapy. It is marketed as Gemzar. The drug replaces one of the building blocks of nucleic acids, in this case cytidine, during DNA replication. The process arrest tumor growth because gemcitabine induces mast chain termination. Gemcitabine is used in various carcinomas: non-small cell lung cancer, pancreatic cancer, bladder cancer and breast cancer. It is being investigated for use in oesophageal cancer, and is used experimentally in lymphomas and various other tumor types. 
+Gemcitabine is a nucleoside analogue used as chemotherapy. It is marketed as Gemzar. The drug replaces one of the building blocks of nucleic acids, in this case cytidine, during DNA replication. The process arrest tumor growth because gemcitabine induces masked chain termination. Gemcitabine is used in various carcinomas: non-small cell lung cancer, pancreatic cancer, bladder cancer and breast cancer. It is being investigated for use in oesophageal cancer, and is used experimentally in lymphomas and various other tumor types. 
 
 ## Preparing the data
 
