@@ -230,7 +230,7 @@ that deliver the most information. To this end, we will base the selection of th
 expression, or more specifically, the change in their expression before and after the treatment with the
 drug. These will be our biomarkers.  
 
-The first step is to calculate a the absolute value of the fold change, to find the difference in expression of every single gene between treated and untreated cell lines. This way we can detect the biggest changes, regardles off if the expession of the genes was up- or down-regulated.
+The first step is to calculate the absolute value of the fold change, to find the difference in expression of every single gene between treated and untreated cell lines. This way we can detect the biggest changes, regardles off if the expession of the genes was up- or down-regulated.
 
 ```{r}
 absvalfcgeneexpression <- abs(fcgeneexpression)
