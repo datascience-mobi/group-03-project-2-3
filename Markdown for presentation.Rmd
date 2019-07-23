@@ -709,8 +709,7 @@ However mutation frequency or type alone is insufficient to identify and predict
 sensitivity of a cellline towards gemcitabine. 
 
 A more effective way to explain a celllines sensitivity to gemcitabine are 
-mutations of genes that play an important role in the mechanisms gemcitabine 
-is involved in. One enzyme that plays an important role in converting gemcitabine 
+mutations of genes that play an important role in gemcitabines mechanism of action. One enzyme that plays an important role in converting gemcitabine 
 from the prodrug into the final active drug form is deoxycytidine kinase (DCK) . 
 It modifies gemcitabine by attaching a phosphate to it, converting it to gemcitabine
 monophosphate. The gene encoding this enzyme is called DCK.
