@@ -429,6 +429,9 @@ biomarkers_geneexpression_MSIL <- biomarkers_geneexpression[,-c(8,12,11,17,19,27
 geneexpression_MSI_related_untreated_MSIH <- geneexpression_MSI_related_untreated[, c(8,12,11,17,19,27,42,45)]
 geneexpression_MSI_related_untreated_MSIL <- geneexpression_MSI_related_untreated[, -c(8,12,11,17,19,27,42,45)]
 
+#heatmap of untreated geneexpression with MSI related genes
+
+pheatmap(cbind(geneexpression_MSI_related_untreated_MSIH, geneexpression_MSI_related_untreated_MSIL), cluster_rows = FALSE, cluster_cols = FALSE, gaps_col = 8, cellheight = 20, name = "MLH1 and MSH6")
 ```  
 
 Now we investigate if the MSI status affects the expression of our biomarkers after gemcitabine treatment.
