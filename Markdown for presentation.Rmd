@@ -990,7 +990,7 @@ multipleregression.cn <- lm(DS_Gemcitabine~ATF3 + GADD45A + TNFAIP3 + CDKN1A + G
 summary(multipleregression.cn)
 ```
 
-This regression has the highest R-squared value of all, but at 0.53 it still cannot be used to predict
+This regression has the highest R-squared value of all, but at 0.544 it still cannot be used to predict
 the drug sensitivity of the celllines.
 
 ### Conclusion from the regression analyses
