@@ -979,7 +979,7 @@ multipleregression.ge <- lm(DS_Gemcitabine~ATF3 + GADD45A + TNFAIP3 + CDKN1A + G
 summary(multipleregression.ge)
 ```
 
-This multiple regression has an R-squared value of 0.3142, which is higher than what each individual biomarker by itself had, but still not enough to be used as a predictor of the drug sensitivity of the celllines.
+This multiple regression has an R-squared value of 0.314, which is higher than what each individual biomarker by itself had, but still not enough to be used as a predictor of the drug sensitivity of the celllines.
 
 #### Gene copy number vs. drug sensitivity
 
