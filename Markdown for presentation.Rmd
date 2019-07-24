@@ -725,7 +725,7 @@ corresponds to the fact that it is also a cellline with a low gemcitabine sensit
 
 References: 
 
-Nakano, T., Saiki, Y., Kudo, C., Hirayama, A., Mizuguchi, Y., Fujiwara, S., Soga, T., Sunamura, M., Matsumura, N., Motoi, F., et al. (2015). Acquisition of chemoresistance to gemcitabine is induced by a loss-of-function missense mutation of DCK. Biochemical and biophysical research communications 464, 1084-1089.
+Nakano, T., Saiki, Y., Kudo, C., Hirayama, A., Mizuguchi, Y., Fujiwara, S., Soga, T., Sunamura, M., Matsumura, N., Motoi, F., et al. (2015). Acquisition of chemoresistance to gemcitabine is induced by a loss-of-function missense mutation of DCK. Biochemical and biophysical research communications 464, 1084-1089.  
 Saiki, Y., Yoshino, Y., Fujimura, H., Manabe, T., Kudo, Y., Shimada, M., Mano, N., Nakano, T., Lee, Y., Shimizu, S., et al. (2012). DCK is frequently inactivated in acquired gemcitabine-resistant human cancer cells. Biochemical and biophysical research communications 421, 98-104.
 
 ***
